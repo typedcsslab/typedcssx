@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "lib": ["ESNext", "dom"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noImplicitReturns": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "incremental": true
+  },
+
+  "include": ["./src"],
+  "exclude": ["./dist"]
+}

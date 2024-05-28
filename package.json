@@ -1,0 +1,15 @@
+{
+  "name": "typedcss",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Refirst",
+  "license": "MIT",
+  "main": "dist/core/index.js",
+  "typings": "dist/_internal/types.d.ts",
+  "devDependencies": {
+    "@types/css-modules": "^1.0.4",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.2.33",
+    "typescript": "^5.2.2"
+  }
+}
