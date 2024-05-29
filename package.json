@@ -1,16 +1,23 @@
 {
-  "name": "typedcss",
-  "version": "0.0.0",
+  "name": "typedcssx",
+  "version": "0.2.1",
   "private": true,
-  "author": "Refirst",
+  "author": "Re First",
   "repository": "github:typedcssxlabs/typedcssx",
   "homepage": "https://typedcssx.vercel.app",
   "license": "MIT",
   "main": "dist/core/index.js",
   "typings": "dist/core/index.d.ts",
-  "devDependencies": {
+  "scripts": {
+    "compile": "npx ts-node --esm compiler/src/index.mts"
+  },
+  "dependencies": {
     "@types/css-modules": "^1.0.4",
     "@types/node": "^20.12.12",
+    "globby": "^14.0.1",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
     "@types/react": "^18.2.33",
     "typescript": "^5.2.2"
   }
