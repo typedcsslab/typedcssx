@@ -16,7 +16,6 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, root?:
     let mediaQueries = '';
 
     const indent = '  '.repeat(indentLevel);
-    const innerIndent = '  '.repeat(indentLevel + 1);
 
     for (const property in properties) {
       const value = (properties as unknown as PropertyType)[property];
@@ -30,11 +29,7 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, root?:
       } else if (property.startsWith('@media')) {
         bigIndent = true;
         const mediaRule = stringConverter(className, value as never, indentLevel + 1);
-        if (mediaRule.pseudoRules.includes(`${className}:`) || mediaRule.pseudoRules.includes(`${className}::`)) {
-          mediaQueries += `\n${property} {\n${mediaRule.pseudoRules}${mediaRule.media}}\n`;
-        } else {
-          mediaQueries += `\n${property} {\n${innerIndent}${className} {\n${mediaRule.mainRules}${mediaRule.media}${innerIndent}}\n}\n`;
-        }
+        mediaQueries += `${property}\n  ${className} {\n${mediaRule.mainRules}  }\n${mediaRule.pseudoRules}${mediaRule.media}}\n`;
         bigIndent = false;
       } else if (typeof value === 'string' || typeof value === 'number') {
         const cssProp = camelToKebabCase(property);

@@ -53,7 +53,7 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
         } else if (property.startsWith('@media')) {
           const mediaRule = property;
           let nestedRules = '';
-          let containsPseudo = false;
+          let regularRules = '';
 
           for (const mediaProp in value as PropertyType) {
             if (Object.prototype.hasOwnProperty.call(value, mediaProp)) {
@@ -62,7 +62,6 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
               const isMediaClassInc = pseudo.classes.includes(mediaProp);
               const isMediaElementInc = pseudo.elements.includes(mediaProp);
               if (mediaProp.startsWith('not') || mediaProp.startsWith('lang') ? mediaClassIndex : isMediaClassInc || isMediaElementInc) {
-                containsPseudo = true;
                 if (isMediaClassInc) colon = ':';
                 if (isMediaElementInc) colon = '::';
                 const kebabMediaProp = camelToKebabCase(mediaProp);
@@ -74,16 +73,15 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
                 }
                 nestedRules += selector(indent + className, colon + kebabMediaProp, pseudoClassRule, innerIndent);
               } else {
-                nestedRules += rules(innerIndent + '  ', value, mediaProp);
+                regularRules += rules(innerIndent + '  ', value, mediaProp);
               }
             }
           }
-
-          if (containsPseudo) {
-            mediaQueries[mediaRule] = (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${nestedRules}${indent}}\n`;
-          } else {
+          if (regularRules) {
             mediaQueries[mediaRule] =
-              (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${innerIndent}${className} {\n${nestedRules}${innerIndent}}\n${indent}}\n`;
+              (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${indent}  ${className} {\n${regularRules}  }\n${nestedRules}${indent}}\n${indent}\n`;
+          } else {
+            mediaQueries[mediaRule] = (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${nestedRules}${indent}}\n`;
           }
         }
       }
