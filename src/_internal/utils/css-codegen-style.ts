@@ -29,7 +29,8 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, root?:
       } else if (property.startsWith('@media')) {
         bigIndent = true;
         const mediaRule = stringConverter(className, value as never, indentLevel + 1);
-        mediaQueries += `${property}\n  ${className} {\n${mediaRule.mainRules}  }\n${mediaRule.pseudoRules}${mediaRule.media}}\n`;
+        const mainRule = mediaRule.mainRules ? `{\n  ${className} {\n${mediaRule.mainRules}  }` : '';
+        mediaQueries += `${property} ${mainRule}\n${mediaRule.pseudoRules}${mediaRule.media}}\n`;
         bigIndent = false;
       } else if (typeof value === 'string' || typeof value === 'number') {
         const cssProp = camelToKebabCase(property);
