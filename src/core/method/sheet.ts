@@ -2,10 +2,22 @@ import type { ReturnStyleType, ClassesObjectType } from '../../_internal';
 import { cssCodeGenSheet, isInDevelopment, buildIn, injectCSS } from '../../_internal';
 import styles from '../styles/style.module.css';
 
+let resolveGlobalStyleSheet: (value: string) => void;
+const globalStyleSheetPromise = new Promise<string>((resolve) => {
+  resolveGlobalStyleSheet = resolve;
+});
+
+export function applyGlobalBuildIn(): void {
+  globalStyleSheetPromise.then((styleSheet) => {
+    if (!isInDevelopment && styleSheet) {
+      buildIn(styleSheet);
+    }
+  });
+}
+
 export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType): ReturnStyleType<T> {
   const { styleSheet, base62Hash } = cssCodeGenSheet(object);
-
-  if (!isInDevelopment) buildIn(styleSheet);
+  resolveGlobalStyleSheet(styleSheet);
 
   return new Proxy<ClassesObjectType>(object, {
     get: function (target, prop: string) {
@@ -20,3 +32,5 @@ export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType
     },
   }) as unknown as ReturnStyleType<T>;
 }
+
+applyGlobalBuildIn();
