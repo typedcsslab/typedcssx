@@ -2,15 +2,22 @@ import type { HTMLType } from '../../_internal';
 import { isInDevelopment, buildIn, cssCodeGenSheet, injectCSSGlobal } from '../../_internal';
 
 let resolveGlobalStyleSheet: (value: string) => void;
-const globalStyleSheetPromise = new Promise<string>((resolve) => {
-  resolveGlobalStyleSheet = resolve;
-});
+let globalStyleSheetPromise: Promise<string>;
 
-export function applyGlobalBuildIn(): void {
+function createNewGlobalStyleSheetPromise() {
+  globalStyleSheetPromise = new Promise<string>((resolve) => {
+    resolveGlobalStyleSheet = resolve;
+  });
+}
+
+function applyGlobalBuildIn(): void {
+  if (typeof globalStyleSheetPromise === 'undefined') createNewGlobalStyleSheetPromise();
+
   globalStyleSheetPromise.then((styleSheet) => {
     if (!isInDevelopment && styleSheet) {
-      buildIn(styleSheet, '--global');
+      buildIn(styleSheet);
     }
+    createNewGlobalStyleSheetPromise();
   });
 }
 

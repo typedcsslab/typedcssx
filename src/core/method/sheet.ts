@@ -3,15 +3,22 @@ import { cssCodeGenSheet, isInDevelopment, buildIn, injectCSS } from '../../_int
 import styles from '../styles/style.module.css';
 
 let resolveGlobalStyleSheet: (value: string) => void;
-const globalStyleSheetPromise = new Promise<string>((resolve) => {
-  resolveGlobalStyleSheet = resolve;
-});
+let globalStyleSheetPromise: Promise<string>;
 
-export function applyGlobalBuildIn(): void {
+function createNewGlobalStyleSheetPromise() {
+  globalStyleSheetPromise = new Promise<string>((resolve) => {
+    resolveGlobalStyleSheet = resolve;
+  });
+}
+
+function applyGlobalBuildIn(): void {
+  if (typeof globalStyleSheetPromise === 'undefined') createNewGlobalStyleSheetPromise();
+
   globalStyleSheetPromise.then((styleSheet) => {
     if (!isInDevelopment && styleSheet) {
       buildIn(styleSheet);
     }
+    createNewGlobalStyleSheetPromise();
   });
 }
 
