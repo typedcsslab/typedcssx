@@ -1,7 +1,7 @@
-import { globby } from 'globby';
+import fg from 'fast-glob';
 import path from 'node:path';
 import fs from 'fs';
-import { cleanUp } from './clean-up.mjs';
+import { cleanUp } from './clean-up';
 
 (async () => {
   cleanUp();
@@ -15,12 +15,12 @@ import { cleanUp } from './clean-up.mjs';
     appRoot = path.join(process.cwd(), '../../');
   }
   const csstsPattern = path.join(appRoot, '**/*.css.ts');
-  const files: string[] = await globby([csstsPattern]);
+  const files: string[] = await fg([csstsPattern]);
 
-  files.forEach(async (file) => {
+  for (const file of files) {
     const filePath = path.resolve(file);
     await import(filePath);
-  });
+  }
 
-  return console.log('✅ (build cache applied the below css successfully)');
+  return console.log('✅ (build cache applied the above css successfully)');
 })();
