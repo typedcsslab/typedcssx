@@ -185,7 +185,7 @@ export type ClassesObjectType = {
 
 export type ReturnStyleType<T> = { [key in keyof T]: string };
 
-type JSXType = keyof JSX.IntrinsicElements;
+type JSXType = keyof JSX.IntrinsicElements | '*';
 
 export type HTMLType = {
   [K in JSXType]?: CustomCSSProperties;
