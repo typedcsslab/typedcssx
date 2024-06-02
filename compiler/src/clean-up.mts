@@ -13,10 +13,10 @@ export const cleanUp = () => {
     const packageJsonContent = JSON.stringify({ type: 'module' }, null, 2);
     fs.writeFileSync(packageJsonPath, packageJsonContent, 'utf-8');
 
-    fs.writeFileSync(styleFilePath, '/*_*/', 'utf-8');
+    fs.writeFileSync(styleFilePath, '/*------------------------------*/', 'utf-8');
     console.log('...💫(reseted module css)');
 
-    fs.writeFileSync(globalFilePath, '/*_*/', 'utf-8');
+    fs.writeFileSync(globalFilePath, '/*------------------------------*/', 'utf-8');
     console.log('...💫(reseted global css)');
 
     fs.unlinkSync(packageJsonPath);
