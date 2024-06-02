@@ -127,7 +127,7 @@ export type CustomExtendProperties = {
   gridColumn?: string;
   gridRow?: string;
   color?: CSSColorValue;
-  background?: CSSColorValue;
+  background?: CSSColorValue | 'none';
   backgroundColor?: CSSColorValue;
   active?: CustomCSSProperties;
   hover?: CustomCSSProperties;
