@@ -1,13 +1,26 @@
 type NumberOrPercent = number | `${number}%`;
 
 type CSSRGB = `rgb(${number},${number},${number})` | `rgb(${number} ${number} ${number})`;
-type CSSRGBA =
-  | `rgba(${number},${number},${number},${NumberOrPercent})`
-  | `rgba(${number} ${number} ${number} / ${NumberOrPercent})`;
+type CSSRGBA = `rgba(${number},${number},${number},${NumberOrPercent})` | `rgba(${number} ${number} ${number} / ${NumberOrPercent})`;
+
+type CSSColorFunction =
+  | `color(srgb ${number} ${number} ${number})`
+  | `color(display-p3 ${number} ${number} ${number})`
+  | `color(a98-rgb ${number} ${number} ${number})`
+  | `color(prophoto-rgb ${number} ${number} ${number})`
+  | `color(rec2020 ${number} ${number} ${number})`
+  | `color(xyz ${number} ${number} ${number})`
+  | `color(lab ${NumberOrPercent} ${number} ${number})`
+  | `color(lch ${NumberOrPercent} ${number} ${number})`
+  | `color(oklab ${NumberOrPercent} ${number} ${number})`
+  | `color(oklch ${NumberOrPercent} ${number} ${number})`;
 
 export type CSSColorNames =
+  | 'currentColor'
+  | 'transparent'
   | CSSRGBA
   | CSSRGB
+  | CSSColorFunction
   | `#${string}`
   | 'aliceblue'
   | 'antiquewhite'
