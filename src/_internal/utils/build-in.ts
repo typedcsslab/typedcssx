@@ -1,6 +1,6 @@
 'use server';
 
-import { createWriteStream, readFile } from 'fs';
+import { readFileSync, appendFileSync } from 'fs';
 import { isWindowDefined, get } from './helper';
 
 export const buildIn = (styleSheet: string, global?: string) => {
@@ -9,20 +9,15 @@ export const buildIn = (styleSheet: string, global?: string) => {
   const filePath = global === '--global' ? globalFilePath : styleFilePath;
   const message = global === '--global' ? ' ✅ Generating global static css \n' : ' ✅ Generating module static css \n';
 
-  if (!isWindowDefined)
-    readFile(filePath, 'utf-8', (error, data) => {
-      if (error || data.includes(styleSheet)) {
-        return;
-      } else {
-        const writeStream = createWriteStream(filePath, { flags: 'a' });
-        writeStream.write(styleSheet, 'utf-8', (error) => {
-          if (error) {
-            console.log('write error');
-          } else {
-            console.log(message + styleSheet);
-          }
-          writeStream.end();
-        });
+  if (!isWindowDefined) {
+    try {
+      const cssData = readFileSync(filePath, 'utf-8');
+      if (!cssData.includes(styleSheet)) {
+        appendFileSync(filePath, styleSheet, 'utf-8');
+        console.log(message + styleSheet);
       }
-    });
+    } catch (error) {
+      console.log('write error');
+    }
+  }
 };
