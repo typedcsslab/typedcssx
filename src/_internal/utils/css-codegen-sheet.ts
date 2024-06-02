@@ -95,18 +95,18 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
     return typeof object === 'object' && !Array.isArray(object);
   };
 
-  const createStyles = (styleObject: CustomCSSProperties | ClassesObjectType, classNamePrefix = '', indentLevel = 0): string => {
+  const createStyles = (styleObject: PropertyType | CustomCSSProperties | ClassesObjectType, indentLevel = 0): string => {
     let styleSheet = '';
 
-    const processStyles = (styles: PropertyType | CustomCSSProperties | ClassesObjectType, prefix = '', currentIndentLevel = 0): void => {
+    const processStyles = (styles: PropertyType | CustomCSSProperties | ClassesObjectType, currentIndentLevel = 0): void => {
       const indent = '  '.repeat(currentIndentLevel);
       for (const property in styles) {
         if (Object.prototype.hasOwnProperty.call(styles, property)) {
-          const value = (styles as PropertyType)[property];
+          const value = (styles as PropertyType)[property] as unknown as PropertyType;
           if (isClassesObjectType(value)) {
             if (property.startsWith('@media')) {
               bigIndent = true;
-              const mediaStyles = createStyles(value, prefix, currentIndentLevel + 1);
+              const mediaStyles = createStyles(value, currentIndentLevel + 1);
               styleSheet += `\n${indent}${property} {${mediaStyles}${indent}}\n`;
               bigIndent = false;
             } else {
@@ -122,7 +122,7 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
       }
     };
 
-    processStyles(styleObject, classNamePrefix, indentLevel);
+    processStyles(styleObject, indentLevel);
     return styleSheet;
   };
 
