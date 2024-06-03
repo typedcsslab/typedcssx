@@ -1,7 +1,8 @@
 import type { ReturnStyleType, ClassesObjectType } from '../../_internal';
 import { cssCodeGenSheet, isInDevelopment, buildIn, injectCSS } from '../../_internal';
+import path from 'path';
 
-const stylesPath = '../styles/style.module.css';
+const styleFilePath = path.join(__dirname, '../styles/style.module.css');
 let resolveGlobalStyleSheet: (value: string) => void;
 let globalStyleSheetPromise: Promise<string>;
 
@@ -37,7 +38,7 @@ export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType
           const sheet = (styleSheet.match(`\\\n.${className}\\s*{[^}]+}`) || '')[0];
           injectCSS(className, sheet, 'sheet');
         }
-        const importStyles = import(stylesPath);
+        const importStyles = import(styleFilePath);
         return isInDevelopment ? className : importStyles.then((styles) => styles[className]);
       }
     },
