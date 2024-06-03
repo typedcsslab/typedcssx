@@ -1,7 +1,7 @@
 import type { ReturnStyleType, ClassesObjectType } from '../../_internal';
 import { cssCodeGenSheet, isInDevelopment, buildIn, injectCSS } from '../../_internal';
-import styles from '../styles/style.module.css';
 
+const stylesPath = '../styles/style.module.css';
 let resolveGlobalStyleSheet: (value: string) => void;
 let globalStyleSheetPromise: Promise<string>;
 
@@ -12,8 +12,6 @@ function createNewGlobalStyleSheetPromise() {
 }
 
 function applyGlobalBuildIn(): void {
-  if (typeof globalStyleSheetPromise === 'undefined') createNewGlobalStyleSheetPromise();
-
   globalStyleSheetPromise.then((styleSheet) => {
     if (!isInDevelopment && styleSheet) {
       buildIn(styleSheet);
@@ -22,8 +20,13 @@ function applyGlobalBuildIn(): void {
   });
 }
 
+export function sheetBuildIn() {
+  applyGlobalBuildIn();
+}
+
 export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType): ReturnStyleType<T> {
   const { styleSheet, base62Hash } = cssCodeGenSheet(object);
+  if (typeof globalStyleSheetPromise === 'undefined') createNewGlobalStyleSheetPromise();
   resolveGlobalStyleSheet(styleSheet);
 
   return new Proxy<ClassesObjectType>(object, {
@@ -34,10 +37,9 @@ export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType
           const sheet = (styleSheet.match(`\\\n.${className}\\s*{[^}]+}`) || '')[0];
           injectCSS(className, sheet, 'sheet');
         }
-        return isInDevelopment ? className : styles[className];
+        const importStyles = import(stylesPath);
+        return isInDevelopment ? className : importStyles.then((styles) => styles[className]);
       }
     },
   }) as unknown as ReturnStyleType<T>;
 }
-
-applyGlobalBuildIn();

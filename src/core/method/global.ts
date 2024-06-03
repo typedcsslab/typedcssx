@@ -15,17 +15,19 @@ function applyGlobalBuildIn(): void {
 
   globalStyleSheetPromise.then((styleSheet) => {
     if (!isInDevelopment && styleSheet) {
-      buildIn(styleSheet);
+      buildIn(styleSheet, '--global');
     }
     createNewGlobalStyleSheetPromise();
   });
 }
 
-export function global(object: HTMLType): void {
-  const { styleSheet } = cssCodeGenSheet(object, '--global');
-
-  resolveGlobalStyleSheet(styleSheet);
-  if (isInDevelopment) injectCSSGlobal(styleSheet, 'global');
+export function globalBuildIn() {
+  applyGlobalBuildIn();
 }
 
-applyGlobalBuildIn();
+export function global(object: HTMLType): void {
+  const { styleSheet } = cssCodeGenSheet(object, '--global');
+  resolveGlobalStyleSheet(styleSheet);
+
+  if (isInDevelopment) injectCSSGlobal(styleSheet, 'global');
+}
