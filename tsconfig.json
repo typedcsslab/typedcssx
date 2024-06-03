@@ -20,5 +20,5 @@
     "skipLibCheck": true
   },
   "include": ["./src"],
-  "exclude": ["./dist", "node_modules"]
+  "exclude": ["./dist", "./src/compiler", "node_modules"]
 }
