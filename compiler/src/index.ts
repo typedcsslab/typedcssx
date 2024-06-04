@@ -2,10 +2,10 @@ import fg from 'fast-glob';
 import path from 'node:path';
 import fs from 'fs';
 import { cleanUp } from './clean-up';
-import { sheetBuildIn } from '../core/method/sheet';
-import { styleBuildIn } from '../core/method/style';
-import { rootBuildIn } from '../core/method/root';
-import { globalBuildIn } from '../core/method/global';
+import { sheetBuildIn } from '../../src/core/method/sheet-build-in-helper';
+import { styleBuildIn } from '../../src/core/method/style-build-in-helper';
+import { globalBuildIn } from '../../src/core/method/global-build-in-helper';
+import { rootBuildIn } from '../../src/core/method/root-build-in-helper';
 
 (async () => {
   cleanUp();
@@ -20,15 +20,13 @@ import { globalBuildIn } from '../core/method/global';
   }
   const csstsPattern = path.join(appRoot, '**/*.css.ts');
   const files: string[] = await fg([csstsPattern]);
-
+  console.log('\n💬 The following CSS caches were accepted:\n');
   for (const file of files) {
     const filePath = path.resolve(file);
     await import(filePath);
     sheetBuildIn();
     styleBuildIn();
-    rootBuildIn();
     globalBuildIn();
+    rootBuildIn();
   }
-
-  return console.log('✅ (build cache applied the above css successfully)');
 })();
