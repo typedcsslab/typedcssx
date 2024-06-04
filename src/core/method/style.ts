@@ -1,31 +1,7 @@
 import type { CustomCSSProperties } from '../../_internal';
-import { isInDevelopment, buildIn, injectCSS, cssCodeGenStyle } from '../../_internal';
-import path from 'path';
-
-const styleFilePath = path.join(__dirname, '../styles/style.module.css');
-let resolveGlobalStyleSheet: (value: string) => void;
-let globalStyleSheetPromise: Promise<string>;
-
-function createNewGlobalStyleSheetPromise() {
-  globalStyleSheetPromise = new Promise<string>((resolve) => {
-    resolveGlobalStyleSheet = resolve;
-  });
-}
-
-function applyGlobalBuildIn(): void {
-  if (typeof globalStyleSheetPromise === 'undefined') createNewGlobalStyleSheetPromise();
-
-  globalStyleSheetPromise.then((styleSheet) => {
-    if (!isInDevelopment && styleSheet) {
-      buildIn(styleSheet);
-    }
-    createNewGlobalStyleSheetPromise();
-  });
-}
-
-export function styleBuildIn() {
-  applyGlobalBuildIn();
-}
+import { isInDevelopment, injectCSS, cssCodeGenStyle } from '../../_internal';
+import styles from '../styles/style.module.css';
+import { resolveGlobalStyleSheet } from './style-build-in-helper';
 
 export function style(object: CustomCSSProperties): string {
   const { styleSheet, base62Hash } = cssCodeGenStyle(object);
@@ -34,10 +10,7 @@ export function style(object: CustomCSSProperties): string {
 
   function returnFunction() {
     if (isInDevelopment) injectCSS(className, styleSheet, 'style');
-    return () => {
-      const importStyles = import(styleFilePath);
-      return isInDevelopment ? className : importStyles.then((styles) => styles[className]);
-    };
+    return isInDevelopment ? className : styles[className];
   }
 
   return returnFunction() as unknown as string;

@@ -1,36 +1,13 @@
 import type { ReturnStyleType, ClassesObjectType } from '../../_internal';
-import { cssCodeGenSheet, isInDevelopment, buildIn, injectCSS } from '../../_internal';
-import path from 'path';
-
-const styleFilePath = path.join(__dirname, '../styles/style.module.css');
-let resolveGlobalStyleSheet: (value: string) => void;
-let globalStyleSheetPromise: Promise<string>;
-
-function createNewGlobalStyleSheetPromise() {
-  globalStyleSheetPromise = new Promise<string>((resolve) => {
-    resolveGlobalStyleSheet = resolve;
-  });
-}
-
-function applyGlobalBuildIn(): void {
-  globalStyleSheetPromise.then((styleSheet) => {
-    if (!isInDevelopment && styleSheet) {
-      buildIn(styleSheet);
-    }
-    createNewGlobalStyleSheetPromise();
-  });
-}
-
-export function sheetBuildIn() {
-  applyGlobalBuildIn();
-}
+import { cssCodeGenSheet, isInDevelopment, injectCSS } from '../../_internal';
+import styles from '../styles/style.module.css';
+import { resolveGlobalStyleSheet } from './sheet-build-in-helper';
 
 export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType): ReturnStyleType<T> {
   const { styleSheet, base62Hash } = cssCodeGenSheet(object);
-  if (typeof globalStyleSheetPromise === 'undefined') createNewGlobalStyleSheetPromise();
   resolveGlobalStyleSheet(styleSheet);
 
-  return new Proxy<ClassesObjectType>(object, {
+  return new Proxy<T & ClassesObjectType>(object, {
     get: function (target, prop: string) {
       if (typeof prop === 'string' && prop in target) {
         const className = prop + '_' + base62Hash;
@@ -38,8 +15,7 @@ export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType
           const sheet = (styleSheet.match(`\\\n.${className}\\s*{[^}]+}`) || '')[0];
           injectCSS(className, sheet, 'sheet');
         }
-        const importStyles = import(styleFilePath);
-        return isInDevelopment ? className : importStyles.then((styles) => styles[className]);
+        return isInDevelopment ? className : styles[className];
       }
     },
   }) as unknown as ReturnStyleType<T>;
