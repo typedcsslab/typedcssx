@@ -164,7 +164,6 @@ export type CustomExtendProperties = {
   firstLine?: CustomCSSProperties;
   marker?: CustomCSSProperties;
   selection?: CustomCSSProperties;
-  [key: CSSVariableKey]: string;
 };
 
 type GenericsArguments<T extends string, K extends string | number> = `${T}_${K}`;
@@ -173,11 +172,13 @@ type Nth = 'nthChild' | 'nthLastChild' | 'nthLastOftType' | 'nthOfType';
 type CSSVariableKey = `--${string}-${string}`;
 type CSSVariableValue = `var(${CSSVariableKey})`;
 type CSSColorValue = CSSColorNames | CSSVariableValue;
+type CSSVariableProperties = { [key: CSSVariableKey]: string };
 
 export type CustomCSSProperties =
-  | CustomExtendProperties & {
+  | (CustomExtendProperties & {
       [K in keyof React.CSSProperties]: React.CSSProperties[K] | CSSVariableValue;
-    };
+    })
+  | CSSVariableProperties;
 
 export type ClassesObjectType = {
   [className: string]: CustomCSSProperties;
