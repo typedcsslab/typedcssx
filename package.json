@@ -1,6 +1,6 @@
 {
   "name": "typedcssx",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "private": true,
   "author": "Refirst",
   "repository": "github:typedcsslab/typedcssx",
@@ -9,7 +9,7 @@
   "main": "dist/core/index.js",
   "typings": "dist/core/index.d.ts",
   "scripts": {
-    "compile": "npx ts-node --esm src/compiler/index.ts"
+    "compile": "npx ts-node --esm compiler/src/index.ts"
   },
   "dependencies": {
     "@types/css-modules": "^1.0.5",
