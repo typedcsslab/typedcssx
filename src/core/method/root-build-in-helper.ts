@@ -10,6 +10,7 @@ function createGlobalStyleSheetPromise() {
 }
 
 export async function rootBuildIn(): Promise<void> {
+  if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   const [styleSheet, option] = await globalStyleSheetPromise;
   if (!isInDevelopment && styleSheet) {
     if (option) buildIn(styleSheet, option);
