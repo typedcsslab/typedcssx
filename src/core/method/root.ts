@@ -1,33 +1,11 @@
 import type { CustomCSSProperties } from '../../_internal';
-import { isInDevelopment, buildIn, injectCSSGlobal, cssCodeGenStyle } from '../../_internal';
-
-let resolveGlobalStyleSheet: (value: string) => void;
-let globalStyleSheetPromise: Promise<string>;
-
-function createNewGlobalStyleSheetPromise() {
-  globalStyleSheetPromise = new Promise<string>((resolve) => {
-    resolveGlobalStyleSheet = resolve;
-  });
-}
-
-function applyGlobalBuildIn(): void {
-  if (typeof globalStyleSheetPromise === 'undefined') createNewGlobalStyleSheetPromise();
-
-  globalStyleSheetPromise.then((styleSheet) => {
-    if (!isInDevelopment && styleSheet) {
-      buildIn(styleSheet, '--global');
-    }
-    createNewGlobalStyleSheetPromise();
-  });
-}
-
-export function rootBuildIn() {
-  applyGlobalBuildIn();
-}
+import { isInDevelopment, injectCSSGlobal, cssCodeGenStyle } from '../../_internal';
+import { resolveGlobalStyleSheet, globalStyleSheetPromise, createGlobalStyleSheetPromise } from './root-build-in-helper';
 
 export function root(object: CustomCSSProperties): void {
   const { styleSheet } = cssCodeGenStyle(object, '--root');
-  resolveGlobalStyleSheet(styleSheet);
+  if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
+  resolveGlobalStyleSheet([styleSheet, '--global']);
 
   if (isInDevelopment) injectCSSGlobal(styleSheet, 'root');
 }
