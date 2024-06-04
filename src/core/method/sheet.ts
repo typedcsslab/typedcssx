@@ -1,10 +1,11 @@
 import type { ReturnStyleType, ClassesObjectType } from '../../_internal';
 import { cssCodeGenSheet, isInDevelopment, injectCSS } from '../../_internal';
 import styles from '../styles/style.module.css';
-import { resolveGlobalStyleSheet } from './sheet-build-in-helper';
+import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalStyleSheet } from './sheet-build-in-helper';
 
 export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType): ReturnStyleType<T> {
   const { styleSheet, base62Hash } = cssCodeGenSheet(object);
+  if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet(styleSheet);
 
   return new Proxy<T & ClassesObjectType>(object, {
