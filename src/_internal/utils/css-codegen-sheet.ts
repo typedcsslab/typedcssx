@@ -42,7 +42,7 @@ export function cssCodeGenSheet(object: ClassesObjectType, base62Hash?: string, 
           const CSSProp = camelToKebabCase(property);
           const applyValue = typeof value === 'number' ? value + 'px' : value;
           // If the media function contains a directly class selector Remove normal bug selector.
-          value.length >= 2 ? (cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`) : '';
+          property.length >= 2 ? (cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`) : '';
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';
           if (isElementInc) colon = '::';
