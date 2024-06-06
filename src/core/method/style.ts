@@ -1,10 +1,11 @@
 import type { CustomCSSProperties } from '../../_internal';
-import { isInDevelopment, injectCSS, cssCodeGenStyle } from '../../_internal';
+import { isInDevelopment, injectCSS, cssCodeGenStyle, genBase62Hash } from '../../_internal';
 import styles from '../styles/style.module.css';
 import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalStyleSheet } from './style-build-in-helper';
 
 export function style(object: CustomCSSProperties): string {
-  const { styleSheet, base62Hash } = cssCodeGenStyle(object);
+  const base62Hash = genBase62Hash(object, 5);
+  const { styleSheet } = cssCodeGenStyle(object, base62Hash);
   const className = '_' + base62Hash;
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet(styleSheet);

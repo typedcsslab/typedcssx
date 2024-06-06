@@ -1,9 +1,7 @@
-import { genBase62Hash, camelToKebabCase, pseudo } from '..';
+import { camelToKebabCase, pseudo } from '..';
 import type { CustomCSSProperties, PropertyType } from '..';
 
-export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, root?: string) {
-  const base62Hash = genBase62Hash(object, 5);
-
+export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, base62Hash?: string, root?: string) {
   const classNameType = () => {
     if (root === '--root') return ':root';
     else return '._' + base62Hash;
@@ -59,5 +57,5 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, root?:
     styleSheet += media;
   }
 
-  return { styleSheet, base62Hash };
+  return { styleSheet };
 }
