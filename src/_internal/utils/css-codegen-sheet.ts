@@ -1,9 +1,7 @@
-import { genBase62Hash, pseudo, camelToKebabCase } from '..';
+import { pseudo, camelToKebabCase, isClassesObjectType } from '..';
 import type { PropertyType, SerializeType, ClassesObjectType, CustomCSSProperties } from '../types';
 
-export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
-  const base62Hash = genBase62Hash(object, 5);
-
+export function cssCodeGenSheet(object: ClassesObjectType, base62Hash?: string, core?: string) {
   let styleSheet = '';
   let bigIndent = false;
   const mediaQueries: Record<string, string> = {};
@@ -43,7 +41,8 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
         if (typeof value === 'string' || typeof value === 'number') {
           const CSSProp = camelToKebabCase(property);
           const applyValue = typeof value === 'number' ? value + 'px' : value;
-          cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
+          // If the media function contains a directly class selector Remove normal bug selector.
+          value.length >= 2 ? (cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`) : '';
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';
           if (isElementInc) colon = '::';
@@ -91,10 +90,6 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
     return classSelector;
   };
 
-  const isClassesObjectType = (object: any): object is ClassesObjectType => {
-    return typeof object === 'object' && !Array.isArray(object);
-  };
-
   const createStyles = (styleObject: PropertyType | CustomCSSProperties | ClassesObjectType, indentLevel = 0): string => {
     let styleSheet = '';
 
@@ -134,5 +129,5 @@ export function cssCodeGenSheet(object: ClassesObjectType, core?: string) {
     }
   }
 
-  return { styleSheet, base62Hash };
+  return { styleSheet };
 }
