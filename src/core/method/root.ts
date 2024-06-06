@@ -3,7 +3,7 @@ import { isInDevelopment, injectCSSGlobal, cssCodeGenStyle } from '../../_intern
 import { resolveGlobalStyleSheet, globalStyleSheetPromise, createGlobalStyleSheetPromise } from './root-build-in-helper';
 
 export function root(object: CustomCSSProperties): void {
-  const { styleSheet } = cssCodeGenStyle(object, '--root');
+  const { styleSheet } = cssCodeGenStyle(object, undefined, '--root');
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet([styleSheet, '--global']);
 

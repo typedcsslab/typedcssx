@@ -3,7 +3,7 @@ import { isInDevelopment, injectCSSGlobal, cssCodeGenSheet } from '../../_intern
 import { resolveGlobalStyleSheet, globalStyleSheetPromise, createGlobalStyleSheetPromise } from './global-build-in-helper';
 
 export function global(object: HTMLType): void {
-  const { styleSheet } = cssCodeGenSheet(object, '--global');
+  const { styleSheet } = cssCodeGenSheet(object, undefined, '--global');
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet([styleSheet, '--global']);
 
