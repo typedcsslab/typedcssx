@@ -1,9 +1,14 @@
 import path from 'path';
 import htmltags from './htmltags';
+import { ClassesObjectType } from '..';
 
 export const isWindowDefined = typeof window !== 'undefined';
 export const isDocumentDefined = typeof document !== 'undefined';
 export const isInDevelopment = process.env.NODE_ENV === 'development';
+
+export const isClassesObjectType = (object: any): object is ClassesObjectType => {
+  return typeof object === 'object' && !Array.isArray(object);
+};
 
 const dir = (direname: string, relativePath: string) => {
   return path.join(direname, relativePath);
