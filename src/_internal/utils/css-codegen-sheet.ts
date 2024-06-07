@@ -1,4 +1,4 @@
-import { pseudo, camelToKebabCase, isClassesObjectType } from '..';
+import { pseudo, camelToKebabCase, isClassesObjectType, isNumeric } from '..';
 import type { PropertyType, SerializeType, ClassesObjectType, CustomCSSProperties } from '../types';
 
 export function cssCodeGenSheet(object: ClassesObjectType, base62Hash?: string, core?: string) {
@@ -41,8 +41,7 @@ export function cssCodeGenSheet(object: ClassesObjectType, base62Hash?: string, 
         if (typeof value === 'string' || typeof value === 'number') {
           const CSSProp = camelToKebabCase(property);
           const applyValue = typeof value === 'number' ? value + 'px' : value;
-          // If the media function contains a directly class selector Remove normal bug selector.
-          property.length >= 2 ? (cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`) : '';
+          if (!isNumeric(property) && property.length >= 2) cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';
           if (isElementInc) colon = '::';
