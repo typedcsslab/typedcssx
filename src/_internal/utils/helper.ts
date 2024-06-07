@@ -10,6 +10,11 @@ export const isClassesObjectType = (object: any): object is ClassesObjectType =>
   return typeof object === 'object' && !Array.isArray(object);
 };
 
+// Block the bug selector if the property is only numbers.
+export const isNumeric = (value: string): boolean => {
+  return /^\d+$/.test(value);
+};
+
 const dir = (direname: string, relativePath: string) => {
   return path.join(direname, relativePath);
 };
