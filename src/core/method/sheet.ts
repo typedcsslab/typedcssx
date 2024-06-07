@@ -13,7 +13,12 @@ export function sheet<T extends ClassesObjectType>(object: T & ClassesObjectType
     get: function (target, prop: string) {
       if (typeof prop === 'string' && prop in target) {
         const className = prop + '_' + base62Hash;
-        if (isInDevelopment) injectCSS(className, styleSheet, 'sheet');
+        const mediaBlockRegex = new RegExp(`(?:\\@media[^{]+\\{[\\s\\S]*?\\.${className}\\s*\\{[\\s\\S]*?\\})`, 'g');
+        const classRuleRegex = new RegExp(`\\n\\.${className}\\s*\\{[\\s\\S]*?\\}`, 'g');
+        const sheet = (Array.from(styleSheet.match(mediaBlockRegex) || []) as string[])
+          .concat(Array.from(styleSheet.match(classRuleRegex) || []) as string[])
+          .join('');
+        if (isInDevelopment) injectCSS(className, sheet, 'sheet');
 
         return isInDevelopment ? className : styles[className];
       }
