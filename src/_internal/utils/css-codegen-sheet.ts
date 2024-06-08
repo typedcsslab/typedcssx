@@ -40,7 +40,12 @@ export function cssCodeGenSheet(object: ClassesObjectType, base62Hash?: string, 
 
         if (typeof value === 'string' || typeof value === 'number') {
           const CSSProp = camelToKebabCase(property);
-          const applyValue = typeof value === 'number' ? value + 'px' : value;
+          const applyValue =
+            typeof value === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale')
+              ? value
+              : typeof value === 'number'
+              ? value + 'px'
+              : value;
           if (!isNumeric(property) && property.length >= 2) cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';

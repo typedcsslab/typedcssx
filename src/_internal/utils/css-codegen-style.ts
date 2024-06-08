@@ -19,8 +19,8 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, base62
       const value = (properties as unknown as PropertyType)[property];
 
       if (pseudo.classes.includes(property) || pseudo.elements.includes(property)) {
-        const cssProp = camelToKebabCase(property);
-        const pseudoSelector = pseudo.classes.includes(property) ? `:${cssProp}` : `::${cssProp}`;
+        const CSSProp = camelToKebabCase(property);
+        const pseudoSelector = pseudo.classes.includes(property) ? `:${CSSProp}` : `::${CSSProp}`;
         const pseudoRuleSet = stringConverter(className + pseudoSelector, value as never, indentLevel + 1);
         pseudoRules += `${indent}${className}${pseudoSelector} {\n${pseudoRuleSet.mainRules}${pseudoRuleSet.pseudoRules}${indent}}\n`;
         mediaQueries += pseudoRuleSet.media;
@@ -31,9 +31,14 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, base62
         mediaQueries += `\n${property} ${mainRule}\n${mediaRule.pseudoRules}${mediaRule.media}}\n`;
         bigIndent = false;
       } else if (typeof value === 'string' || typeof value === 'number') {
-        const cssProp = camelToKebabCase(property);
-        const applyValue = typeof value === 'number' ? value + 'px' : value;
-        mainRules += `${bigIndent ? '    ' : '  '}${cssProp}: ${applyValue};\n`;
+        const CSSProp = camelToKebabCase(property);
+        const applyValue =
+          typeof value === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale')
+            ? value
+            : typeof value === 'number'
+            ? value + 'px'
+            : value;
+        mainRules += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
       }
     }
 
