@@ -1,9 +1,9 @@
-import type { CustomCSSProperties, ClassesObjectType, ReturnStyleType } from '../_internal';
+import type { CustomCSSProperties, ClassesObjectType, ReturnStyleType, ExactClassesObjectType } from '../_internal';
 import styles from '../core/styles/style.module.css';
 import { isClassesObjectType, isInDevelopment } from '../_internal';
 
 export const media = (query: string, secondary?: string) => {
-  return <T extends ClassesObjectType>(object: T | CustomCSSProperties): T => {
+  return <T extends ClassesObjectType>(object: ExactClassesObjectType<T> | ClassesObjectType | CustomCSSProperties): ClassesObjectType => {
     const mediaQuery = `@media (${query}${secondary ? ' and ' + secondary : ''})`;
 
     if (isClassesObjectType(object)) {
@@ -16,11 +16,11 @@ export const media = (query: string, secondary?: string) => {
       });
 
       return {
-        ...({ [mediaQuery]: object } as unknown as T),
-        ...(result as T),
+        ...{ [mediaQuery]: object },
+        ...result,
       };
     } else {
-      return { [mediaQuery]: object } as T;
+      return { [mediaQuery]: object };
     }
   };
 };
