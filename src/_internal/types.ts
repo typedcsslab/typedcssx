@@ -20,7 +20,7 @@ type CSSArithmeticOperations = '+' | '-' | '*' | '/';
 type CSSCalcExpressionFunctioin = `calc(${string} ${CSSArithmeticOperations} ${string})`;
 type CSSColumnsValue = `${CSSNumericValue | number}` | 'auto' | `${CSSNumericValue | number} auto` | `auto ${CSSNumericValue | number}` | 'auto auto';
 
-type CSSNumericValue =
+type CSSUnitsAndGlobalValue =
   | CSSAbsoluteUnitValue
   | CSSLocalFontRelativeUnitValue
   | CSSRootFontRelativeUnitValue
@@ -30,6 +30,8 @@ type CSSNumericValue =
   | CSSCalcExpressionFunctioin
   | CSSVariableValue
   | CSSGlobalValue;
+
+type CSSNumericValue = CSSUnitsAndGlobalValue | number;
 
 type CSSSizeValue<T extends string | number> = `${T}` | `${T} ${T}` | `${T} ${T} ${T}` | `${T} ${T} ${T} ${T}`;
 
@@ -106,7 +108,9 @@ export type CustomExtendProperties = {
   paddingRight?: CSSNumericValue;
   paddingTop?: CSSNumericValue;
   fontSize?: CSSNumericValue | CSSFontSizeSubValue;
-  lineHeight?: CSSNumericValue | 'normal';
+  scale?: CSSNumericValue | `${number}` | 'none';
+  opacity?: CSSNumericValue | `${number}`;
+  lineHeight?: CSSNumericValue | `${number}` | 'normal';
   letterSpacing?: CSSNumericValue | 'normal';
   wordSpacing?: CSSNumericValue | 'normal';
   borderWidth?: CSSNumericValue | 'thin' | 'medium' | 'thick';
@@ -172,7 +176,8 @@ type Nth = 'nthChild' | 'nthLastChild' | 'nthLastOftType' | 'nthOfType';
 type CSSVariableKey = `--${string}-${string}`;
 type CSSVariableValue = `var(${CSSVariableKey})`;
 type CSSColorValue = CSSColorNames | CSSVariableValue;
-type CSSVariableProperties = { [key: CSSVariableKey]: string };
+
+export type CSSVariableProperties = { [key: CSSVariableKey]: string };
 
 export type CustomCSSProperties =
   | (CustomExtendProperties & {
@@ -182,6 +187,12 @@ export type CustomCSSProperties =
 
 export type ClassesObjectType = {
   [className: string]: CustomCSSProperties;
+};
+
+type Exact<T, U> = T extends U ? (U extends T ? T : never) : never;
+
+export type ExactClassesObjectType<T> = {
+  [K in keyof T]: Exact<T[K], CustomCSSProperties>;
 };
 
 export type ReturnStyleType<T> = { [key in keyof T]: string };
