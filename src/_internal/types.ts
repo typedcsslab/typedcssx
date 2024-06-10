@@ -1,4 +1,6 @@
 import type { CSSColorNames } from './colors';
+import type { LanguageCodes } from './utils/language-codes';
+import type { HtmlTags } from './utils/html-tags';
 
 type AbsoluteCSSUnit = 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt';
 type LocalFontRelativeCSSUnit = 'cap' | 'ch' | 'em' | 'ex' | 'ic' | 'lh';
@@ -137,18 +139,22 @@ export type CustomExtendProperties = {
   hover?: CustomCSSProperties;
   link?: CustomCSSProperties;
   visited?: CustomCSSProperties;
-  lang?: undefined;
-  [key: GenericsArguments<'lang', string>]: CustomCSSProperties;
   empty?: CustomCSSProperties;
+  lang?: undefined;
   not?: undefined;
-  [key: GenericsArguments<'not', string>]: CustomCSSProperties;
+  notClass?: undefined;
+  has?: undefined;
+  hasChild?: undefined;
+  hasPlus?: undefined;
+  hasClass?: undefined;
+  hasClassChild?: undefined;
+  hasClassPlus?: undefined;
   firstChild?: CustomCSSProperties;
   lastChild?: CustomCSSProperties;
   nthChild?: undefined;
   nthLastChild?: undefined;
-  nthLastOftType?: undefined;
+  nthLastOfType?: undefined;
   nthOfType?: undefined;
-  [key: GenericsArguments<Nth, string | number>]: CustomCSSProperties;
   checked?: CustomCSSProperties;
   disabled?: CustomCSSProperties;
   enabled?: CustomCSSProperties;
@@ -170,8 +176,101 @@ export type CustomExtendProperties = {
   selection?: CustomCSSProperties;
 };
 
-type GenericsArguments<T extends string, K extends string | number> = `${T}_${K}`;
-type Nth = 'nthChild' | 'nthLastChild' | 'nthLastOftType' | 'nthOfType';
+type NthChild = `nthChild${number | 'Odd' | 'Even'}`;
+type NthLastChild = `nthLastChild${number | 'Odd' | 'Even'}`;
+type NthLastOfType = `nthLastOfType${number | 'Odd' | 'Even'}`;
+type NthOfType = `nthOfType${number | 'Odd' | 'Even'}`;
+type CustomNthSelectors = NthChild | NthLastChild | NthLastOfType | NthOfType;
+
+type CustomNthArgsType = {
+  [key in CustomNthSelectors]?: CustomCSSProperties;
+};
+
+type Langs = `lang${LanguageCodes}`;
+type LanguagesType = {
+  [key in Langs]?: CustomCSSProperties;
+};
+
+type Not = `not${HtmlTags}`;
+type NotType = {
+  [key in Not]?: CustomCSSProperties;
+};
+
+type NotClass<T extends string> = `notClass${Capitalize<T>}${string}`;
+type NotClassType = {
+  [key in NotClass<string>]?: CustomCSSProperties;
+};
+
+type Has = `has${HtmlTags}`;
+type HasType = {
+  [key in Has]?: CustomCSSProperties;
+};
+
+type HasChild = `hasChild${HtmlTags}`;
+type HasChildType = {
+  [key in HasChild]?: CustomCSSProperties;
+};
+
+type HasPlus = `hasPlus${HtmlTags}`;
+type HasPlusType = {
+  [key in HasPlus]?: CustomCSSProperties;
+};
+
+export type HasEPE = `has${HtmlTags}Plus${HtmlTags | string}`;
+type HasEPEType = {
+  [key in HasEPE]?: CustomCSSProperties;
+};
+
+export type HasECE = `has${HtmlTags}Child${HtmlTags | string}`;
+type HasECEType = {
+  [key in HasECE]?: CustomCSSProperties;
+};
+
+type HasClass<T extends string> = `hasClass${Capitalize<T>}${string}`;
+type HasClassType = {
+  [key in HasClass<string>]?: CustomCSSProperties;
+};
+
+type HasClassChild<T extends string> = `hasClassChild${Capitalize<T>}${string}`;
+type HasClassChildType = {
+  [key in HasClassChild<string>]?: CustomCSSProperties;
+};
+
+type HasClassPlus<T extends string> = `hasClassPlus${Capitalize<T>}${string}`;
+type HasClassPlusType = {
+  [key in HasClassPlus<string>]?: CustomCSSProperties;
+};
+
+export type HasCPC = `hasClass${string}Plus${string | HtmlTags}`;
+type HasCPCType = {
+  [key in HasCPC]?: CustomCSSProperties;
+};
+
+export type HasCCC = `hasClass${string}Child${string | HtmlTags}`;
+type HasCCCType = {
+  [key in HasCCC]?: CustomCSSProperties;
+};
+
+type ArgsPseudos =
+  | HasCCCType
+  | HasCPCType
+  | HasClassPlusType
+  | HasClassChildType
+  | HasClassType
+  | HasECEType
+  | HasEPEType
+  | HasPlusType
+  | HasChildType
+  | HasType
+  | NotClassType
+  | NotType
+  | LanguagesType
+  | CustomNthArgsType;
+
+type AndStrings = `&${string}`;
+type AndStringsType = {
+  [key in AndStrings]: CustomCSSProperties;
+};
 
 type CSSVariableKey = `--${string}-${string}`;
 type CSSVariableValue = `var(${CSSVariableKey})`;
@@ -180,6 +279,8 @@ type CSSColorValue = CSSColorNames | CSSVariableValue;
 export type CSSVariableProperties = { [key: CSSVariableKey]: string };
 
 export type CustomCSSProperties =
+  | ArgsPseudos
+  | AndStringsType
   | (CustomExtendProperties & {
       [K in keyof React.CSSProperties]: React.CSSProperties[K] | CSSVariableValue;
     })
