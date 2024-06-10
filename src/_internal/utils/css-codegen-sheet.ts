@@ -50,7 +50,7 @@ export function cssCodeGenSheet(object: ClassesObjectType, base62Hash?: string, 
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';
           if (isElementInc) colon = '::';
-          const kebabPseudoClass = camelToKebabCase(property);
+          const kebabPseudoClass = camelToKebabCase(property.replace('&', ''));
           const styles = stringConverter(className + colon + kebabPseudoClass, value, indentLevel + 1);
           Object.assign(classSelector, styles);
         } else if (property.startsWith('@media')) {

@@ -18,9 +18,9 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, base62
     for (const property in properties) {
       const value = (properties as unknown as PropertyType)[property];
 
-      if (pseudo.classes.includes(property) || pseudo.elements.includes(property)) {
-        const CSSProp = camelToKebabCase(property);
-        const pseudoSelector = pseudo.classes.includes(property) ? `:${CSSProp}` : `::${CSSProp}`;
+      if (pseudo.classes.includes(property) || pseudo.elements.includes(property) || property.includes('&')) {
+        const CSSProp = camelToKebabCase(property.replace('&', ''));
+        const pseudoSelector = property.includes('&') ? `${CSSProp}` : pseudo.classes.includes(property) ? `:${CSSProp}` : `::${CSSProp}`;
         const pseudoRuleSet = stringConverter(className + pseudoSelector, value as never, indentLevel + 1);
         pseudoRules += `${indent}${className}${pseudoSelector} {\n${pseudoRuleSet.mainRules}${pseudoRuleSet.pseudoRules}${indent}}\n`;
         mediaQueries += pseudoRuleSet.media;
