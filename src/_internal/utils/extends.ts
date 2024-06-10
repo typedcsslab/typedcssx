@@ -1,5 +1,5 @@
-import htmltags from './htmltags';
-import languageCodes from './languageCodes';
+import htmltags from './html-tags';
+import languageCodes from './language-codes';
 import { toPascalCase } from './helper';
 
 const pascalCaseLanguageCodes = languageCodes.map((code) => toPascalCase(code));
@@ -12,6 +12,7 @@ const classes = [
   ...Array.from(pascalCaseLanguageCodes, (code) => `lang${code}`),
   'empty',
   ...Array.from(htmltags, (tag) => `not${tag}`),
+  ...Array.from(htmltags, (tag) => `has${tag}`),
   'firstChild',
   'lastChild',
   'firstOfType',
