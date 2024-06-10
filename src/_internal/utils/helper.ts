@@ -1,14 +1,47 @@
 import path from 'path';
-import htmltags from './htmltags';
-import { ClassesObjectType } from '..';
+import type { ClassesObjectType, HasEPE, HasECE, HasCPC, HasCCC } from '..';
+import htmlTags from './html-tags';
 
 export const isWindowDefined = typeof window !== 'undefined';
 export const isDocumentDefined = typeof document !== 'undefined';
 export const isInDevelopment = process.env.NODE_ENV === 'development';
 
-export const isClassesObjectType = (object: any): object is ClassesObjectType => {
+export const isClassesObjectType = (object: object): object is ClassesObjectType => {
   return typeof object === 'object' && !Array.isArray(object);
 };
+
+export const toPascalCase = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+const pascalCaseHtmlTags = htmlTags.map((code) => toPascalCase(code));
+
+const isHasEPEType = (property: string): property is HasEPE => {
+  const regex = new RegExp(`^has(${pascalCaseHtmlTags.join('|')})Plus(${pascalCaseHtmlTags.join('|')})?(.*?)$`);
+  return regex.test(property);
+};
+const isHasECEType = (property: string): property is HasECE => {
+  const regex = new RegExp(`^has(${pascalCaseHtmlTags.join('|')})Child(${pascalCaseHtmlTags.join('|')})?(.*?)$`);
+  return regex.test(property);
+};
+
+function isHasCPCTypeKey(key: string): key is HasCPC {
+  const regex = /^hasClass.*Plus.*$/;
+  return regex.test(key);
+}
+
+function isHasCPCType(property: string): property is HasCPC {
+  return isHasCPCTypeKey(property);
+}
+
+function isHasCCCTypeKey(key: string): key is HasCPC {
+  const regex = /^hasClass.*Child.*$/;
+  return regex.test(key);
+}
+
+function isHasCCCType(property: string): property is HasCCC {
+  return isHasCCCTypeKey(property);
+}
 
 // Block the bug selector if the property is only numbers.
 export const isNumeric = (value: string): boolean => {
@@ -23,12 +56,22 @@ export const get = {
   dir,
 };
 
-export const toPascalCase = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
-
 export const camelToKebabCase = (property: string) => {
-  const pseudoCamelPropWithArgs = ['nthChild', 'nthLastChild', 'nthLastOfType', 'nthOfType', 'lang', 'not'];
+  const pseudoCamelPropWithArgs = [
+    'nthChild',
+    'nthLastChild',
+    'nthLastOfType',
+    'nthOfType',
+    'lang',
+    'notClass',
+    'not',
+    'hasClassChild',
+    'hasClassPlus',
+    'hasClass',
+    'hasChild',
+    'hasPlus',
+    'has',
+  ];
 
   const toKebabCase = (str: string) => str.replace(/([A-Z])/g, '-$1').toLowerCase();
 
@@ -36,12 +79,81 @@ export const camelToKebabCase = (property: string) => {
     const index = property.indexOf(prop);
     if (index !== -1) {
       const afterProp = property.slice(index + prop.length);
+      const afterNotKebab = afterProp.replace(/_/g, '-').toLowerCase();
+
+      if (prop === 'notClass') {
+        return `:not(.${afterNotKebab})`;
+      }
 
       if (prop === 'not') {
-        const afterNot = afterProp.charAt(0).toUpperCase() + afterProp.slice(1).toLowerCase();
-        const afterNotKebab = afterProp.replace(/_/g, '-').toLowerCase();
-        if (!htmltags.includes(afterNot)) {
-          return `:not(.${afterNotKebab})`;
+        if (property.includes('not(')) {
+          return `:not${afterProp.toLowerCase()}`;
+        } else {
+          return `:not(${afterProp.toLowerCase()})`;
+        }
+      }
+
+      if (isHasCCCType(property)) {
+        const regex = /^hasClass(.*?)Child(.*?)$/;
+        const matches = property.match(regex);
+        if (matches) {
+          const [, class1, class2] = matches;
+          return `:has(.${class1.replace(/_/g, '-').toLowerCase()} > ${pascalCaseHtmlTags.includes(class2) ? class2.toLowerCase() : '.' + class2.replace(/_/g, '-').toLowerCase()})`;
+        }
+      }
+
+      if (isHasCPCType(property)) {
+        const regex = /^hasClass(.*?)Plus(.*?)$/;
+        const matches = property.match(regex);
+        if (matches) {
+          const [, class1, class2] = matches;
+          return `:has(.${class1.replace(/_/g, '-').toLowerCase()} + ${pascalCaseHtmlTags.includes(class2) ? class2.toLowerCase() : '.' + class2.replace(/_/g, '-').toLowerCase()})`;
+        }
+      }
+
+      if (prop === 'hasClassChild') {
+        return `:has(> .${afterNotKebab})`;
+      }
+
+      if (prop === 'hasClassPlus') {
+        return `:has(+ .${afterNotKebab})`;
+      }
+
+      if (prop === 'hasClass') {
+        return `:has(.${afterNotKebab})`;
+      }
+
+      if (isHasECEType(property)) {
+        const regex = /^has(.*?)Child(.*?)$/;
+        const matches = property.match(regex);
+        if (matches) {
+          const [, tag1, tag2] = matches;
+          return `:has(${tag1.toLowerCase()} > ${pascalCaseHtmlTags.includes(tag2) ? tag2.toLowerCase() : '.' + tag2.replace(/_/g, '-').toLowerCase()})`;
+        }
+      }
+
+      if (isHasEPEType(property)) {
+        const regex = /^has(.*?)Plus(.*?)$/;
+        const matches = property.match(regex);
+        if (matches) {
+          const [, tag1, tag2] = matches;
+          return `:has(${tag1.toLowerCase()} + ${pascalCaseHtmlTags.includes(tag2) ? tag2.toLowerCase() : '.' + tag2.replace(/_/g, '-').toLowerCase()})`;
+        }
+      }
+
+      if (prop === 'hasChild') {
+        return `:has(> ${afterProp.toLowerCase()})`;
+      }
+
+      if (prop === 'hasPlus') {
+        return `:has(+ ${afterProp.toLowerCase()})`;
+      }
+
+      if (prop === 'has') {
+        if (property.includes('has(')) {
+          return `:has${afterProp.toLowerCase()}`;
+        } else {
+          return `:has(${afterProp.toLowerCase()})`;
         }
       }
 
