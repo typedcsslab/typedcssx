@@ -4,15 +4,19 @@
 
 - For Next.js App router(RSC)
 - Console lover
-- Server Component
-- Client Component
+- Client Component (Non async Server Component)
 - Zero-runtime (statically generated during build)
 - Hot Reload (A smooth development experience)
-- Hard Type (Benefit from type completion development experience)
+- Hard Type (AutoComplete with TypeScript is works)
 - Media (Media Query provides modern functions)
 
-All types are Property(CamelCase): String and can't write directly to a tsx file.  
-In development mode with we can see hot reloading preview by adding 'use client'.
+All types are property(camelCase): String | Number.  
+The compiler assigns px to number unless there is an exception.
+
+In development mode with we can see hot reloading preview by adding 'use client'.  
+⚠︎ can't write directly to a tsx file.
+
+The className property and style are converted to an underscore with a hash as className.
 
 ## Scoped.style
 
@@ -20,8 +24,10 @@ In development mode with we can see hot reloading preview by adding 'use client'
 import { Scoped } from 'typedcssx';
 
 export const style = Scoped.style({
-  fontSize: '16px',
-  color: 'black',
+  '& a': {
+    fontSize: 16,
+    color: 'black',
+  },
 });
 ```
 
@@ -31,7 +37,7 @@ export const style = Scoped.style({
 export const styles = Scoped.sheet({
   header_nav: {
     position: 'absolute',
-    top: '0',
+    top: 0,
   },
 });
 ```
@@ -39,12 +45,12 @@ export const styles = Scoped.sheet({
 ## Example of use
 
 ```tsx
-import { styles } from './style.css';
+import { styles, style } from './style.css';
 
 const Header = () => {
   return (
     <header className={styles.header_nav}>
-      <nav>
+      <nav className={style}>
         <a>content</a>
         <a>home</a>
       </nav>
@@ -57,6 +63,8 @@ const Header = () => {
 
 Scoped.gloabl and Scoped.root is do not use it in a variable scope.  
 Wherever they are, the compiler reads them and writes them to the StyleSheet.
+
+development there preview it, you need to load it in the 'use client' place and render it.
 
 ```ts
 Scoped.global({
@@ -77,23 +85,23 @@ Scoped.root({
 ```ts
 import { Scoped, media } from 'typedcssx';
 const small = media('300px <= width <= 600px');
-const xlarge = media('200px <= width <= 1400px');
+const large = media('200px <= width <= 1400px');
 
 export const styles = Scoped.sheet({
   header_nav: {
-    fontSize: '18px',
+    fontSize: 18,
     color: 'white',
     ...small({
-      fontSize: '12px',
+      fontSize: 12,
       color: 'pink',
     }),
   },
-  ...small({
+  ...large({
     footer_nav: {
-      margin: '24px'
-      padding: '24px'
+      margin: 24,
+      padding: 24,
     },
-  })
+  }),
 });
 ```
 
