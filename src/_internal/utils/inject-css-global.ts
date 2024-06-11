@@ -4,6 +4,11 @@ const isServer = !isWindowDefined || !isDocumentDefined;
 let styleElement: HTMLStyleElement;
 
 function createStyleElement(scoped: string) {
+  const existingStyleElement = document.querySelector(`[data-scope="${scoped}"]`);
+  if (existingStyleElement) {
+    existingStyleElement.remove();
+  }
+
   const styleElement = document.createElement('style');
   styleElement.setAttribute('data-scope', scoped);
   styleElement.setAttribute('type', 'text/css');
@@ -15,7 +20,7 @@ function createStyleElement(scoped: string) {
 export function injectCSSGlobal(sheet: string, scoped: string) {
   if (isInDevelopment) console.log('💫 ' + scoped + ' executing ...' + sheet);
   if (isServer) return;
-  if (styleElement == undefined) styleElement = createStyleElement(scoped);
 
+  styleElement = createStyleElement(scoped);
   styleElement.textContent = sheet;
 }
