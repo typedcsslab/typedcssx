@@ -300,9 +300,11 @@ export type ReturnStyleType<T> = { [key in keyof T]: string };
 
 type JSXType = keyof JSX.IntrinsicElements | '*';
 
-export type HTMLType = {
+type HTMLType = {
   [K in JSXType]?: CustomCSSProperties;
 };
+
+export type CustomHTMLType = HTMLType | ArgsPseudos | AndStrings;
 
 export type SerializeType = Record<string, string>;
 
