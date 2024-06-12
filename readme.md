@@ -96,6 +96,10 @@ export const styles = Scoped.sheet({
       color: 'pink',
     }),
   },
+  footer_nav: {
+    margin: 0,
+    padding: 0,
+  },
   ...large({
     footer_nav: {
       margin: 24,
