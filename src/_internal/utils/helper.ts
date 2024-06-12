@@ -43,11 +43,6 @@ function isHasCCCType(property: string): property is HasCCC {
   return isHasCCCTypeKey(property);
 }
 
-// Block the bug selector if the property is only numbers.
-export const isNumeric = (value: string): boolean => {
-  return /^\d+$/.test(value);
-};
-
 const dir = (direname: string, relativePath: string) => {
   return path.join(direname, relativePath);
 };
@@ -98,7 +93,9 @@ export const camelToKebabCase = (property: string) => {
         const matches = property.match(regex);
         if (matches) {
           const [, class1, class2] = matches;
-          return `:has(.${class1.replace(/_/g, '-').toLowerCase()} > ${pascalCaseHtmlTags.includes(class2) ? class2.toLowerCase() : '.' + class2.replace(/_/g, '-').toLowerCase()})`;
+          return `:has(.${class1.replace(/_/g, '-').toLowerCase()} > ${
+            pascalCaseHtmlTags.includes(class2) ? class2.toLowerCase() : '.' + class2.replace(/_/g, '-').toLowerCase()
+          })`;
         }
       }
 
@@ -107,7 +104,9 @@ export const camelToKebabCase = (property: string) => {
         const matches = property.match(regex);
         if (matches) {
           const [, class1, class2] = matches;
-          return `:has(.${class1.replace(/_/g, '-').toLowerCase()} + ${pascalCaseHtmlTags.includes(class2) ? class2.toLowerCase() : '.' + class2.replace(/_/g, '-').toLowerCase()})`;
+          return `:has(.${class1.replace(/_/g, '-').toLowerCase()} + ${
+            pascalCaseHtmlTags.includes(class2) ? class2.toLowerCase() : '.' + class2.replace(/_/g, '-').toLowerCase()
+          })`;
         }
       }
 

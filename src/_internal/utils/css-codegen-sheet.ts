@@ -1,4 +1,4 @@
-import { pseudo, camelToKebabCase, isClassesObjectType, isNumeric } from '..';
+import { pseudo, camelToKebabCase, isClassesObjectType } from '..';
 import type { PropertyType, SerializeType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '../types';
 
 export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base62Hash?: string, core?: string) {
@@ -46,7 +46,7 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
               : typeof value === 'number'
               ? value + 'px'
               : value;
-          if (!isNumeric(property) && property.length >= 2) cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
+          cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';
           if (isElementInc) colon = '::';
