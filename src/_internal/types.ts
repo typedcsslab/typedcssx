@@ -99,12 +99,12 @@ type CSSRadiusValues =
 export type CustomExtendProperties = {
   width?: CSSNumericValue | CSSLengthSubValue;
   height?: CSSNumericValue | CSSLengthSubValue;
-  margin?: CSSMarginEdgeSizeValues;
+  margin?: CSSMarginEdgeSizeValues | number;
   marginBottom?: CSSNumericValue | 'auto';
   marginLeft?: CSSNumericValue | 'auto';
   marginRight?: CSSNumericValue | 'auto';
   marginTop?: CSSNumericValue | 'auto';
-  padding?: CSSPaddingEdgeSizeValues;
+  padding?: CSSPaddingEdgeSizeValues | number;
   paddingBottom?: CSSNumericValue;
   paddingLeft?: CSSNumericValue;
   paddingRight?: CSSNumericValue;
