@@ -13,8 +13,8 @@ export function sheet<T extends ClassesObjectType>(object: ExactClassesObjectTyp
     get: function (target, prop: string) {
       if (typeof prop === 'string' && prop in target) {
         const className = prop + '_' + base62Hash;
-        const mediaBlockRegex = new RegExp(`(?:\\@media[^{]+\\{[\\s\\S]*?\\.${className}\\s*\\{[\\s\\S]*?\\})`, 'g');
-        const classRuleRegex = new RegExp(`\\n\\.${className}\\s*\\{[\\s\\S]*?\\}`, 'g');
+        const mediaBlockRegex = new RegExp(`(?:\\@media[^{]+\\{[\\s\\S]*?\\.${className}(?:\\s|\\S)*?\\{[\\s\\S]*?\\})`, 'g');
+        const classRuleRegex = new RegExp(`\\n\\.${className}(?:\\s|\\S)*?\\{[\\s\\S]*?\\}`, 'g');
         const sheet = (Array.from(styleSheet.match(mediaBlockRegex) || []) as string[])
           .concat(Array.from(styleSheet.match(classRuleRegex) || []) as string[])
           .join('');
