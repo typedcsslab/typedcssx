@@ -1,4 +1,4 @@
-import type { ClassesObjectType, ReturnStyleType, CustomHTMLType, CustomCSSProperties, ExactClassesObjectType } from '../_internal';
+import type { ClassesObjectType, ReturnStyleType, HTMLType, CustomCSSProperties, ExactClassesObjectType } from '../_internal';
 import { sheet } from './method/sheet';
 import { style } from './method/style';
 import { global } from './method/global';
@@ -11,7 +11,7 @@ export class Scoped {
   static style(object: CustomCSSProperties): string {
     return style(object);
   }
-  static global(object: CustomHTMLType): void {
+  static global(object: HTMLType): void {
     return global(object);
   }
   static root(object: CustomCSSProperties): void {

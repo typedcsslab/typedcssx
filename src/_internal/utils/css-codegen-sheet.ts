@@ -1,7 +1,7 @@
 import { pseudo, camelToKebabCase, isClassesObjectType } from '..';
-import type { PropertyType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '../types';
+import type { PropertyType, ClassesObjectType, CustomCSSProperties, HTMLType } from '../types';
 
-export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base62Hash?: string, core?: string) {
+export function cssCodeGenSheet(object: ClassesObjectType | HTMLType, base62Hash?: string, core?: string) {
   let styleSheet = '';
   let bigIndent = false;
   const mediaQueries: Record<string, string> = {};
