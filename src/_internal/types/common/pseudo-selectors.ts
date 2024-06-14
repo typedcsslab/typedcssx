@@ -84,7 +84,7 @@ export type ArgsPseudos =
   | LanguagesType
   | CustomNthArgsType;
 
-export type AndStrings = `&${string}`;
+type AndStrings = `&${string}`;
 export type AndStringsType = {
   [key in AndStrings]: CustomCSSProperties;
 };
