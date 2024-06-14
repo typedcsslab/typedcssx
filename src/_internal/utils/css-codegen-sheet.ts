@@ -1,5 +1,5 @@
 import { pseudo, camelToKebabCase, isClassesObjectType } from '..';
-import type { PropertyType, SerializeType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '../types';
+import type { PropertyType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '../types';
 
 export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base62Hash?: string, core?: string) {
   let styleSheet = '';
@@ -22,8 +22,8 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
     return `${indent}${className}${property} {\n${rule}${indent}}\n`;
   };
 
-  const stringConverter = (className: string, properties: PropertyType | CustomCSSProperties, indentLevel = 0): SerializeType => {
-    const classSelector: SerializeType = {};
+  const stringConverter = (className: string, properties: PropertyType | CustomCSSProperties, indentLevel = 0): PropertyType => {
+    const classSelector: PropertyType = {};
     const indent = '  '.repeat(indentLevel);
     const innerIndent = '  '.repeat(indentLevel + 1);
     let cssRule = '';
