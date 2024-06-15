@@ -26,7 +26,7 @@ async function processStyleSheets() {
   isProcessing = false;
 }
 
-export function styleBuildIn(): void {
+export function setBuildIn(): void {
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   if (!isProcessing && styleSheetQueue.length > 0) {
     isProcessing = true;
