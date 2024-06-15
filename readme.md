@@ -18,26 +18,22 @@ In development mode with we can see hot reloading preview by adding 'use client'
 
 The className property and style are converted to an underscore with a hash as className.
 
-## Scoped.style
+## Style.create and Style.set
 
 ```ts
-import { Scoped } from 'typedcssx';
+import { Style } from 'typedcssx';
 
-export const style = Scoped.style({
-  '& a': {
-    fontSize: 16,
-    color: 'black',
-  },
-});
-```
-
-## Scoped.sheet
-
-```ts
-export const styles = Scoped.sheet({
+export const styles = Style.create({
   header_nav: {
     position: 'absolute',
     top: 0,
+  },
+});
+
+export const navStyle = Style.set({
+  '& a': {
+    fontSize: 16,
+    color: '#333',
   },
 });
 ```
@@ -45,12 +41,12 @@ export const styles = Scoped.sheet({
 ## Example of use
 
 ```tsx
-import { styles, style } from './style.css';
+import { styles, navStyle } from './style.css';
 
 const Header = () => {
   return (
     <header className={styles.header_nav}>
-      <nav className={style}>
+      <nav className={navStyle}>
         <a>content</a>
         <a>home</a>
       </nav>
@@ -59,22 +55,25 @@ const Header = () => {
 };
 ```
 
-## Global API
+## Global function
 
-Scoped.gloabl and Scoped.root is do not use it in a variable scope.  
+Style.gloabl and Style.root is do not use it in a variable scope.  
 Wherever they are, the compiler reads them and writes them to the StyleSheet.
 
 development there preview it, you need to load it in the 'use client' place and render it.
 
 ```ts
-Scoped.global({
+Style.global({
   h1: {
     color: 'var(--color-font)',
     background: 'var(--color-background)',
   },
+  'h2:hover': {
+    color: 'skyblue',
+  },
 });
 
-Scoped.root({
+Style.root({
   '--color-font': '#333',
   '--color-background': '#fff',
 });
@@ -83,11 +82,11 @@ Scoped.root({
 ## MediaQuery
 
 ```ts
-import { Scoped, media } from 'typedcssx';
+import { Style, media } from 'typedcssx';
 const small = media('300px <= width <= 600px');
 const large = media('200px <= width <= 1400px');
 
-export const styles = Scoped.sheet({
+export const styles = Style.create({
   header_nav: {
     fontSize: 18,
     color: 'white',
