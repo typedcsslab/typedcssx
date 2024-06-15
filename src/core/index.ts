@@ -1,2 +1,2 @@
-export { Scoped } from './scoped';
+export { Style } from './style';
 export { media } from './media-query';
