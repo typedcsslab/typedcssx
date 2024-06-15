@@ -2,8 +2,8 @@ import fg from 'fast-glob';
 import path from 'node:path';
 import fs from 'fs';
 import { cleanUp } from './clean-up';
-import { sheetBuildIn } from '../../src/core/method/sheet-build-in-helper';
-import { styleBuildIn } from '../../src/core/method/style-build-in-helper';
+import { createBuildIn } from '../../src/core/method/create-build-in-helper';
+import { setBuildIn } from '../../src/core/method/set-build-in-helper';
 import { globalBuildIn } from '../../src/core/method/global-build-in-helper';
 import { rootBuildIn } from '../../src/core/method/root-build-in-helper';
 
@@ -24,8 +24,8 @@ import { rootBuildIn } from '../../src/core/method/root-build-in-helper';
   for (const file of files) {
     const filePath = path.resolve(file);
     await import(filePath);
-    sheetBuildIn();
-    styleBuildIn();
+    createBuildIn();
+    setBuildIn();
     globalBuildIn();
     rootBuildIn();
   }
