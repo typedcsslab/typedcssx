@@ -41,7 +41,7 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
         if (typeof value === 'string' || typeof value === 'number') {
           const CSSProp = camelToKebabCase(property);
           const applyValue =
-            typeof value === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale')
+            typeof value === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale' || CSSProp === 'font-weight')
               ? value
               : typeof value === 'number'
               ? value + 'px'
@@ -60,7 +60,7 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
 
           for (const mediaProp in value as PropertyType) {
             if (Object.prototype.hasOwnProperty.call(value, mediaProp)) {
-              const mediaValue = value[mediaProp as keyof PropertyType] as PropertyType;
+              const mediaValue = value[mediaProp] as PropertyType;
               const mediaClassIndex = pseudo.classes.indexOf(mediaProp);
               const isMediaClassInc = pseudo.classes.includes(mediaProp);
               const isMediaElementInc = pseudo.elements.includes(mediaProp);
@@ -76,7 +76,14 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
                 }
                 nestedRules += selector(indent + className, colon + kebabMediaProp, pseudoClassRule, innerIndent);
               } else {
-                regularRules += rules(innerIndent + '  ', value, mediaProp);
+                const CSSProp = camelToKebabCase(mediaProp);
+                const applyValue =
+                  typeof mediaValue === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale' || CSSProp === 'font-weight')
+                    ? mediaValue
+                    : typeof mediaValue === 'number'
+                    ? mediaValue + 'px'
+                    : mediaValue;
+                regularRules += rules(innerIndent + '  ', { [mediaProp]: applyValue }, mediaProp);
               }
             }
           }

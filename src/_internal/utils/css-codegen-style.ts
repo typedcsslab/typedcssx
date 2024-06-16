@@ -33,7 +33,7 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, base62
       } else if (typeof value === 'string' || typeof value === 'number') {
         const CSSProp = camelToKebabCase(property);
         const applyValue =
-          typeof value === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale')
+          typeof value === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale' || CSSProp === 'font-weight')
             ? value
             : typeof value === 'number'
             ? value + 'px'
