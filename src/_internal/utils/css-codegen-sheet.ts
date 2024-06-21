@@ -89,9 +89,9 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
           }
           if (regularRules) {
             mediaQueries[mediaRule] =
-              (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${indent}  ${className} {\n${regularRules}  }\n${nestedRules}${indent}}\n${indent}\n`;
+              mediaQueries[mediaRule] + `\n${mediaRule} {\n${indent}  ${className} {\n${regularRules}  }\n${nestedRules}${indent}}\n${indent}\n`;
           } else {
-            mediaQueries[mediaRule] = (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${nestedRules}${indent}}\n`;
+            mediaQueries[mediaRule] = mediaQueries[mediaRule] + `\n${mediaRule} {\n${nestedRules}${indent}}\n`;
           }
         }
       }
