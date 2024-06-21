@@ -13,13 +13,13 @@ export function create<T extends ClassesObjectType>(object: ExactClassesObjectTy
     get: function (target, prop: string) {
       if (typeof prop === 'string' && prop in target) {
         const className = prop + '_' + base62Hash;
+        const classRuleRegex = new RegExp(`\\n\\.${className}[^{]*\\{[^}]*\\}`, 'g');
         const mediaBlockRegex = new RegExp(
           `\\n@media[^{]+\\{(?:[^{}]*\\{[^{}]*\\})*[^{}]*\\.${className}[^{}]*\\{[^{}]*\\}(?:[^{}]*\\{[^{}]*\\})*[^{}]*\\}`,
           'g'
         );
-        const classRuleRegex = new RegExp(`\\n\\.${className}[^{]*\\{[^}]*\\}`, 'g');
-        const sheet = (Array.from(styleSheet.match(mediaBlockRegex) || []) as string[])
-          .concat(Array.from(styleSheet.match(classRuleRegex) || []) as string[])
+        const sheet = (Array.from(styleSheet.match(classRuleRegex) || []) as string[])
+          .concat(Array.from(styleSheet.match(mediaBlockRegex) || []) as string[])
           .join('');
         if (isInDevelopment) injectCSS(className, sheet, 'sheet');
 
