@@ -6,6 +6,8 @@ export const isWindowDefined = typeof window !== 'undefined';
 export const isDocumentDefined = typeof document !== 'undefined';
 export const isInDevelopment = process.env.NODE_ENV === 'development';
 
+export const exception = ['line-height', 'font-weight', 'opacity', 'scale', 'z-index'];
+
 export const isClassesObjectType = (object: object): object is ClassesObjectType => {
   return typeof object === 'object' && !Array.isArray(object);
 };
