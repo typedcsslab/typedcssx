@@ -8,12 +8,12 @@ import type {
 } from './css-units';
 import type { CSSVariableValue } from './css-variables';
 
-type CSSGlobalValue = 'inherit' | 'initial' | 'revert' | 'revert-layer' | 'unset';
 type CSSArithmeticOperations = '+' | '-' | '*' | '/';
 export type CSSCalcExpressionFunctioin = `calc(${string} ${CSSArithmeticOperations} ${string})`;
 export type CSSColumnsValue = `${CSSNumericValue | number}` | 'auto' | `${CSSNumericValue | number} auto` | `auto ${CSSNumericValue | number}` | 'auto auto';
 export type CSSLengthSubValue = 'none' | 'max-content' | 'min-content' | 'fit-content' | `fit-content(${number}${CSSNumericValue})`;
 export type CSSFontSizeSubValue = 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'xx-large' | 'math';
+export type CSSGlobalValue = 'inherit' | 'initial' | 'revert' | 'revert-layer' | 'unset';
 
 type CSSUnitsAndGlobalValue =
   | CSSAbsoluteUnitValue
@@ -86,4 +86,5 @@ export type CSSRadiusValues =
   | CSSRadiusRespectValues
   | CSSRadiusPercentageValues
   | CSSGlobalValue
-  | CSSVariableValue;
+  | CSSVariableValue
+  | number;

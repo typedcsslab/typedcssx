@@ -3,6 +3,7 @@ import type {
   CSSColumnsValue,
   CSSLengthSubValue,
   CSSFontSizeSubValue,
+  CSSGlobalValue,
   CSSNumericValue,
   CSSMarginEdgeSizeValues,
   CSSPaddingEdgeSizeValues,
@@ -12,8 +13,8 @@ import type { AndStringsType, ArgsPseudos } from '../common/pseudo-selectors';
 import type { CSSColorValue, CSSVariableProperties, CSSVariableValue } from '../common/css-variables';
 
 type CustomExtendProperties = {
-  width?: CSSNumericValue | CSSLengthSubValue;
-  height?: CSSNumericValue | CSSLengthSubValue;
+  width?: CSSNumericValue | CSSLengthSubValue | 'auto';
+  height?: CSSNumericValue | CSSLengthSubValue | 'auto';
   margin?: CSSMarginEdgeSizeValues | number;
   marginBottom?: CSSNumericValue | 'auto';
   marginLeft?: CSSNumericValue | 'auto';
@@ -31,25 +32,25 @@ type CustomExtendProperties = {
   letterSpacing?: CSSNumericValue | 'normal';
   wordSpacing?: CSSNumericValue | 'normal';
   borderWidth?: CSSNumericValue | 'thin' | 'medium' | 'thick';
-  borderRadius?: CSSRadiusValues;
+  borderRadius?: CSSRadiusValues | number;
   top?: CSSNumericValue | 'auto';
   right?: CSSNumericValue | 'auto';
   bottom?: CSSNumericValue | 'auto';
   left?: CSSNumericValue | 'auto';
-  maxWidth?: CSSNumericValue | CSSLengthSubValue;
-  maxHeight?: CSSNumericValue | CSSLengthSubValue;
-  minWidth?: CSSNumericValue | CSSLengthSubValue;
-  minHeight?: CSSNumericValue | CSSLengthSubValue;
-  flexBasis?: CSSNumericValue;
+  maxWidth?: CSSNumericValue | CSSLengthSubValue | 'auto';
+  maxHeight?: CSSNumericValue | CSSLengthSubValue | 'auto';
+  minWidth?: CSSNumericValue | CSSLengthSubValue | 'auto';
+  minHeight?: CSSNumericValue | CSSLengthSubValue | 'auto';
+  flexBasis?: CSSNumericValue | 'auto';
   gap?: CSSNumericValue | CSSCalcExpressionFunctioin;
   rowGap?: CSSNumericValue;
   columnGap?: CSSNumericValue | 'normal';
   columns?: CSSColumnsValue;
   gridColumn?: string;
   gridRow?: string;
-  color?: CSSColorValue;
-  background?: CSSColorValue | 'none';
-  backgroundColor?: CSSColorValue;
+  color?: CSSColorValue | CSSGlobalValue;
+  background?: CSSColorValue | CSSGlobalValue | 'none';
+  backgroundColor?: CSSColorValue | CSSGlobalValue;
   active?: CustomCSSProperties;
   hover?: CustomCSSProperties;
   link?: CustomCSSProperties;
