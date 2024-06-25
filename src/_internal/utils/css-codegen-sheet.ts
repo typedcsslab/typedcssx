@@ -1,4 +1,4 @@
-import { pseudo, camelToKebabCase, isClassesObjectType } from '..';
+import { pseudo, camelToKebabCase, isClassesObjectType, exception } from '..';
 import type { PropertyType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '../types';
 
 export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base62Hash?: string, core?: string) {
@@ -40,12 +40,7 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
 
         if (typeof value === 'string' || typeof value === 'number') {
           const CSSProp = camelToKebabCase(property);
-          const applyValue =
-            typeof value === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale' || CSSProp === 'font-weight')
-              ? value
-              : typeof value === 'number'
-              ? value + 'px'
-              : value;
+          const applyValue = typeof value === 'number' && exception.includes(CSSProp) ? value : typeof value === 'number' ? value + 'px' : value;
           cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';
@@ -78,11 +73,7 @@ export function cssCodeGenSheet(object: ClassesObjectType | CustomHTMLType, base
               } else {
                 const CSSProp = camelToKebabCase(mediaProp);
                 const applyValue =
-                  typeof mediaValue === 'number' && (CSSProp === 'line-height' || CSSProp === 'opacity' || CSSProp === 'scale' || CSSProp === 'font-weight')
-                    ? mediaValue
-                    : typeof mediaValue === 'number'
-                    ? mediaValue + 'px'
-                    : mediaValue;
+                  typeof mediaValue === 'number' && exception.includes(CSSProp) ? mediaValue : typeof mediaValue === 'number' ? mediaValue + 'px' : mediaValue;
                 regularRules += rules(innerIndent + '  ', { [mediaProp]: applyValue }, mediaProp);
               }
             }
