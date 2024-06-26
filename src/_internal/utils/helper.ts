@@ -128,11 +128,11 @@ export const camelToKebabCase = (property: string) => {
       const afterProp = property.slice(index + prop.length);
       const afterNotKebab = afterProp.replace(/_/g, '-').toLowerCase();
 
-      if (property.startsWith('notClass')) {
+      if (prop === 'notClass') {
         return `:not(.${afterNotKebab})`;
       }
 
-      if (property.startsWith('not')) {
+      if (prop === 'not') {
         if (property.includes('not(')) {
           return `:not${afterProp.toLowerCase()}`;
         } else {
@@ -140,19 +140,19 @@ export const camelToKebabCase = (property: string) => {
         }
       }
 
-      if (property.startsWith('hasClass')) {
+      if (prop === 'hasClass') {
         return `:has(.${afterNotKebab})`;
       }
 
-      if (property.startsWith('hasChild')) {
+      if (prop === 'hasChild') {
         return `:has(> ${afterProp.toLowerCase()})`;
       }
 
-      if (property.startsWith('hasPlus')) {
+      if (prop === 'hasPlus') {
         return `:has(+ ${afterProp.toLowerCase()})`;
       }
 
-      if (property.startsWith('has')) {
+      if (prop === 'has') {
         if (property.includes('has(')) {
           return `:has${afterProp.toLowerCase()}`;
         } else {
