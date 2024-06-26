@@ -27,7 +27,7 @@ export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, base62
       ) {
         let CSSProp = camelToKebabCase(property.replace('&', ''));
         if (property.startsWith('has') || property.startsWith('not') || property.includes('&')) {
-          CSSProp = camelToKebabCase(property);
+          CSSProp = camelToKebabCase(property.replace('&', ''));
         } else {
           CSSProp = pseudo.classes.includes(property) ? `:${CSSProp}` : `::${CSSProp}`;
         }
