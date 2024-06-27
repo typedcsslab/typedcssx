@@ -1,7 +1,7 @@
 import { camelToKebabCase, exception, pseudo } from '..';
 import type { CustomCSSProperties, PropertyType } from '..';
 
-export function cssCodeGenStyle<T extends CustomCSSProperties>(object: T, base62Hash?: string, root?: string) {
+export function styleCompiler<T extends CustomCSSProperties>(object: T, base62Hash?: string, root?: string) {
   const classNameType = () => {
     if (root === '--root') return ':root';
     else return '._' + base62Hash;

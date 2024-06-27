@@ -1,11 +1,11 @@
 import type { ReturnStyleType, ClassesObjectType, ExactClassesObjectType } from '../../_internal';
-import { cssCodeGenSheet, isInDevelopment, injectCSS, genBase62Hash } from '../../_internal';
+import { sheetCompiler, isInDevelopment, injectCSS, genBase62Hash } from '../../_internal';
 import styles from '../styles/style.module.css';
 import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalStyleSheet } from './create-build-in-helper';
 
 export function create<T extends ClassesObjectType>(object: ExactClassesObjectType<T> | ClassesObjectType): ReturnStyleType<T> {
   const base62Hash = genBase62Hash(object, 5);
-  const { styleSheet } = cssCodeGenSheet(object, base62Hash);
+  const { styleSheet } = sheetCompiler(object, base62Hash);
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet(styleSheet);
 
