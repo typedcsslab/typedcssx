@@ -1,4 +1,4 @@
-import { isWindowDefined, isDocumentDefined, isInDevelopment } from '../index';
+import { isWindowDefined, isDocumentDefined, isInDevelopment } from '..';
 
 const isServer = !isWindowDefined || !isDocumentDefined;
 const styleSheets: Record<string, HTMLStyleElement> = {};

@@ -1,4 +1,4 @@
-import { CustomCSSProperties, ClassesObjectType } from '../types';
+import { CustomCSSProperties, ClassesObjectType } from '..';
 import crypto from 'crypto';
 
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
