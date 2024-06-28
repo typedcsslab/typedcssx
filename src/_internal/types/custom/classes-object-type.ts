@@ -4,4 +4,8 @@ export type ClassesObjectType = {
   [className: string]: CustomCSSProperties;
 };
 
-export type ExactClassesObjectType<T extends Record<string, CustomCSSProperties>> = T;
+type Exact<T, U> = T extends U ? T : never;
+
+export type ExactClassesObjectType<T> = {
+  [K in keyof T | string]: K extends keyof T ? Exact<T[K], CustomCSSProperties> : CustomCSSProperties;
+};
