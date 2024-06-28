@@ -5,7 +5,7 @@ import { global } from './method/global';
 import { root } from './method/root';
 
 export class Style {
-  static create<T extends ClassesObjectType>(object: ExactClassesObjectType<T> | ClassesObjectType): ReturnStyleType<T> {
+  static create<T extends ClassesObjectType>(object: ExactClassesObjectType<T>): ReturnStyleType<T> {
     return create(object);
   }
   static set(object: CustomCSSProperties): string {

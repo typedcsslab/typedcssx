@@ -3,7 +3,7 @@ import { sheetCompiler, isInDevelopment, injectCSS, genBase62Hash } from '../../
 import styles from '../styles/style.module.css';
 import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalStyleSheet } from './create-build-in-helper';
 
-export function create<T extends ClassesObjectType>(object: ExactClassesObjectType<T> | ClassesObjectType): ReturnStyleType<T> {
+export function create<T extends ClassesObjectType>(object: ExactClassesObjectType<T>): ReturnStyleType<T> {
   const base62Hash = genBase62Hash(object, 5);
   const { styleSheet } = sheetCompiler(object, base62Hash);
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
