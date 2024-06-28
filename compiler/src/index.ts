@@ -18,8 +18,8 @@ import { rootBuildIn } from '../../src/core/method/root-build-in-helper';
   } else {
     appRoot = path.join(process.cwd(), '../../');
   }
-  const csstsPattern = path.join(appRoot, '**/*.css.ts');
-  const files = await fg([csstsPattern]);
+  const csstsPattern = [path.join(appRoot, '**/*.css.ts'), path.join(appRoot, '**/*.css.tsx')];
+  const files = await fg(csstsPattern);
   console.log('\n💬 The following CSS caches were accepted:\n');
   for (const file of files) {
     const filePath = path.resolve(file);
