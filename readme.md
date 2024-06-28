@@ -13,10 +13,10 @@
 All types are property(camelCase): String | Number.  
 The compiler assigns px to number unless there is an exception.
 
-In development mode with we can see hot reloading preview by adding 'use client'.  
-⚠︎ can't write directly to a tsx file.
+The className property and style are converted to an underscore with a hash as className.  
+This can be written directly to a css.ts or css.tsx file.
 
-The className property and style are converted to an underscore with a hash as className.
+In development mode with we can see hot reloading preview by adding 'use client'.
 
 ## Style.create and Style.set
 
@@ -116,7 +116,7 @@ media is a higher-order function, so you can directly create wrapper functions f
 add file extension in tsconfig.json
 
 ```json
-  "include": ["**/*.css.ts"]
+  "include": ["**/*.css.ts", "**/*.css.tsx"]
 ```
 
 add package.json scripts field.
