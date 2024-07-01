@@ -6,7 +6,14 @@ export const isWindowDefined = typeof window !== 'undefined';
 export const isDocumentDefined = typeof document !== 'undefined';
 export const isInDevelopment = process.env.NODE_ENV === 'development';
 
-export const exception = ['line-height', 'font-weight', 'opacity', 'scale', 'z-index'];
+const exception = ['line-height', 'font-weight', 'opacity', 'scale', 'z-index'];
+
+export const applyCssValue = (value: string | number, cssProp: string): string => {
+  if (typeof value === 'number') {
+    return exception.includes(cssProp) ? value.toString() : value + 'px';
+  }
+  return value;
+};
 
 export const isClassesObjectType = (object: object): object is ClassesObjectType => {
   return typeof object === 'object' && !Array.isArray(object);
