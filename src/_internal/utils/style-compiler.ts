@@ -1,5 +1,5 @@
-import { camelToKebabCase, exception, pseudo } from '..';
-import type { CustomCSSProperties, PropertyType } from '..';
+import { camelToKebabCase, pseudo, applyCssValue } from '..';
+import type { CustomCSSProperties, PropertyType, PropertyValue } from '..';
 
 export function styleCompiler<T extends CustomCSSProperties>(object: T, base62Hash?: string, root?: string) {
   const classNameType = () => {
@@ -8,15 +8,19 @@ export function styleCompiler<T extends CustomCSSProperties>(object: T, base62Ha
   };
   let bigIndent = false;
 
-  const stringConverter = (className: string, properties: CustomCSSProperties, indentLevel = 0): { mainRules: string; pseudoRules: string; media: string } => {
+  const stringConverter = (
+    className: string,
+    properties: PropertyValue | CustomCSSProperties,
+    indentLevel = 0
+  ): { mainRules: string; pseudoRules: string; media: string } => {
     let mainRules = '';
     let pseudoRules = '';
     let mediaQueries = '';
 
     const indent = '  '.repeat(indentLevel);
 
-    for (const property in properties) {
-      const value = (properties as unknown as PropertyType)[property];
+    for (const property in properties as CustomCSSProperties) {
+      const value = (properties as PropertyType)[property];
 
       if (
         pseudo.classes.includes(property) ||
@@ -32,18 +36,18 @@ export function styleCompiler<T extends CustomCSSProperties>(object: T, base62Ha
           CSSProp = pseudo.classes.includes(property) ? `:${CSSProp}` : `::${CSSProp}`;
         }
         const pseudoSelector = property.includes('&') ? `${CSSProp}` : CSSProp;
-        const pseudoRuleSet = stringConverter(className + pseudoSelector, value as never, indentLevel + 1);
+        const pseudoRuleSet = stringConverter(className + pseudoSelector, value, indentLevel + 1);
         pseudoRules += `${indent}${className}${pseudoSelector} {\n${pseudoRuleSet.mainRules}${pseudoRuleSet.pseudoRules}${indent}}\n`;
         mediaQueries += pseudoRuleSet.media;
       } else if (property.startsWith('@media')) {
         bigIndent = true;
-        const mediaRule = stringConverter(className, value as never, indentLevel + 1);
+        const mediaRule = stringConverter(className, value, indentLevel + 1);
         const mainRule = mediaRule.mainRules ? `{\n  ${className} {\n${mediaRule.mainRules}  }` : '{';
         mediaQueries += `\n${property} ${mainRule}\n${mediaRule.pseudoRules}${mediaRule.media}}\n`;
         bigIndent = false;
       } else if (typeof value === 'string' || typeof value === 'number') {
         const CSSProp = camelToKebabCase(property);
-        const applyValue = typeof value === 'number' && exception.includes(CSSProp) ? value : typeof value === 'number' ? value + 'px' : value;
+        const applyValue = applyCssValue(value, CSSProp);
         mainRules += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
       }
     }
