@@ -1,4 +1,4 @@
-import { pseudo, camelToKebabCase, isClassesObjectType, exception } from '..';
+import { pseudo, camelToKebabCase, isClassesObjectType, applyCssValue } from '..';
 import type { PropertyType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '..';
 
 export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62Hash?: string, core?: string) {
@@ -40,13 +40,13 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62
 
         if (typeof value === 'string' || typeof value === 'number') {
           const CSSProp = camelToKebabCase(property);
-          const applyValue = typeof value === 'number' && exception.includes(CSSProp) ? value : typeof value === 'number' ? value + 'px' : value;
+          const applyValue = applyCssValue(value, CSSProp);
           cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
         } else if (isPseudoOrMediaClass) {
           if (isClassInc) colon = ':';
           if (isElementInc) colon = '::';
-          const kebabPseudoClass = camelToKebabCase(property.replace('&', ''));
-          const styles = stringConverter(className + colon + kebabPseudoClass, value, indentLevel + 1);
+          const kebabPseudoSelector = camelToKebabCase(property.replace('&', ''));
+          const styles = stringConverter(className + colon + kebabPseudoSelector, value, indentLevel + 1);
           Object.assign(classSelector, styles);
         } else if (property.startsWith('@media')) {
           const mediaRule = property;
@@ -55,25 +55,30 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62
 
           for (const mediaProp in value as PropertyType) {
             if (Object.prototype.hasOwnProperty.call(value, mediaProp)) {
-              const mediaValue = value[mediaProp] as PropertyType;
+              const mediaValue = value[mediaProp];
               const mediaClassIndex = pseudo.classes.indexOf(mediaProp);
               const isMediaClassInc = pseudo.classes.includes(mediaProp);
               const isMediaElementInc = pseudo.elements.includes(mediaProp);
-              if (mediaProp.startsWith('not') || mediaProp.startsWith('lang') ? mediaClassIndex : isMediaClassInc || isMediaElementInc) {
+              const isAndInc = mediaProp.startsWith('&');
+              if (mediaProp.startsWith('not') || mediaProp.startsWith('lang') ? mediaClassIndex : isMediaClassInc || isMediaElementInc || isAndInc) {
                 if (isMediaClassInc) colon = ':';
                 if (isMediaElementInc) colon = '::';
-                const kebabMediaProp = camelToKebabCase(mediaProp);
+                const kebabMediaProp = camelToKebabCase(mediaProp.replace('&', ''));
                 let pseudoClassRule = '';
-                for (const pseudoProp in mediaValue) {
-                  if (Object.prototype.hasOwnProperty.call(mediaValue, pseudoProp)) {
-                    pseudoClassRule += rules(innerIndent + '  ', mediaValue, pseudoProp);
+
+                if (typeof mediaValue === 'object' && mediaValue !== null) {
+                  for (const pseudoProp in mediaValue) {
+                    if (Object.prototype.hasOwnProperty.call(mediaValue, pseudoProp)) {
+                      const CSSProp = camelToKebabCase(pseudoProp);
+                      const applyValue = applyCssValue(mediaValue[pseudoProp] as string | number, CSSProp);
+                      pseudoClassRule += rules(innerIndent + '  ', { [pseudoProp]: applyValue }, pseudoProp);
+                    }
                   }
                 }
                 nestedRules += selector(indent + className, colon + kebabMediaProp, pseudoClassRule, innerIndent);
               } else {
                 const CSSProp = camelToKebabCase(mediaProp);
-                const applyValue =
-                  typeof mediaValue === 'number' && exception.includes(CSSProp) ? mediaValue : typeof mediaValue === 'number' ? mediaValue + 'px' : mediaValue;
+                const applyValue = applyCssValue(mediaValue as string | number, CSSProp);
                 regularRules += rules(innerIndent + '  ', { [mediaProp]: applyValue }, mediaProp);
               }
             }
