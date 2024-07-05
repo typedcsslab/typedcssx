@@ -6,13 +6,13 @@ import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalSt
 export function set(object: CustomCSSProperties): string {
   const base62Hash = genBase62Hash(object, 5);
   const { styleSheet } = styleCompiler(object, base62Hash);
-  const className = '_' + base62Hash;
+  const classHash = '_' + base62Hash;
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet(styleSheet);
 
   function returnFunction() {
-    if (isInDevelopment) injectCSS(className, styleSheet, 'style');
-    return isInDevelopment ? className : styles[className];
+    if (isInDevelopment) injectCSS(base62Hash, styleSheet, 'set');
+    return isInDevelopment ? classHash : styles[classHash];
   }
 
   return returnFunction() as unknown as string;

@@ -16,12 +16,14 @@ function createStyleElement(hash: string): HTMLStyleElement | null {
   return styleSheets[hash];
 }
 
-export function injectCSS(hash: string, sheet: string, string: string) {
-  if (isInDevelopment) console.log('💫 ' + string + ' executing ...' + sheet);
+export function injectCSS(hash: string, sheet: string, context: string) {
+  if (isInDevelopment) console.log('💫 ' + context + ' executing ...' + sheet);
   if (isServer) return;
-
-  styleCleanUp();
+  queueMicrotask(() => {
+    styleCleanUp();
+  });
   hashCache[hash] = hash;
+
   const styleElement = createStyleElement(hash);
   if (styleElement == null) return;
 
@@ -31,7 +33,7 @@ export function injectCSS(hash: string, sheet: string, string: string) {
 function styleCleanUp() {
   requestAnimationFrame(() => {
     for (const hash in hashCache) {
-      const classElements = document.getElementsByClassName(hash);
+      const classElements = document.querySelectorAll(`[class*="${hash}"]`);
       if (classElements.length === 0) {
         removeStyleElement(hashCache[hash]);
       }
