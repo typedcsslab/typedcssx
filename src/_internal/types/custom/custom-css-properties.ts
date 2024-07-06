@@ -5,8 +5,8 @@ import type {
   CSSFontSizeSubValue,
   CSSGlobalValue,
   CSSNumericValue,
-  CSSMarginEdgeSizeValues,
-  CSSPaddingEdgeSizeValues,
+  CSSMarginValue,
+  CSSPaddingValue,
   CSSRadiusValues,
 } from '../common/css-values';
 import type { AndStringsType, ArgsPseudos } from '../common/pseudo-selectors';
@@ -15,12 +15,12 @@ import type { CSSColorValue, CSSVariableProperties, CSSVariableValue } from '../
 type CustomExtendProperties = {
   width?: CSSNumericValue | CSSLengthSubValue | 'auto';
   height?: CSSNumericValue | CSSLengthSubValue | 'auto';
-  margin?: CSSMarginEdgeSizeValues | number;
+  margin?: CSSMarginValue;
   marginBottom?: CSSNumericValue | 'auto';
   marginLeft?: CSSNumericValue | 'auto';
   marginRight?: CSSNumericValue | 'auto';
   marginTop?: CSSNumericValue | 'auto';
-  padding?: CSSPaddingEdgeSizeValues | number;
+  padding?: CSSPaddingValue;
   paddingBottom?: CSSNumericValue;
   paddingLeft?: CSSNumericValue;
   paddingRight?: CSSNumericValue;

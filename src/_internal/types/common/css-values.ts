@@ -5,6 +5,7 @@ import type {
   CSSPercentageUnitValue,
   CSSRespectUnitValue,
   CSSViewportUnitValue,
+  CSSUnit,
 } from './css-units';
 import type { CSSVariableValue } from './css-variables';
 
@@ -28,48 +29,15 @@ type CSSUnitsAndGlobalValue =
 
 export type CSSNumericValue = CSSUnitsAndGlobalValue | number;
 
+type CSSPaddingUnitValue = `${number}${CSSUnit}` | '0';
+type CSSPaddingSizeValue<T extends CSSPaddingUnitValue> = `${T}` | `${T} ${T}` | `${T} ${T} ${string}` | `${T} ${T} ${string} ${string}`;
+export type CSSPaddingValue = CSSPaddingSizeValue<CSSPaddingUnitValue> | number;
+
+type CSSMarginUnitValue = `${number}${CSSUnit}` | '0' | 'auto';
+type CSSMarginSizeValue<T extends CSSMarginUnitValue> = `${T}` | `${T} ${T}` | `${T} ${T} ${string}` | `${T} ${T} ${string} ${string}`;
+export type CSSMarginValue = CSSMarginSizeValue<CSSMarginUnitValue> | number;
+
 type CSSSizeValue<T extends string | number> = `${T}` | `${T} ${T}` | `${T} ${T} ${T}` | `${T} ${T} ${T} ${T}`;
-
-type CSSAbsoluteUnitAndAutoValue = CSSAbsoluteUnitValue | 'auto';
-type CSSLocalFontAndAutoValue = CSSLocalFontRelativeUnitValue | 'auto';
-type CSSViewportUnitAndAutoValue = CSSViewportUnitValue | 'auto';
-type CSSRespectUnitAndAutoValue = CSSRespectUnitValue | 'auto';
-type CSSPercentageUnitAndAutValue = CSSPercentageUnitValue | 'auto';
-
-type CSSEdgeSizeAbsoluteWithAutoValues = CSSSizeValue<CSSAbsoluteUnitAndAutoValue>;
-type CSSEdgeSizeLocalFontWithAutoValues = CSSSizeValue<CSSLocalFontAndAutoValue>;
-type CSSEdgeSizeRootFontWithAutoValues = CSSSizeValue<CSSRootFontRelativeUnitValue>;
-type CSSEdgeSizeViewportWithAutoValues = CSSSizeValue<CSSViewportUnitAndAutoValue>;
-type CSSEdgeSizeRespectWithAutoValues = CSSSizeValue<CSSRespectUnitAndAutoValue>;
-type CSSEdgeSizePercentageWithAutoValues = CSSSizeValue<CSSPercentageUnitAndAutValue>;
-type CSSEdgeSizeCalcExpressionFunctioin = CSSSizeValue<CSSCalcExpressionFunctioin>;
-export type CSSMarginEdgeSizeValues =
-  | CSSEdgeSizeAbsoluteWithAutoValues
-  | CSSEdgeSizeLocalFontWithAutoValues
-  | CSSEdgeSizeRootFontWithAutoValues
-  | CSSEdgeSizeViewportWithAutoValues
-  | CSSEdgeSizeRespectWithAutoValues
-  | CSSEdgeSizePercentageWithAutoValues
-  | CSSEdgeSizeCalcExpressionFunctioin
-  | CSSGlobalValue
-  | CSSVariableValue;
-
-type CSSEdgeSizeAbsoluteValues = CSSSizeValue<CSSAbsoluteUnitValue>;
-type CSSEdgeSizeLocalFontValues = CSSSizeValue<CSSLocalFontRelativeUnitValue>;
-type CSSEdgeSizeRootFontValues = CSSSizeValue<CSSRootFontRelativeUnitValue>;
-type CSSEdgeSizeViewportValues = CSSSizeValue<CSSViewportUnitValue>;
-type CSSEdgeSizeRespectValues = CSSRadiusValue<CSSRespectUnitValue>;
-type CSSEdgeSizePercentageValues = CSSSizeValue<CSSPercentageUnitValue>;
-export type CSSPaddingEdgeSizeValues =
-  | CSSEdgeSizeAbsoluteValues
-  | CSSEdgeSizeLocalFontValues
-  | CSSEdgeSizeRootFontValues
-  | CSSEdgeSizeViewportValues
-  | CSSEdgeSizeRespectValues
-  | CSSEdgeSizePercentageValues
-  | CSSEdgeSizeCalcExpressionFunctioin
-  | CSSGlobalValue
-  | CSSVariableValue;
 
 type CustomRadiusValue<
   T extends
