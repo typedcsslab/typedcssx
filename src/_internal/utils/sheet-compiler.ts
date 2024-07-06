@@ -38,7 +38,26 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62
         const isPseudoOrMediaClass = property.startsWith('@') ? isClassInc || isElementInc : classIndex || elementIndex;
         let colon = '';
 
-        if (typeof value === 'string' || typeof value === 'number') {
+        if (property.startsWith('@keyframes')) {
+          let keyframesRule = `${property} {\n`;
+          for (const keyframe in value as PropertyType) {
+            if (Object.prototype.hasOwnProperty.call(value, keyframe)) {
+              const keyframeValue = (value as PropertyType)[keyframe];
+              keyframesRule += `${innerIndent}${keyframe} {\n`;
+              if (typeof keyframeValue === 'object' && keyframeValue !== null) {
+                for (const prop in keyframeValue) {
+                  if (Object.prototype.hasOwnProperty.call(keyframeValue, prop)) {
+                    const propValue = keyframeValue[prop];
+                    keyframesRule += `${innerIndent}  ${camelToKebabCase(prop)}: ${propValue};\n`;
+                  }
+                }
+              }
+              keyframesRule += `${innerIndent}}\n`;
+            }
+          }
+          keyframesRule += `}\n`;
+          cssRule += keyframesRule;
+        } else if (typeof value === 'string' || typeof value === 'number') {
           const CSSProp = camelToKebabCase(property);
           const applyValue = applyCssValue(value, CSSProp);
           cssRule += `${bigIndent ? '    ' : '  '}${CSSProp}: ${applyValue};\n`;
@@ -106,7 +125,10 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62
         if (Object.prototype.hasOwnProperty.call(styles, property)) {
           const value = (styles as PropertyType)[property] as unknown as PropertyType;
           if (isClassesObjectType(value)) {
-            if (property.startsWith('@media')) {
+            if (property.startsWith('@keyframes')) {
+              const keyframesStyles = stringConverter('', { [property]: value }, currentIndentLevel);
+              styleSheet += '\n' + Object.values(keyframesStyles)[0];
+            } else if (property.startsWith('@media')) {
               bigIndent = true;
               const mediaStyles = createStyles(value, currentIndentLevel + 1);
               styleSheet += `\n${indent}${property} {${mediaStyles}${indent}}\n`;
