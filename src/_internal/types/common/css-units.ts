@@ -5,6 +5,7 @@ type ViewportCSSUnit = 'vh' | 'vw' | 'vmin' | 'vmax' | 'vb' | 'vi';
 type RespectCSSUnit = 'svw' | 'svh' | 'lvw' | 'lvh' | 'dvw' | 'dvh';
 type PercentageCSSUnit = '%';
 
+export type CSSUnit = AbsoluteCSSUnit | LocalFontRelativeCSSUnit | RootFontRelativeCSSUnit | ViewportCSSUnit | RespectCSSUnit | PercentageCSSUnit;
 export type CSSAbsoluteUnitValue = '0' | `${number}${AbsoluteCSSUnit}`;
 export type CSSLocalFontRelativeUnitValue = '0' | `${number}${LocalFontRelativeCSSUnit}`;
 export type CSSRootFontRelativeUnitValue = '0' | `${number}${RootFontRelativeCSSUnit}`;
