@@ -1,7 +1,13 @@
+import { CSSVariableValue } from './css-variables';
+
 type NumberOrPercent = number | `${number}%`;
 
-type CSSRGB = `rgb(${number},${number},${number})` | `rgb(${number} ${number} ${number})`;
-type CSSRGBA = `rgba(${number},${number},${number},${NumberOrPercent})` | `rgba(${number} ${number} ${number} / ${NumberOrPercent})`;
+type CSSRGB = `rgb(${number},${number},${number})` | `rgb(${number} ${number} ${number})` | `rgb(${CSSVariableValue})`;
+type CSSRGBA =
+  | `rgba(${number},${number},${number},${NumberOrPercent})`
+  | `rgba(${number} ${number} ${number} / ${NumberOrPercent})`
+  | `rgba(${CSSVariableValue} / ${NumberOrPercent})`
+  | `rgba(${CSSVariableValue},${NumberOrPercent})`;
 
 type CSSColorFunction =
   | `color(srgb ${number} ${number} ${number})`
