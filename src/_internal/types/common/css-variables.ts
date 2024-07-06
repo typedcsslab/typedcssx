@@ -1,6 +1,6 @@
 import type { CSSColorNames } from './colors';
 
-type CSSVariableKey = `--${string}-${string}`;
+type CSSVariableKey = `--${string}`;
 export type CSSVariableValue = `var(${CSSVariableKey})`;
 
 export type CSSColorValue = CSSColorNames | CSSVariableValue;
