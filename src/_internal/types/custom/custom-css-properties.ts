@@ -5,22 +5,22 @@ import type {
   CSSFontSizeSubValue,
   CSSGlobalValue,
   CSSNumericValue,
-  CSSMarginValue,
-  CSSPaddingValue,
+  CSSEdgeSizeValue,
   CSSRadiusValues,
 } from '../common/css-values';
 import type { AndStringsType, ArgsPseudos } from '../common/pseudo-selectors';
 import type { CSSColorValue, CSSVariableProperties, CSSVariableValue } from '../common/css-variables';
+import { MediaQueryType } from './custom-html-type';
 
 type CustomExtendProperties = {
   width?: CSSNumericValue | CSSLengthSubValue | 'auto';
   height?: CSSNumericValue | CSSLengthSubValue | 'auto';
-  margin?: CSSMarginValue;
+  margin?: CSSEdgeSizeValue;
   marginBottom?: CSSNumericValue | 'auto';
   marginLeft?: CSSNumericValue | 'auto';
   marginRight?: CSSNumericValue | 'auto';
   marginTop?: CSSNumericValue | 'auto';
-  padding?: CSSPaddingValue;
+  padding?: CSSEdgeSizeValue;
   paddingBottom?: CSSNumericValue;
   paddingLeft?: CSSNumericValue;
   paddingRight?: CSSNumericValue;
@@ -98,4 +98,5 @@ export type CustomCSSProperties =
   | (CustomExtendProperties & {
       [K in keyof React.CSSProperties]: React.CSSProperties[K] | CSSVariableValue;
     })
-  | CSSVariableProperties;
+  | CSSVariableProperties
+  | MediaQueryType;

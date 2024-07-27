@@ -1,25 +1,32 @@
 import { CSSVariableValue } from './css-variables';
 
-type NumberOrPercent = number | `${number}%`;
+type Alpha = number | `${number}%`;
+type RGBValue = `${Alpha} ${Alpha} ${Alpha}` | `${CSSVariableValue}`;
 
-type CSSRGB = `rgb(${number},${number},${number})` | `rgb(${number} ${number} ${number})` | `rgb(${CSSVariableValue})`;
-type CSSRGBA =
-  | `rgba(${number},${number},${number},${NumberOrPercent})`
-  | `rgba(${number} ${number} ${number} / ${NumberOrPercent})`
-  | `rgba(${CSSVariableValue} / ${NumberOrPercent})`
-  | `rgba(${CSSVariableValue},${NumberOrPercent})`;
+type CSSRGB = `rgb(${Alpha},${Alpha},${Alpha})` | `rgb(${RGBValue})`;
+type CSSRGBA = `rgba(${Alpha},${Alpha},${Alpha},${Alpha})` | `rgba(${RGBValue} / ${Alpha})`;
 
 type CSSColorFunction =
-  | `color(srgb ${number} ${number} ${number})`
-  | `color(display-p3 ${number} ${number} ${number})`
-  | `color(a98-rgb ${number} ${number} ${number})`
-  | `color(prophoto-rgb ${number} ${number} ${number})`
-  | `color(rec2020 ${number} ${number} ${number})`
-  | `color(xyz ${number} ${number} ${number})`
-  | `color(lab ${NumberOrPercent} ${number} ${number})`
-  | `color(lch ${NumberOrPercent} ${number} ${number})`
-  | `color(oklab ${NumberOrPercent} ${number} ${number})`
-  | `color(oklch ${NumberOrPercent} ${number} ${number})`;
+  | `color(srgb ${RGBValue})`
+  | `color(srgb ${RGBValue} / ${Alpha})`
+  | `color(display-p3 ${RGBValue})`
+  | `color(display-p3 ${RGBValue} / ${Alpha})`
+  | `color(a98-rgb ${RGBValue})`
+  | `color(a98-rgb ${RGBValue} / ${Alpha})`
+  | `color(prophoto-rgb ${RGBValue})`
+  | `color(prophoto-rgb ${RGBValue} / ${Alpha})`
+  | `color(rec2020 ${RGBValue})`
+  | `color(rec2020 ${RGBValue} / ${Alpha})`
+  | `color(xyz ${RGBValue})`
+  | `color(xyz ${RGBValue} / ${Alpha})`
+  | `color(lab ${Alpha} ${Alpha} ${Alpha})`
+  | `color(lab ${Alpha} ${Alpha} ${Alpha} / ${Alpha})`
+  | `color(lch ${Alpha} ${Alpha} ${Alpha})`
+  | `color(lch ${Alpha} ${Alpha} ${Alpha} / ${Alpha})`
+  | `color(oklab ${Alpha} ${Alpha} ${Alpha})`
+  | `color(oklab ${Alpha} ${Alpha} ${Alpha} / ${Alpha})`
+  | `color(oklch ${Alpha} ${Alpha} ${Alpha})`
+  | `color(oklch ${Alpha} ${Alpha} ${Alpha} / ${Alpha})`;
 
 export type CSSColorNames =
   | 'currentColor'

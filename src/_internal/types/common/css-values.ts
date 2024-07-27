@@ -29,48 +29,12 @@ type CSSUnitsAndGlobalValue =
 
 export type CSSNumericValue = CSSUnitsAndGlobalValue | number;
 
-type CSSPaddingUnitValue = `${number}${CSSUnit}` | '0';
-type CSSPaddingSizeValue<T extends CSSPaddingUnitValue> = `${T}` | `${T} ${T}` | `${T} ${T} ${string}` | `${T} ${T} ${string} ${string}`;
-export type CSSPaddingValue = CSSPaddingSizeValue<CSSPaddingUnitValue> | number;
+type CSSUnitValue = `${number}${CSSUnit}` | '0' | 'auto';
+type CSSMarginPaddingSizeValue<T extends CSSUnitValue> = `${T}` | `${T} ${T}` | `${T} ${T} ${string}` | `${T} ${T} ${string} ${string}`;
+export type CSSEdgeSizeValue = CSSMarginPaddingSizeValue<CSSUnitValue> | number;
 
-type CSSMarginUnitValue = `${number}${CSSUnit}` | '0' | 'auto';
-type CSSMarginSizeValue<T extends CSSMarginUnitValue> = `${T}` | `${T} ${T}` | `${T} ${T} ${string}` | `${T} ${T} ${string} ${string}`;
-export type CSSMarginValue = CSSMarginSizeValue<CSSMarginUnitValue> | number;
-
-type CSSSizeValue<T extends string | number> = `${T}` | `${T} ${T}` | `${T} ${T} ${T}` | `${T} ${T} ${T} ${T}`;
-
-type CustomRadiusValue<
-  T extends
-    | CSSAbsoluteUnitValue
-    | CSSLocalFontRelativeUnitValue
-    | CSSRootFontRelativeUnitValue
-    | CSSViewportUnitValue
-    | CSSRespectUnitValue
-    | CSSPercentageUnitValue
-> = `${T} ${T} / ${T} ${T}`;
-
-type CSSRadiusValue<
-  T extends
-    | CSSAbsoluteUnitValue
-    | CSSLocalFontRelativeUnitValue
-    | CSSRootFontRelativeUnitValue
-    | CSSViewportUnitValue
-    | CSSRespectUnitValue
-    | CSSPercentageUnitValue
-> = CSSSizeValue<T> | CustomRadiusValue<T>;
-
-type CSSRadiusAbsoluteValues = CSSRadiusValue<CSSAbsoluteUnitValue>;
-type CSSRadiusLocalFontValues = CSSRadiusValue<CSSLocalFontRelativeUnitValue>;
-type CSSRadiusRootFontValues = CSSRadiusValue<CSSRootFontRelativeUnitValue>;
-type CSSRadiusViewportValues = CSSRadiusValue<CSSViewportUnitValue>;
-type CSSRadiusRespectValues = CSSRadiusValue<CSSRespectUnitValue>;
-type CSSRadiusPercentageValues = CSSRadiusValue<CSSPercentageUnitValue>;
-export type CSSRadiusValues =
-  | CSSRadiusAbsoluteValues
-  | CSSRadiusLocalFontValues
-  | CSSRadiusRootFontValues
-  | CSSRadiusViewportValues
-  | CSSRadiusRespectValues
-  | CSSRadiusPercentageValues
-  | CSSGlobalValue
-  | CSSVariableValue;
+type CSSSizeValue<T extends string | number> = `${T}` | `${T} ${T}` | `${T} ${T} ${string}` | `${T} ${T} ${string} ${string}`;
+type CustomRadiusValue<T extends CSSUnitValue> = `${T} ${T} / ${string} ${string}`;
+type CSSRadiusValue<T extends CSSUnitValue> = CSSSizeValue<T> | CustomRadiusValue<T>;
+type CSSRadiusSizeValue = CSSRadiusValue<CSSUnitValue>;
+export type CSSRadiusValues = CSSRadiusSizeValue | CSSGlobalValue | CSSVariableValue;

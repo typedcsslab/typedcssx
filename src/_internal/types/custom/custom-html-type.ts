@@ -26,11 +26,18 @@ type PseudoType = {
 };
 
 type KeyframeSelector = 'from' | 'to' | `${number}%`;
+
 type KeyframesDefinition = {
   [K in KeyframeSelector]?: CustomCSSProperties;
 };
+
 type AtKeyframes = {
   [K in `@keyframes ${string}`]: KeyframesDefinition;
 };
 
-export type CustomHTMLType = HTMLType | ClassNameType | AttributeType | ConsecutiveType | PseudoType | AtKeyframes;
+type MediaQuery = `@media ${string}`;
+export type MediaQueryType = {
+  [key in MediaQuery]?: CustomCSSProperties | AtKeyframes;
+};
+
+export type CustomHTMLType = HTMLType | ClassNameType | AttributeType | ConsecutiveType | PseudoType | AtKeyframes | MediaQueryType;
