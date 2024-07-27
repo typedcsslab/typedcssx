@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs';
-import path from 'path';
+import * as path from 'path';
 
 const styleFilePath = path.join(__dirname, '../../src/core/styles/style.module.css');
 const globalFilePath = path.join(__dirname, '../../src/core/styles/global.css');

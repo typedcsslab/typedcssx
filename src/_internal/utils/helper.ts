@@ -1,6 +1,6 @@
-import path from 'path';
 import type { ClassesObjectType, HasEPE, HasECE, HasCPC, HasCCC } from '..';
 import htmlTags from './html-tags';
+import * as path from 'path';
 
 export const isWindowDefined = typeof window !== 'undefined';
 export const isDocumentDefined = typeof document !== 'undefined';
