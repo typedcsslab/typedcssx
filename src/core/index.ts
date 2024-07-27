@@ -1,2 +1,3 @@
-export { Style } from './style';
-export { media } from './media-query';
+export * from './breakpoint';
+import Style from './style';
+export default Style;
