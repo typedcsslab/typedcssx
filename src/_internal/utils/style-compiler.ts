@@ -37,13 +37,13 @@ export function styleCompiler<T extends CustomCSSProperties>(object: T, base62Ha
         }
         const pseudoSelector = property.includes('&') ? `${CSSProp}` : CSSProp;
         const pseudoRuleSet = stringConverter(className + pseudoSelector, value, indentLevel + 1);
-        pseudoRules += `${indent}${className}${pseudoSelector} {\n${pseudoRuleSet.mainRules}${pseudoRuleSet.pseudoRules}${indent}}\n`;
+        pseudoRules += `\n${indent}${className}${pseudoSelector} {\n${pseudoRuleSet.mainRules}${pseudoRuleSet.pseudoRules}${indent}}\n`;
         mediaQueries += pseudoRuleSet.media;
       } else if (property.startsWith('@media')) {
         bigIndent = true;
         const mediaRule = stringConverter(className, value, indentLevel + 1);
         const mainRule = mediaRule.mainRules ? `{\n  ${className} {\n${mediaRule.mainRules}  }` : '{';
-        mediaQueries += `\n${property} ${mainRule}\n${mediaRule.pseudoRules}${mediaRule.media}}\n`;
+        mediaQueries += `\n${property} ${mainRule}${mediaRule.pseudoRules}${mediaRule.media}}\n`;
         bigIndent = false;
       } else if (typeof value === 'string' || typeof value === 'number') {
         const CSSProp = camelToKebabCase(property);
@@ -61,7 +61,7 @@ export function styleCompiler<T extends CustomCSSProperties>(object: T, base62Ha
   let styleSheet = '';
 
   if (mainRules) {
-    styleSheet += `\n${className} {\n${mainRules}}\n\n`;
+    styleSheet += `\n${className} {\n${mainRules}}\n`;
   }
 
   if (pseudoRules) {
