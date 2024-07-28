@@ -35,7 +35,7 @@ type AtKeyframes = {
   [K in `@keyframes ${string}`]: KeyframesDefinition;
 };
 
-type MediaQuery = `@media ${string}`;
+export type MediaQuery = `@media ${string}`;
 export type MediaQueryType = {
   [key in MediaQuery]?: CustomCSSProperties | AtKeyframes;
 };

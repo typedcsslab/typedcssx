@@ -1,13 +1,20 @@
 import type { CustomCSSProperties } from './custom-css-properties';
+import { MediaQuery } from './custom-html-type';
 
-export type ClassesObjectType = {
-  [key: string]:
-    | CustomCSSProperties
-    | {
-        [className: string]: CustomCSSProperties | ClassesObjectType;
-      };
-};
+export type ClassesObjectType =
+  | {
+      [key in MediaQuery]:
+        | CustomCSSProperties
+        | {
+            [className: string]: CustomCSSProperties;
+          };
+    }
+  | {
+      [className: string]: CustomCSSProperties;
+    };
+
+type Exact<T, U> = T extends U ? T : never;
 
 export type ExactClassesObjectType<T> = {
-  [K in keyof T | string]: K extends keyof T ? T[K] : CustomCSSProperties | ClassesObjectType;
+  [K in keyof T | string]: K extends keyof T ? Exact<T[K], CustomCSSProperties> : CustomCSSProperties;
 };
