@@ -16,7 +16,7 @@ For detailed documentation, visit our [typedcssx site](https://typedcssx.vercel.
 
 ```typescript
 // Header.css.tsx
-import { Style } from 'typedcssx';
+import Style from 'typedcssx';
 
 const styles = Style.create({
   header: {
