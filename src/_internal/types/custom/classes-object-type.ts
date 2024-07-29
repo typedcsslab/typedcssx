@@ -1,17 +1,11 @@
 import type { CustomCSSProperties } from './custom-css-properties';
 import { MediaQuery } from './custom-html-type';
 
-export type ClassesObjectType =
-  | {
-      [key in MediaQuery]:
-        | CustomCSSProperties
-        | {
-            [className: string]: CustomCSSProperties;
-          };
-    }
-  | {
-      [className: string]: CustomCSSProperties;
-    };
+export type ClassesObjectType = {
+  [key in MediaQuery]: {
+    [className: string]: CustomCSSProperties;
+  };
+};
 
 type Exact<T, U> = T extends U ? T : never;
 
