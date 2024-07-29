@@ -8,9 +8,11 @@ import type {
   CSSEdgeSizeValue,
   CSSRadiusValues,
 } from '../common/css-values';
-import type { AndStringsType, ArgsPseudos } from '../common/pseudo-selectors';
+import type { AndStrings, AndStringsType, ArgsPseudos } from '../common/pseudo-selectors';
 import type { CSSColorValue, CSSVariableProperties, CSSVariableValue } from '../common/css-variables';
-import { MediaQueryType } from './custom-html-type';
+import { MediaQuery, MediaQueryType } from './custom-html-type';
+import { HtmlTags } from '../../utils/html-tags';
+import { LanguageCodes } from '../../utils/language-codes';
 
 type CustomExtendProperties = {
   width?: CSSNumericValue | CSSLengthSubValue | 'auto';
@@ -33,7 +35,7 @@ type CustomExtendProperties = {
   wordSpacing?: CSSNumericValue | 'normal';
   borderWidth?: CSSNumericValue | 'thin' | 'medium' | 'thick';
   borderRadius?: CSSRadiusValues | number;
-  top?: CSSNumericValue | 'auto';
+  top?: CSSNumericValue | 'auto' | number;
   right?: CSSNumericValue | 'auto';
   bottom?: CSSNumericValue | 'auto';
   left?: CSSNumericValue | 'auto';
@@ -51,45 +53,51 @@ type CustomExtendProperties = {
   color?: CSSColorValue | CSSGlobalValue;
   background?: CSSColorValue | CSSGlobalValue | 'none';
   backgroundColor?: CSSColorValue | CSSGlobalValue;
-  active?: CustomCSSProperties;
-  hover?: CustomCSSProperties;
-  link?: CustomCSSProperties;
-  visited?: CustomCSSProperties;
-  empty?: CustomCSSProperties;
-  lang?: undefined;
-  not?: undefined;
-  notClass?: undefined;
-  has?: undefined;
-  hasChild?: undefined;
-  hasPlus?: undefined;
-  hasClass?: undefined;
-  hasClassChild?: undefined;
-  hasClassPlus?: undefined;
-  firstChild?: CustomCSSProperties;
-  lastChild?: CustomCSSProperties;
-  nthChild?: undefined;
-  nthLastChild?: undefined;
-  nthLastOfType?: undefined;
-  nthOfType?: undefined;
-  checked?: CustomCSSProperties;
-  disabled?: CustomCSSProperties;
-  enabled?: CustomCSSProperties;
-  focus?: CustomCSSProperties;
-  inRange?: CustomCSSProperties;
-  invalid?: CustomCSSProperties;
-  valid?: CustomCSSProperties;
-  optional?: CustomCSSProperties;
-  outOfRange?: CustomCSSProperties;
-  readOnly?: CustomCSSProperties;
-  readWrite?: CustomCSSProperties;
-  required?: CustomCSSProperties;
-  target?: CustomCSSProperties;
-  after?: CustomCSSProperties;
-  before?: CustomCSSProperties;
-  firstLetter?: CustomCSSProperties;
-  firstLine?: CustomCSSProperties;
-  marker?: CustomCSSProperties;
-  selection?: CustomCSSProperties;
+};
+
+type PseudoElementsAndClassKeys =
+  | 'active'
+  | 'hover'
+  | 'link'
+  | 'visited'
+  | 'empty'
+  | `lang${LanguageCodes}`
+  | `not${HtmlTags}`
+  | `notClass${string}`
+  | `has${HtmlTags}`
+  | `hasChild${HtmlTags}`
+  | `hasPlus${HtmlTags}`
+  | `hasClass${string}`
+  | `hasClassChild${string}`
+  | `hasClassPlus${string}`
+  | 'firstChild'
+  | 'lastChild'
+  | `nthChild${number | 'Odd' | 'Even'}`
+  | `nthLastChild${number | 'Odd' | 'Even'}`
+  | `nthLastOfType${number | 'Odd' | 'Even'}`
+  | `nthOfType${number | 'Odd' | 'Even'}`
+  | 'checked'
+  | 'disabled'
+  | 'enabled'
+  | 'focus'
+  | 'inRange'
+  | 'invalid'
+  | 'valid'
+  | 'optional'
+  | 'outOfRange'
+  | 'readOnly'
+  | 'readWrite'
+  | 'required'
+  | 'target'
+  | 'after'
+  | 'before'
+  | 'firstLetter'
+  | 'firstLine'
+  | 'marker'
+  | 'selection';
+
+type PseudoElementsAndClassType = {
+  [K in PseudoElementsAndClassKeys]?: CustomCSSProperties;
 };
 
 export type CustomCSSProperties =
@@ -99,4 +107,11 @@ export type CustomCSSProperties =
       [K in keyof React.CSSProperties]: React.CSSProperties[K] | CSSVariableValue;
     })
   | CSSVariableProperties
-  | MediaQueryType;
+  | MediaQueryType
+  | PseudoElementsAndClassType;
+
+export type ExtendedCSSProperties =
+  | CustomCSSProperties
+  | {
+      [K in AndStrings | PseudoElementsAndClassKeys | MediaQuery]?: CustomCSSProperties;
+    };
