@@ -1,4 +1,12 @@
 node_modules
 dist
-.vscode
+*.log
+*.tgz
+.next
 .DS_Store
+.idea
+.vscode
+package-lock.json
+*.tsbuildinfo
+test-results
+playwright-report
