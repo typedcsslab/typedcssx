@@ -20,7 +20,7 @@ import fg = require('fast-glob');
   }
   const csstsPattern = [path.join(appRoot, '**/*.css.ts'), path.join(appRoot, '**/*.css.tsx')];
   const files = await fg(csstsPattern);
-  console.log('\n💬 The f ollowing CSS caches were accepted:\n');
+  console.log('\n💬 The following CSS caches were accepted:\n');
   for (const file of files) {
     const filePath = path.resolve(file);
     await import(filePath);
