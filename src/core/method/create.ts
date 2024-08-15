@@ -1,5 +1,5 @@
 import type { ReturnStyleType, ClassesObjectType, ExactClassesObjectType } from '../../_internal';
-import { sheetCompiler, isInDevelopment, injectCSS, genBase62Hash } from '../../_internal';
+import { isInDevelopment, isDevelopAndTest, injectCSS, sheetCompiler, genBase62Hash } from '../../_internal';
 import styles from '../styles/style.module.css';
 import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalStyleSheet } from './create-build-in-helper';
 
@@ -14,7 +14,7 @@ export function create<T extends ClassesObjectType>(object: ExactClassesObjectTy
       if (typeof prop === 'string' && prop in target) {
         const className = prop + '_' + base62Hash;
         if (isInDevelopment) injectCSS(base62Hash, styleSheet, 'create');
-        return isInDevelopment ? className : styles[className];
+        return isDevelopAndTest ? className : styles[className];
       }
     },
   }) as unknown as ReturnStyleType<T>;
