@@ -4,7 +4,7 @@ import * as path from 'path';
 
 export const isWindowDefined = typeof window !== 'undefined';
 export const isDocumentDefined = typeof document !== 'undefined';
-export const isInDevelopment = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+export const isInDevelopment = process.env.NODE_ENV === 'development';
 
 const exception = ['line-height', 'font-weight', 'opacity', 'scale', 'z-index'];
 
