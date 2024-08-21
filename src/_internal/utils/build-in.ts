@@ -1,7 +1,7 @@
 'use server';
 
 import { readFileSync, appendFileSync } from 'fs';
-import { isWindowDefined, get } from './helper';
+import { isServer, get } from './helper';
 
 export const buildIn = (styleSheet: string, global?: string) => {
   const styleFilePath = get.dir(__dirname, '../../core/styles/style.module.css');
@@ -9,7 +9,7 @@ export const buildIn = (styleSheet: string, global?: string) => {
   const filePath = global === '--global' ? globalFilePath : styleFilePath;
   const message = global === '--global' ? ' ✅ Generating global static css \n' : ' ✅ Generating module static css \n';
 
-  if (!isWindowDefined) {
+  if (isServer) {
     try {
       const cssData = readFileSync(filePath, 'utf-8');
       if (!cssData.includes(styleSheet)) {
