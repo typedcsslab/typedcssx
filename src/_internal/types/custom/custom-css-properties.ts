@@ -62,14 +62,10 @@ type PseudoElementsAndClassKeys =
   | 'visited'
   | 'empty'
   | `lang${LanguageCodes}`
-  | `not${HtmlTags}`
-  | `notClass${string}`
-  | `has${HtmlTags}`
-  | `hasChild${HtmlTags}`
-  | `hasPlus${HtmlTags}`
-  | `hasClass${string}`
-  | `hasClassChild${string}`
-  | `hasClassPlus${string}`
+  | `not${HtmlTags | string}`
+  | `has${HtmlTags | string}`
+  | `hasChild${HtmlTags | string}`
+  | `hasPlus${HtmlTags | string}`
   | 'firstChild'
   | 'lastChild'
   | `nthChild${number | 'Odd' | 'Even'}`
