@@ -84,9 +84,12 @@ export const camelToKebabCase = (property: string) => {
       const tagOrClass = pascalCaseHtmlTags.includes(afterProp) ? afterPropKebab : `.${afterPropKebab}`;
 
       if (prop === 'not') {
-        return `:not(${tagOrClass})`;
+        if (property.includes('not(')) {
+          return `:not${afterProp.toLowerCase()}`;
+        } else {
+          return `:not(${tagOrClass})`;
+        }
       }
-
       if (prop === 'hasChild') {
         return `:has(> ${tagOrClass})`;
       }
