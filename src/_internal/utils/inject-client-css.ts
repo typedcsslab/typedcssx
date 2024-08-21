@@ -1,10 +1,9 @@
-import { isWindowDefined, isDocumentDefined, isInDevelopment } from '..';
+import { isServer, isDevelopment } from '..';
 
-const isServer = !isWindowDefined || !isDocumentDefined;
 const styleSheets: Record<string, HTMLStyleElement> = {};
 const hashCache: Record<string, string> = {};
 
-function createStyleElement(hash: string): HTMLStyleElement | null {
+export function createStyleElement(hash: string): HTMLStyleElement | null {
   if (document.getElementById(hash)) return null;
 
   const styleElement = document.createElement('style');
@@ -16,8 +15,8 @@ function createStyleElement(hash: string): HTMLStyleElement | null {
   return styleSheets[hash];
 }
 
-export function injectCSS(hash: string, sheet: string, context: string) {
-  if (isInDevelopment) console.log('💫 ' + context + ' executing ...' + sheet);
+export function injectClientCSS(hash: string, sheet: string, context: string) {
+  if (isDevelopment) console.log('💫 ' + context + ' executing ...' + sheet);
   if (isServer) return;
   queueMicrotask(() => {
     styleCleanUp();
