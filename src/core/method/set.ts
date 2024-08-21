@@ -1,5 +1,5 @@
 import type { ExtendedCSSProperties } from '../../_internal';
-import { isInDevelopment, isDevelopAndTest, injectCSS, styleCompiler, genBase62Hash } from '../../_internal';
+import { isDevelopment, isDevAndTest, isServer, injectServerCSS, injectClientCSS, styleCompiler, genBase62Hash } from '../../_internal';
 import styles from '../styles/style.module.css';
 import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalStyleSheet } from './set-build-in-helper';
 
@@ -10,10 +10,6 @@ export function set(object: ExtendedCSSProperties): string {
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet(styleSheet);
 
-  function returnFunction() {
-    if (isInDevelopment) injectCSS(base62Hash, styleSheet, 'set');
-    return isDevelopAndTest ? classHash : styles[classHash];
-  }
-
-  return returnFunction() as unknown as string;
+  if (isDevelopment) isServer ? injectServerCSS(base62Hash, styleSheet, 'set') : injectClientCSS(base62Hash, styleSheet, 'set');
+  return isDevAndTest ? classHash : styles[classHash];
 }
