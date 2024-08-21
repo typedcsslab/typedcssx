@@ -9,3 +9,6 @@ export const max_md = '@media (max-width: 768px)';
 export const max_lg = '@media (max-width: 1024px)';
 export const max_xl = '@media (max-width: 1280px)';
 export const max_2xl = '@media (max-width: 1536px)';
+
+export const dark = '@media (prefers-color-scheme: dark)';
+export const light = '@media (prefers-color-scheme: light)';
