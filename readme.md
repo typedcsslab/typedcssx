@@ -5,10 +5,10 @@
 Typed CSS X is an innovative CSS-in-JS solution designed for the Next.js App Router (RSC).  
 Key features:
 
-- Client Component support
 - Zero-runtime (statically generated during build time)
-- Hot Reload
 - type check (compile time and autocomplete)
+- RSC support
+- Hot Reload
 
 For detailed documentation, visit our [typedcssx site](https://typedcssx.vercel.app/).
 
