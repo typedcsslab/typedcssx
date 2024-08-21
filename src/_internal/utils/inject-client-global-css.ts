@@ -1,6 +1,5 @@
-import { isWindowDefined, isDocumentDefined, isInDevelopment } from '..';
+import { isServer, isDevelopment } from '..';
 
-const isServer = !isWindowDefined || !isDocumentDefined;
 let styleElement: HTMLStyleElement;
 
 function createStyleElement(scoped: string) {
@@ -17,8 +16,8 @@ function createStyleElement(scoped: string) {
   return styleElement;
 }
 
-export function injectCSSGlobal(sheet: string, scoped: string) {
-  if (isInDevelopment) console.log('💫 ' + scoped + ' executing ...' + sheet);
+export function injectClientGlobalCSS(sheet: string, scoped: string) {
+  if (isDevelopment) console.log('💫 ' + scoped + ' executing ...' + sheet);
   if (isServer) return;
 
   styleElement = createStyleElement(scoped);
