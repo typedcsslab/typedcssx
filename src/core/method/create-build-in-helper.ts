@@ -1,4 +1,4 @@
-import { buildIn, isInDevelopment } from '../../_internal';
+import { buildIn, isDevelopment } from '../../_internal';
 
 let resolveGlobalStyleSheet: (value: string) => void;
 let globalStyleSheetPromise: Promise<string>;
@@ -15,7 +15,7 @@ function createGlobalStyleSheetPromise() {
 }
 
 async function executeBuildIn(styleSheet: string): Promise<void> {
-  if (!isInDevelopment && styleSheet) buildIn(styleSheet);
+  if (!isDevelopment && styleSheet) buildIn(styleSheet);
 }
 
 async function processStyleSheets() {
