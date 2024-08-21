@@ -7,8 +7,8 @@ test('Style.create returns an object with string values', () => {
 });
 
 test('Style.set returns a string', () => {
-  const styleClass = Style.set({ color: 'aqua' });
-  expect(typeof styleClass).toBe('string');
+  const style = Style.set({ color: 'aqua' });
+  expect(typeof style).toBe('string');
 });
 
 test('Style.global returns undefined', () => {
