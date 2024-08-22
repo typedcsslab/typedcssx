@@ -14,7 +14,7 @@ const styles = Style.create({
 export function E2ETest() {
   return (
     <div className={styles.e2e} data-testid="e2e-test-div">
-      E2E Test
+      Component-attach-class and Responsive-design test
     </div>
   );
 }
