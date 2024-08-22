@@ -1,4 +1,3 @@
-import React from 'react';
 import Style from 'typedcssx';
 
 const styles = Style.create({
