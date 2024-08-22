@@ -1,8 +1,15 @@
-import { getServerCSS } from '../src/_internal/utils/inject-server-css';
+import { getServerCSS, injectServerCSS } from '../src/_internal';
 
-test('returns null when isDevServer is false', () => {
-  // Assuming isDevServer is set to false in this test environment
-  // running the case where isDevServer is true in e2e testing.
-  const injectedCSS = getServerCSS();
-  expect(injectedCSS).toBeNull();
+test('should inject and get server CSS correctly', () => {
+  const hash1 = 'abcd1';
+  const hash2 = 'abcd2';
+  const sheet1 = 'body { color: red; }';
+  const sheet2 = 'h1 { font-size: 20px; }';
+
+  injectServerCSS(hash1, sheet1, 'context1');
+  injectServerCSS(hash2, sheet2, 'context2');
+
+  const serverCSS = getServerCSS();
+  expect(serverCSS).toContain(sheet1);
+  expect(serverCSS).toContain(sheet2);
 });
