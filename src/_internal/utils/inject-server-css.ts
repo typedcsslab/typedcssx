@@ -1,4 +1,4 @@
-import { isDevelopment, isDevServer } from '..';
+import { isDevelopment } from '..';
 
 const styleSheets: Record<string, string> = {};
 
@@ -10,5 +10,5 @@ export function injectServerCSS(hash: string, sheet: string, context: string) {
 }
 
 export function getServerCSS(): string | null {
-  return isDevServer ? Object.values(styleSheets).join('\n') : null;
+  return Object.values(styleSheets).join('\n');
 }
