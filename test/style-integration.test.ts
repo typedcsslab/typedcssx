@@ -1,4 +1,4 @@
-import Style from '../src/core';
+import Style from '../src/core/style';
 
 test('Style.create returns an object with string values', () => {
   const styles = Style.create({ test: { color: 'aqua' } });

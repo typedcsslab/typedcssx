@@ -1,5 +1,5 @@
 import { genBase62Hash, styleCompiler } from '../src/_internal';
-import { max_lg } from '../src/core';
+import { max_lg } from '../src/core/media';
 
 test('styleCompiler produces expected output', async () => {
   const object = {

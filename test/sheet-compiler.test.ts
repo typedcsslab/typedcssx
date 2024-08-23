@@ -1,5 +1,5 @@
 import { genBase62Hash, sheetCompiler } from '../src/_internal';
-import { max_lg } from '../src/core';
+import { max_lg } from '../src/core/media';
 
 test('sheetCompiler produces expected output', async () => {
   const object = {
