@@ -9,5 +9,6 @@ dist
 .vscode
 package-lock.json
 *.tsbuildinfo
+coverage
 test-results
 playwright-report
