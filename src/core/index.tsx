@@ -1,4 +1,4 @@
 export * from './media';
-export { PreviewServerCSS } from '../_internal';
+export { PreviewServerCSS } from './component/server-css';
 import Style from './style';
 export default Style;
