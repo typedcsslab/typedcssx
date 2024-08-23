@@ -9,6 +9,6 @@ export function injectServerCSS(hash: string, sheet: string, context: string) {
   return sheet;
 }
 
-export function getServerCSS(): string | null {
+export function getServerCSS(): string {
   return Object.values(styleSheets).join('\n');
 }
