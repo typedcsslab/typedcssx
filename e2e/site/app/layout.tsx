@@ -4,7 +4,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <PreviewServerCSS />
+        <PreviewServerCSS anchorEnabled={true} />
       </head>
       <body>{children}</body>
     </html>
