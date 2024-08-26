@@ -5,7 +5,7 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 test('CSS compilation logs contain expected output', async () => {
-  const { stdout } = await execPromise('npm run compile', {
+  const { stdout } = await execPromise('npx typedcssx --compile', {
     cwd: path.join(__dirname, '../e2e/site'),
   });
 
