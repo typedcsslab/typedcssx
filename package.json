@@ -1,6 +1,6 @@
 {
   "name": "typedcssx",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "private": true,
   "author": "Refirst",
   "repository": "github:typedcsslab/typedcssx",
@@ -9,11 +9,13 @@
   "main": "dist/core/index.js",
   "typings": "dist/core/index.d.ts",
   "scripts": {
-    "compiler": "tsc --noEmit ./compiler/src/index.ts && tsx ./compiler/src/index.ts",
     "test": "jest",
     "dev": "next dev",
     "dev:e2e": "cd e2e/site && npm run dev -- -p 4000",
     "test:e2e": "playwright test"
+  },
+  "bin": {
+    "typedcssx": "./bin/typedcssx.js"
   },
   "dependencies": {
     "fast-glob": "^3.3.2",
