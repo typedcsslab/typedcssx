@@ -11,6 +11,12 @@ const styles = Style.create({
   },
 });
 
+Style.global({
+  h1: {
+    color: 'aqua',
+  },
+});
+
 export function E2ETest() {
   return (
     <div className={styles.e2e} data-testid="e2e-test-div">
