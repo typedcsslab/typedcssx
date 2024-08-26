@@ -1,11 +1,4 @@
-
+/*------------------------------*/
 h1 {
-  color: pink;
+  color: aqua;
 }
-
-@media (max-width: 1024px) {
-  h1 {
-    color: aqua;
-  }
-}
-
