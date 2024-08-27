@@ -5,7 +5,8 @@ import { createBuildIn } from '../../src/core/method/create-build-in-helper';
 import { setBuildIn } from '../../src/core/method/set-build-in-helper';
 import { globalBuildIn } from '../../src/core/method/global-build-in-helper';
 import { rootBuildIn } from '../../src/core/method/root-build-in-helper';
-import fg = require('fast-glob');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fg = require('fast-glob');
 
 (async () => {
   await cleanUp();
