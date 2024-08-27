@@ -1,34 +1,42 @@
 #!/usr/bin/env node
 
 const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+const { join, dirname } = require('path');
+const { existsSync } = require('fs');
 
-const args = process.argv.slice(2);
-
-function findPackageRoot(startDir) {
-  let currentDir = startDir;
-  while (currentDir !== path.parse(currentDir).root) {
-    const packageJsonPath = path.join(currentDir, 'node_modules', 'typedcssx', 'package.json');
-    if (fs.existsSync(packageJsonPath)) {
-      return path.dirname(packageJsonPath);
+function findNextJsProjectRoot(startPath) {
+  let currentPath = startPath;
+  while (currentPath !== '/') {
+    if (
+      existsSync(join(currentPath, 'package.json')) &&
+      (existsSync(join(currentPath, 'next.config.js')) || existsSync(join(currentPath, 'next.config.mjs')))
+    ) {
+      return currentPath;
     }
-    currentDir = path.dirname(currentDir);
+    currentPath = dirname(currentPath);
   }
-  throw new Error('Could not find typedcssx package');
+  return null;
 }
 
-if (args.includes('--compile')) {
+if (process.argv.includes('--compile')) {
   try {
-    const packageRoot = findPackageRoot(process.cwd());
-    const compilerPath = path.join(packageRoot, 'compiler/src/index.ts');
+    const packageRoot = findNextJsProjectRoot(__dirname);
+    if (!packageRoot) {
+      throw new Error('Could not find Next.js project root');
+    }
 
     console.log('Running TypeScript compiler...');
-    execSync(`npx tsc --noEmit "${compilerPath}"`, { stdio: 'inherit' });
-    
+    execSync('npx tsc --noEmit', {
+      stdio: 'inherit',
+      cwd: join(packageRoot, 'node_modules/typedcssx'),
+    });
+
     console.log('Executing compiler...');
-    execSync(`npx tsx "${compilerPath}"`, { stdio: 'inherit' });
-    
+    execSync('npx tsx compiler/src/index.ts', {
+      stdio: 'inherit',
+      cwd: join(packageRoot, 'node_modules/typedcssx'),
+    });
+
     console.log('Compilation completed successfully.');
   } catch (error) {
     console.error('Compilation failed:', error.message);
