@@ -1,9 +1,9 @@
 import { existsSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 
-function findNextJsProjectRoot(startPath: string, count: number): string | null {
+function findNextJsProjectRoot(startPath: string): string | null {
   let currentPath = startPath;
-  for (let i = 1; i <= count; i++) {
+  while (currentPath !== '/') {
     if (
       existsSync(join(currentPath, 'package.json')) &&
       (existsSync(join(currentPath, 'next.config.js')) || existsSync(join(currentPath, 'next.config.mjs')))
@@ -16,8 +16,7 @@ function findNextJsProjectRoot(startPath: string, count: number): string | null 
 }
 
 export const cleanUp = async () => {
-  const currentDir = __dirname;
-  const projectRoot = findNextJsProjectRoot(currentDir, 5);
+  const projectRoot = findNextJsProjectRoot(__dirname);
 
   if (!projectRoot) {
     console.error('Next.js project root not found');

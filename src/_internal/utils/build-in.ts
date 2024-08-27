@@ -6,7 +6,7 @@ import { join, dirname } from 'path';
 
 function findNextJsProjectRoot(startPath: string): string | null {
   let currentPath = startPath;
-  for (let i = 1; i <= 6; i++) {
+  while (currentPath !== '/') {
     if (
       existsSync(join(currentPath, 'package.json')) &&
       (existsSync(join(currentPath, 'next.config.js')) || existsSync(join(currentPath, 'next.config.mjs')))
@@ -19,8 +19,7 @@ function findNextJsProjectRoot(startPath: string): string | null {
 }
 
 export const buildIn = (styleSheet: string, global?: string) => {
-  const currentDir = __dirname;
-  const projectRoot = findNextJsProjectRoot(currentDir);
+  const projectRoot = findNextJsProjectRoot(__dirname);
 
   if (!projectRoot) {
     console.error('Next.js project root not found');
