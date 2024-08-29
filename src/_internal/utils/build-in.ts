@@ -1,8 +1,9 @@
 'use server';
 
 import { readFileSync, appendFileSync, mkdirSync, existsSync } from 'fs';
-import { findNextJsProjectRoot, isServer } from './helper';
+import { isServer } from './helper';
 import { join } from 'path';
+import { findNextJsProjectRoot } from '..';
 
 export const buildIn = (styleSheet: string, global?: string) => {
   const projectRoot = findNextJsProjectRoot(__dirname);
