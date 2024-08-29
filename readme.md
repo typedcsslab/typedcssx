@@ -10,7 +10,8 @@ Key features:
 - RSC support
 - Hot Reload
 
-For detailed documentation, visit our [typedcssx site](https://typedcssx.vercel.app/).
+To explore detailed documentation, visit our [typedcssx site](https://typedcssx.vercel.app/).  
+Check out our [release notes](https://github.com/typedcsslab/typedcssx/releases) for the latest version information and updates.
 
 ## Quick Start
 
