@@ -1,22 +1,8 @@
 'use server';
 
 import { readFileSync, appendFileSync, mkdirSync, existsSync } from 'fs';
-import { isServer } from './helper';
-import { join, dirname } from 'path';
-
-function findNextJsProjectRoot(startPath: string): string | null {
-  let currentPath = startPath;
-  while (currentPath !== '/') {
-    if (
-      existsSync(join(currentPath, 'package.json')) &&
-      (existsSync(join(currentPath, 'next.config.js')) || existsSync(join(currentPath, 'next.config.mjs')))
-    ) {
-      return currentPath;
-    }
-    currentPath = dirname(currentPath);
-  }
-  return null;
-}
+import { findNextJsProjectRoot, isServer } from './helper';
+import { join } from 'path';
 
 export const buildIn = (styleSheet: string, global?: string) => {
   const projectRoot = findNextJsProjectRoot(__dirname);

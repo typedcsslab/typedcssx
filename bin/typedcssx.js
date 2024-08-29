@@ -1,22 +1,8 @@
 #!/usr/bin/env node
 
+const { findNextJsProjectRoot } = require('../src/_internal');
 const { execSync } = require('child_process');
-const { join, dirname } = require('path');
-const { existsSync } = require('fs');
-
-function findNextJsProjectRoot(startPath) {
-  let currentPath = startPath;
-  while (currentPath !== '/') {
-    if (
-      existsSync(join(currentPath, 'package.json')) &&
-      (existsSync(join(currentPath, 'next.config.js')) || existsSync(join(currentPath, 'next.config.mjs')))
-    ) {
-      return currentPath;
-    }
-    currentPath = dirname(currentPath);
-  }
-  return null;
-}
+const { join } = require('path');
 
 if (process.argv.includes('--compile')) {
   try {
@@ -26,7 +12,7 @@ if (process.argv.includes('--compile')) {
     }
 
     console.log('Running TypeScript compiler...');
-    execSync('npx tsc --noEmit', {
+    execSync('npx tsc --noEmit compiler/src/index.ts', {
       stdio: 'inherit',
       cwd: join(packageRoot, 'node_modules/typedcssx'),
     });

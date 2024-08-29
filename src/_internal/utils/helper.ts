@@ -1,6 +1,21 @@
 import * as path from 'path';
+import * as fs from 'fs';
 import type { ClassesObjectType, HasEPE, HasECE } from '..';
 import htmlTags from './html-tags';
+
+export function findNextJsProjectRoot(startPath: string): string | null {
+  let currentPath = startPath;
+  while (currentPath !== '/') {
+    if (
+      fs.existsSync(path.join(currentPath, 'package.json')) &&
+      (fs.existsSync(path.join(currentPath, 'next.config.js')) || fs.existsSync(path.join(currentPath, 'next.config.mjs')))
+    ) {
+      return currentPath;
+    }
+    currentPath = path.dirname(currentPath);
+  }
+  return null;
+}
 
 const isWindowDefined = typeof window !== 'undefined';
 const isDocumentDefined = typeof document !== 'undefined';

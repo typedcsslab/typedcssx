@@ -1,19 +1,6 @@
+import { findNextJsProjectRoot } from '../../src/_internal';
 import { existsSync, writeFileSync } from 'fs';
-import { join, dirname } from 'path';
-
-function findNextJsProjectRoot(startPath: string): string | null {
-  let currentPath = startPath;
-  while (currentPath !== '/') {
-    if (
-      existsSync(join(currentPath, 'package.json')) &&
-      (existsSync(join(currentPath, 'next.config.js')) || existsSync(join(currentPath, 'next.config.mjs')))
-    ) {
-      return currentPath;
-    }
-    currentPath = dirname(currentPath);
-  }
-  return null;
-}
+import { join } from 'path';
 
 export const cleanUp = async () => {
   const projectRoot = findNextJsProjectRoot(__dirname);
