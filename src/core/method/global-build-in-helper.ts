@@ -6,7 +6,7 @@ const styleSheetQueue: [string, string?][] = [];
 let isProcessing = false;
 
 function createGlobalStyleSheetPromise() {
-  globalStyleSheetPromise = new Promise<[string, string?]>((resolve) => {
+  globalStyleSheetPromise = new Promise<[string, string?]>(resolve => {
     resolveGlobalStyleSheet = (value: [string, string?]) => {
       styleSheetQueue.push(value);
       resolve(value);
@@ -15,10 +15,7 @@ function createGlobalStyleSheetPromise() {
 }
 
 async function executeBuildIn(styleSheet: string, option?: string): Promise<void> {
-  if (!isDevelopment && styleSheet) {
-    if (option) buildIn(styleSheet, option);
-    else buildIn(styleSheet);
-  }
+  if (!isDevelopment && styleSheet) await buildIn(styleSheet, option);
 }
 
 async function processStyleSheets() {
