@@ -45,23 +45,25 @@ export const camelToKebabCase = (property: string) => {
     return `.${afterPropKebab}`;
   };
 
-  if (isHasECEType(property)) {
-    const matches = property.match(hasECERegex);
-    if (matches) {
-      const [, tag1, tag2] = matches;
-      const tagOrClass1 = pascalCaseHtmlTags.includes(tag1) ? tag1.toLowerCase() : processAfterProp(tag1);
-      const tagOrClass2 = pascalCaseHtmlTags.includes(tag2) ? tag2.toLowerCase() : processAfterProp(tag2);
-      return `:has(${tagOrClass1} > ${tagOrClass2})`;
-    }
+  if (property.includes('hasChild')) {
+    const afterProp = property.replace('hasChild', '');
+    const tagOrClass = pascalCaseHtmlTags.includes(afterProp) ? afterProp.toLowerCase() : processAfterProp(afterProp);
+    return `:has(> ${tagOrClass})`;
   }
 
-  if (isHasEPEType(property)) {
-    const matches = property.match(hasEPERegex);
+  if (property.includes('hasPlus')) {
+    const afterProp = property.replace('hasPlus', '');
+    const tagOrClass = pascalCaseHtmlTags.includes(afterProp) ? afterProp.toLowerCase() : processAfterProp(afterProp);
+    return `:has(+ ${tagOrClass})`;
+  }
+
+  if (isHasECEType(property) || isHasEPEType(property)) {
+    const matches = property.match(isHasECEType(property) ? hasECERegex : hasEPERegex);
     if (matches) {
       const [, tag1, tag2] = matches;
       const tagOrClass1 = pascalCaseHtmlTags.includes(tag1) ? tag1.toLowerCase() : processAfterProp(tag1);
       const tagOrClass2 = pascalCaseHtmlTags.includes(tag2) ? tag2.toLowerCase() : processAfterProp(tag2);
-      return `:has(${tagOrClass1} + ${tagOrClass2})`;
+      return isHasECEType(property) ? `:has(${tagOrClass1} > ${tagOrClass2})` : `:has(${tagOrClass1} + ${tagOrClass2})`;
     }
   }
 
@@ -80,13 +82,6 @@ export const camelToKebabCase = (property: string) => {
         } else {
           return `:not(${tagOrClass})`;
         }
-      }
-      if (prop === 'hasChild') {
-        return `:has(> ${tagOrClass})`;
-      }
-
-      if (prop === 'hasPlus') {
-        return `:has(+ ${tagOrClass})`;
       }
 
       if (prop === 'has') {
