@@ -5,8 +5,8 @@ import { isServer } from './helper';
 import { join } from 'path';
 import { findNextJsProjectRoot } from '..';
 
-export const buildIn = (styleSheet: string, global?: string) => {
-  const projectRoot = findNextJsProjectRoot(__dirname);
+export const buildIn = async (styleSheet: string, global?: string): Promise<void> => {
+  const projectRoot = await findNextJsProjectRoot(__dirname);
 
   if (!projectRoot) {
     console.error('Next.js project root not found');
