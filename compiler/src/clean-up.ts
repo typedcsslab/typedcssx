@@ -3,7 +3,7 @@ import { existsSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 export const cleanUp = async () => {
-  const projectRoot = findNextJsProjectRoot(__dirname);
+  const projectRoot = await findNextJsProjectRoot(__dirname);
 
   if (!projectRoot) {
     console.error('Next.js project root not found');
