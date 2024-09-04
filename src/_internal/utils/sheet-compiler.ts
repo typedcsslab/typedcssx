@@ -4,7 +4,7 @@ import type { PropertyType, ClassesObjectType, CustomCSSProperties, CustomHTMLTy
 export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62Hash?: string, core?: string) {
   let styleSheet = '';
   let bigIndent = false;
-  const mediaQueries: Record<string, string> = {};
+  const mediaQueries: { media: string; css: string }[] = [];
 
   const classNameType = (property: string) => {
     if (core === '--global') return property;
@@ -103,10 +103,15 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62
             }
           }
           if (regularRules) {
-            mediaQueries[mediaRule] =
-              (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${indent}  ${className} {\n${regularRules}  }\n${nestedRules}${indent}}\n${indent}\n`;
+            mediaQueries.push({
+              media: mediaRule,
+              css: `\n${mediaRule} {\n${indent}  ${className} {\n${regularRules}  }\n${nestedRules}${indent}}\n${indent}\n`,
+            });
           } else {
-            mediaQueries[mediaRule] = (mediaQueries[mediaRule] || '') + `\n${mediaRule} {\n${nestedRules}${indent}}\n`;
+            mediaQueries.push({
+              media: mediaRule,
+              css: `\n${mediaRule} {\n${nestedRules}${indent}}\n`,
+            });
           }
         }
       }
@@ -152,11 +157,9 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62
 
   styleSheet = createStyles(object);
 
-  for (const media in mediaQueries) {
-    if (Object.prototype.hasOwnProperty.call(mediaQueries, media)) {
-      styleSheet += mediaQueries[media];
-    }
-  }
+  mediaQueries.forEach(({ css }) => {
+    styleSheet += css;
+  });
 
   return { styleSheet };
 }
