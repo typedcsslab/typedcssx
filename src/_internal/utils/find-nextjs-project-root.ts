@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { isServer } from './helper';
 
-export function findNextJsProjectRoot(startPath: string): string | null {
+export async function findNextJsProjectRoot(startPath: string): Promise<string | null> {
   if (!isServer) return null;
   let currentPath = startPath;
   while (currentPath !== '/') {
