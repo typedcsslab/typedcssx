@@ -4,7 +4,7 @@ import { set } from './method/set';
 import { global } from './method/global';
 import { root } from './method/root';
 
-class Style {
+class cssx {
   static create<T extends ClassesObjectType>(object: ExactClassesObjectType<T> | ClassesObjectType): ReturnStyleType<T> {
     return create(object);
   }
@@ -19,4 +19,4 @@ class Style {
   }
 }
 
-export default Style;
+export default cssx;
