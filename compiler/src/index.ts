@@ -6,6 +6,7 @@ import { createBuildIn } from '../../src/core/method/create-build-in-helper';
 import { setBuildIn } from '../../src/core/method/set-build-in-helper';
 import { globalBuildIn } from '../../src/core/method/global-build-in-helper';
 import { rootBuildIn } from '../../src/core/method/root-build-in-helper';
+const FastGlob = require('fast-glob');
 
 function isStyleClass(filePath: string): boolean {
   const content = fs.readFileSync(filePath, 'utf8');
@@ -43,7 +44,7 @@ function isStyleClass(filePath: string): boolean {
     appRoot = path.join(process.cwd(), '../../');
   }
   const csstsPattern = [path.join(appRoot, '**/*.ts'), path.join(appRoot, '**/*.tsx')];
-  const files = fs.globSync(csstsPattern);
+  const files = await FastGlob(csstsPattern);
   const styleFiles = files.filter(file => {
     return isStyleClass(file);
   });
