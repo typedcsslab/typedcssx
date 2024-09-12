@@ -1,8 +1,8 @@
 'use client';
 
-import Style, { max_lg } from 'typedcssx';
+import cssx, { max_lg } from 'typedcssx';
 
-const styles = Style.create({
+const css = cssx.create({
   e2e: {
     color: 'pink',
     [max_lg]: {
@@ -11,7 +11,7 @@ const styles = Style.create({
   },
 });
 
-Style.global({
+cssx.global({
   h1: {
     color: 'aqua',
   },
@@ -19,7 +19,7 @@ Style.global({
 
 export function E2ETest() {
   return (
-    <div className={styles.e2e} data-testid="e2e-test-div">
+    <div className={css.e2e} data-testid="e2e-test-div">
       Component-attach-class and Responsive-design test
     </div>
   );
