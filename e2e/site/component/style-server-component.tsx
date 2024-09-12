@@ -1,6 +1,6 @@
-import Style from 'typedcssx';
+import cssx from 'typedcssx';
 
-const styles = Style.create({
+const css = cssx.create({
   test_server: {
     color: 'green',
   },
@@ -8,7 +8,7 @@ const styles = Style.create({
 
 export const ServerComponent = () => {
   return (
-    <p className={styles.test_server} data-testid="e2e-test-p">
+    <p className={css.test_server} data-testid="e2e-test-p">
       ServerComponent
     </p>
   );
