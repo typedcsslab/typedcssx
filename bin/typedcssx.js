@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-const { findNextJsProjectRoot } = require('../src/_internal');
+const { findProjectRoot } = require('../src/_internal');
 const { execSync } = require('child_process');
 const { join } = require('path');
 
 (async () => {
   if (process.argv.includes('--compile')) {
     try {
-      const packageRoot = await findNextJsProjectRoot(__dirname);
+      const packageRoot = await findProjectRoot(__dirname);
       if (!packageRoot) {
         throw new Error('Could not find Next.js project root');
       }

@@ -3,10 +3,10 @@
 import { readFileSync, appendFileSync, mkdirSync, existsSync } from 'fs';
 import { isServer } from './helper';
 import { join } from 'path';
-import { findNextJsProjectRoot } from '..';
+import { findProjectRoot } from '..';
 
 export const buildIn = async (styleSheet: string, global?: string): Promise<void> => {
-  const projectRoot = await findNextJsProjectRoot(__dirname);
+  const projectRoot = await findProjectRoot(__dirname);
 
   if (!projectRoot) {
     console.error('Next.js project root not found');

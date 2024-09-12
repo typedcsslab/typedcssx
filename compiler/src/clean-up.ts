@@ -1,9 +1,9 @@
-import { findNextJsProjectRoot } from '../../src/_internal';
+import { findProjectRoot } from '../../src/_internal';
 import { existsSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 export const cleanUp = async () => {
-  const projectRoot = await findNextJsProjectRoot(__dirname);
+  const projectRoot = await findProjectRoot(__dirname);
 
   if (!projectRoot) {
     console.error('Next.js project root not found');
