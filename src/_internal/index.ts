@@ -8,4 +8,4 @@ export { injectServerCSS, getServerCSS } from './utils/inject-server-css';
 export { buildIn } from './utils/build-in';
 export { sheetCompiler } from './utils/sheet-compiler';
 export { styleCompiler } from './utils/style-compiler';
-export { findNextJsProjectRoot } from './utils/find-nextjs-project-root';
+export { findProjectRoot } from './utils/find-project-root';
