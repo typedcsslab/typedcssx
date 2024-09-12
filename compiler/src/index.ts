@@ -44,7 +44,7 @@ function isStyleClass(filePath: string): boolean {
     appRoot = path.join(process.cwd(), '../../');
   }
   const csstsPattern = [path.join(appRoot, '**/*.ts'), path.join(appRoot, '**/*.tsx')];
-  const files = await FastGlob(csstsPattern);
+  const files = (await FastGlob(csstsPattern)) as string[];
   const styleFiles = files.filter(file => {
     return isStyleClass(file);
   });
