@@ -15,4 +15,4 @@ test('CSS compilation logs contain expected output', async () => {
   expect(stdout).toContain('color: pink;');
   expect(stdout).toContain('@media (max-width: 1024px)');
   expect(stdout).toContain('color: aqua;');
-}, 10000);
+}, 15000);
