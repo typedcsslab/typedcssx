@@ -45,7 +45,7 @@ export const buildIn = async (styleSheet: string, global?: string): Promise<void
   const message = global === '--global' ? ' ✅ Generating global static css \n' : ' ✅ Generating module static css \n';
 
   if (!existsSync(stylesDir)) {
-    mkdirSync(stylesDir, { recursive: true });
+    mkdirSync(stylesDir);
   }
 
   if (isServer) {
