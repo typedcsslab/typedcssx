@@ -1,4 +1,4 @@
-import { findProjectRoot } from '../../src/_internal';
+import { findProjectRoot } from '../../lib/find-project-root.mjs';
 import { existsSync, writeFileSync } from 'fs';
 import { join } from 'path';
 

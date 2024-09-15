@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
-const { findProjectRoot } = require('../src/_internal');
-const { execSync } = require('child_process');
-const { join } = require('path');
+import { findProjectRoot } from '../lib/find-project-root.mjs';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 (async () => {
   if (process.argv.includes('--compile')) {
@@ -18,7 +22,6 @@ const { join } = require('path');
         cwd: join(packageRoot, 'node_modules/typedcssx'),
       });
 
-      console.log('Executing compiler...');
       execSync('npx tsx compiler/src/index.ts', {
         stdio: 'inherit',
         cwd: join(packageRoot, 'node_modules/typedcssx'),
