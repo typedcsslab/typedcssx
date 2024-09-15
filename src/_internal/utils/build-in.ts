@@ -2,11 +2,27 @@
 
 import { readFileSync, appendFileSync, mkdirSync, existsSync } from 'fs';
 import { isServer } from './helper';
-import { join } from 'path';
-import { findProjectRoot } from '../../../lib/find-project-root.mjs';
+import { join, dirname } from 'path';
+import * as fs from 'fs';
 
-export const buildIn = (styleSheet: string, global?: string): void => {
-  const projectRoot = findProjectRoot(__dirname);
+// Those affected by builds that exist in dist
+// Functions required on the outside and inside
+async function findProjectRoot(startPath: string): Promise<string | null> {
+  if (!isServer) return null;
+  let currentPath = startPath;
+  while (currentPath !== '/') {
+    const packageJsonPath = join(currentPath, 'package.json');
+    const lockFiles = ['pnpm-lock.yaml', 'package-lock.json', 'yarn.lock', 'bun.lockb'].some(file => fs.existsSync(join(currentPath, file)));
+    if (fs.existsSync(packageJsonPath) && lockFiles) {
+      return currentPath;
+    }
+    currentPath = dirname(currentPath);
+  }
+  return null;
+}
+
+export const buildIn = async (styleSheet: string, global?: string): Promise<void> => {
+  const projectRoot = await findProjectRoot(__dirname);
 
   if (!projectRoot) {
     console.error('Next.js project root not found');
