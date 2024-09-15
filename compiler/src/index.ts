@@ -2,11 +2,11 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as ts from 'typescript';
 import { cleanUp } from './clean-up';
-import { createBuildIn } from '../../src/core/method/create-build-in-helper';
-import { setBuildIn } from '../../src/core/method/set-build-in-helper';
-import { globalBuildIn } from '../../src/core/method/global-build-in-helper';
-import { rootBuildIn } from '../../src/core/method/root-build-in-helper';
-const FastGlob = require('fast-glob');
+import { createBuildIn } from '../../src/core/method/create-build-in-helper.js';
+import { setBuildIn } from '../../src/core/method/set-build-in-helper.js';
+import { globalBuildIn } from '../../src/core/method/global-build-in-helper.js';
+import { rootBuildIn } from '../../src/core/method/root-build-in-helper.js';
+const fg = require('fast-glob');
 
 function isStyleClass(filePath: string): boolean {
   const content = fs.readFileSync(filePath, 'utf8');
@@ -44,7 +44,7 @@ function isStyleClass(filePath: string): boolean {
     appRoot = path.join(process.cwd(), '../../');
   }
   const csstsPattern = [path.join(appRoot, '**/*.ts'), path.join(appRoot, '**/*.tsx')];
-  const files = (await FastGlob(csstsPattern)) as string[];
+  const files = (await fg(csstsPattern)) as string[];
   const styleFiles = files.filter(file => {
     return isStyleClass(file);
   });
