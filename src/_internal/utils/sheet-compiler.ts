@@ -105,7 +105,7 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62
           if (regularRules) {
             mediaQueries.push({
               media: mediaRule,
-              css: `\n${mediaRule} {\n${indent}  ${className} {\n${regularRules}  }\n${nestedRules}${indent}}\n${indent}\n`,
+              css: `\n${mediaRule} {\n${indent}  ${className} {\n${regularRules}  }\n${nestedRules}${indent}}${indent}\n`,
             });
           } else {
             mediaQueries.push({
