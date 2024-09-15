@@ -15,7 +15,8 @@
     "target": "ES2022",
     "noEmitOnError": true,
     "incremental": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "removeComments": true
   },
   "include": ["./src"],
   "exclude": ["./dist", "node_modules"]
