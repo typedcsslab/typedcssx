@@ -44,7 +44,3 @@ const Page = () => <div className={css.blue}>Hello World</div>;
 
 For help, discuss best practices and please join the conversation here:  
 [Discuss TypedCSSX on GitHub](https://github.com/typedcsslab/typedcssx/discussions)
-
-## License
-
-Under The MIT License.
