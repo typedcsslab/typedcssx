@@ -28,4 +28,4 @@ class cssx {
 }
 
 export default cssx;
-export { create, set, global, root, union };
+export { union };
