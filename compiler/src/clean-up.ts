@@ -23,10 +23,11 @@ export const cleanUp = async () => {
   const globalFilePath = join(stylesDir, 'typedcssx-global.css');
 
   try {
-    writeFileSync(styleFilePath, '/*------------------------------*/', 'utf-8');
+    writeFileSync(styleFilePath, '/*______________________________*/', 'utf-8');
     console.log('...💫(reseted module css)');
-
-    writeFileSync(globalFilePath, '/*------------------------------*/', 'utf-8');
+    if (existsSync(stylesDir)) {
+      writeFileSync(globalFilePath, '/*______________________________*/', 'utf-8');
+    }
     console.log('...💫(reseted global css)');
   } catch (err) {
     console.error('An error occurred:', err);
