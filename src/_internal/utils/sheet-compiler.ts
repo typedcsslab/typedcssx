@@ -1,14 +1,14 @@
 import { pseudo, camelToKebabCase, isClassesObjectType, applyCssValue } from '..';
 import type { PropertyType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '..';
 
-export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base62Hash?: string, core?: string) {
+export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base36Hash?: string, core?: string) {
   let styleSheet = '';
   let bigIndent = false;
   const mediaQueries: { media: string; css: string }[] = [];
 
   const classNameType = (property: string) => {
     if (core === '--global') return property;
-    else return '.' + property + '_' + base62Hash;
+    else return '.' + property + '_' + base36Hash;
   };
 
   const rules = (indent: string, rulesValue: unknown, property: unknown) => {

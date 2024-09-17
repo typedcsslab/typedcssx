@@ -1,10 +1,10 @@
 import { camelToKebabCase, pseudo, applyCssValue } from '..';
 import type { CustomCSSProperties, PropertyType, PropertyValue } from '..';
 
-export function styleCompiler<T extends CustomCSSProperties>(object: T, base62Hash?: string, root?: string) {
+export function styleCompiler<T extends CustomCSSProperties>(object: T, base36Hash?: string, root?: string) {
   const classNameType = () => {
     if (root === '--root') return ':root';
-    else return '._' + base62Hash;
+    else return '.' + base36Hash;
   };
   let bigIndent = false;
 

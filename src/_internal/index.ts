@@ -1,7 +1,7 @@
 export * from './types';
 export * from './utils/extends';
 export * from './utils/helper';
-export { genBase62Hash } from './utils/hash';
+export { genBase36Hash } from './utils/hash';
 export { injectClientCSS } from './utils/inject-client-css';
 export { injectClientGlobalCSS } from './utils/inject-client-global-css';
 export { injectServerCSS, getServerCSS } from './utils/inject-server-css';
