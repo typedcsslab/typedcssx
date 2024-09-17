@@ -1,4 +1,4 @@
-import { genBase62Hash, styleCompiler } from '../src/_internal';
+import { genBase36Hash, styleCompiler } from '../src/_internal';
 import { max_lg } from '../src/core/media';
 
 test('styleCompiler produces expected output', async () => {
@@ -11,7 +11,7 @@ test('styleCompiler produces expected output', async () => {
     },
   };
 
-  const base62Hash = genBase62Hash(object, 5);
+  const base62Hash = genBase36Hash(object, 8);
   const { styleSheet } = styleCompiler(object, base62Hash);
 
   expect(styleSheet).toContain('color: blue;');
