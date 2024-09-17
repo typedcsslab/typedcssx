@@ -1,6 +1,6 @@
 {
   "name": "typedcssx",
-  "version": "2.4.5",
+  "version": "2.5.0",
   "private": true,
   "author": "Refirst",
   "repository": "github:typedcsslab/typedcssx",
@@ -11,7 +11,8 @@
   "scripts": {
     "test": "jest",
     "dev:e2e": "cd e2e/site && npm run dev -- -p 4000",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "compiler": "tsc --noEmit ./compiler/src/index.ts && tsx ./compiler/src/index.ts"
   },
   "bin": {
     "typedcssx": "./bin/typedcssx.mjs"
