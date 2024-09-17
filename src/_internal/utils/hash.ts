@@ -1,7 +1,7 @@
 import { CustomCSSProperties, ClassesObjectType } from '..';
 import * as crypto from 'crypto';
 
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
 function bufferToInteger(buffer: Uint8Array): number {
   let result = 0;
@@ -11,20 +11,27 @@ function bufferToInteger(buffer: Uint8Array): number {
   return result;
 }
 
-function encodeBase62(buffer: Uint8Array): string {
+function encodeBase36(buffer: Uint8Array): string {
   let num = bufferToInteger(buffer);
   let result = '';
   while (num > 0) {
-    result = chars[num % 62] + result;
-    num = Math.floor(num / 62);
+    result = chars[num % 36] + result;
+    num = Math.floor(num / 36);
   }
   return result;
 }
 
-export function genBase62Hash(object: ClassesObjectType | CustomCSSProperties, n: number) {
-  const serialized = JSON.stringify(object);
-  const hashBuffer = crypto.createHash('sha256').update(serialized).digest();
-  const base62Hash = encodeBase62(hashBuffer);
+function getStartingChar(hashBuffer: Uint8Array): string {
+  const chars = 'abcdefghijklmnopqrstuvwxyz';
+  const firstByte = hashBuffer[0];
+  return chars[firstByte % chars.length];
+}
 
-  return base62Hash.slice(0, n);
+export function genBase36Hash(object: ClassesObjectType | CustomCSSProperties, n: number) {
+  const serialized = JSON.stringify(object);
+  const hashBuffer = crypto.createHash('sha512').update(serialized).digest();
+  const base36Hash = encodeBase36(hashBuffer);
+  const startingChar = getStartingChar(hashBuffer);
+
+  return startingChar + base36Hash.slice(0, n - 1);
 }
