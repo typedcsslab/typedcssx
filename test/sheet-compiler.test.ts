@@ -1,4 +1,4 @@
-import { genBase62Hash, sheetCompiler } from '../src/_internal';
+import { genBase36Hash, sheetCompiler } from '../src/_internal';
 import { max_lg } from '../src/core/media';
 
 test('sheetCompiler produces expected output', async () => {
@@ -11,7 +11,7 @@ test('sheetCompiler produces expected output', async () => {
     },
   };
 
-  const base62Hash = genBase62Hash(object, 5);
+  const base62Hash = genBase36Hash(object, 6);
   const { styleSheet } = sheetCompiler(object, base62Hash);
 
   expect(styleSheet).toContain('.e2e_');
