@@ -14,7 +14,11 @@ import { MediaQuery, MediaQueryType } from './custom-html-type';
 import { HtmlTags } from '../../utils/html-tags';
 import { LanguageCodes } from '../../utils/language-codes';
 
-type CustomExtendProperties = {
+type BaseCSSProperties = {
+  [K in keyof React.CSSProperties]: React.CSSProperties[K] | CSSVariableValue;
+};
+
+interface CustomExtendProperties extends BaseCSSProperties {
   width?: CSSNumericValue | CSSLengthSubValue | 'auto';
   height?: CSSNumericValue | CSSLengthSubValue | 'auto';
   margin?: CSSEdgeSizeValue;
@@ -53,7 +57,7 @@ type CustomExtendProperties = {
   color?: CSSColorValue | CSSGlobalValue;
   background?: CSSColorValue | CSSGlobalValue | 'none';
   backgroundColor?: CSSColorValue | CSSGlobalValue;
-};
+}
 
 type PseudoElementsAndClassKeys =
   | 'active'
@@ -96,15 +100,7 @@ type PseudoElementsAndClassType = {
   [K in PseudoElementsAndClassKeys]?: CustomCSSProperties;
 };
 
-export type CustomCSSProperties =
-  | ArgsPseudos
-  | AndStringsType
-  | (CustomExtendProperties & {
-      [K in keyof React.CSSProperties]: React.CSSProperties[K] | CSSVariableValue;
-    })
-  | CSSVariableProperties
-  | MediaQueryType
-  | PseudoElementsAndClassType;
+export type CustomCSSProperties = CustomExtendProperties | AndStringsType | ArgsPseudos | CSSVariableProperties | MediaQueryType | PseudoElementsAndClassType;
 
 export type ExtendedCSSProperties =
   | CustomCSSProperties
