@@ -1,26 +1,26 @@
 'use server';
 
-import { readFileSync, appendFileSync, existsSync } from 'fs';
+import * as fs from 'fs';
+import * as path from 'path';
 import { isServer } from './helper';
-import { join } from 'path';
 
 export const buildIn = async (styleSheet: string, global?: string): Promise<void> => {
-  const styleFilePath = join(__dirname, '../../core/styles/style.module.css');
-  const globalFilePath = join(__dirname, '../../core/styles/global.css');
+  const styleFilePath = path.join(__dirname, '../../core/styles/style.module.css');
+  const globalFilePath = path.join(__dirname, '../../core/styles/global.css');
 
   const filePath = global === '--global' ? globalFilePath : styleFilePath;
   const message = global === '--global' ? ' ✅ Generating global static css \n' : ' ✅ Generating module static css \n';
 
   if (!isServer) return;
   try {
-    if (existsSync(filePath)) {
-      const cssData = readFileSync(filePath, 'utf-8');
+    if (fs.existsSync(filePath)) {
+      const cssData = fs.readFileSync(filePath, 'utf-8');
       if (!cssData.includes(styleSheet)) {
-        appendFileSync(filePath, styleSheet, 'utf-8');
+        fs.appendFileSync(filePath, styleSheet, 'utf-8');
         console.log(message + styleSheet);
       }
     } else {
-      appendFileSync(filePath, styleSheet, 'utf-8');
+      fs.appendFileSync(filePath, styleSheet, 'utf-8');
       console.log(message + styleSheet);
     }
   } catch (error) {
