@@ -1,37 +1,35 @@
 import { CustomCSSProperties, ClassesObjectType } from '..';
-import * as crypto from 'crypto';
 
 const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
-function bufferToInteger(buffer: Uint8Array): number {
-  let result = 0;
-  for (let i = 0; i < buffer.length; i++) {
-    result = result * 256 + buffer[i];
+function simpleHash(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
   }
-  return result;
+  return Math.abs(hash);
 }
 
-function encodeBase36(buffer: Uint8Array): string {
-  let num = bufferToInteger(buffer);
+function encodeBase36(num: number): string {
   let result = '';
-  while (num > 0) {
+  do {
     result = chars[num % 36] + result;
     num = Math.floor(num / 36);
-  }
+  } while (num > 0);
   return result;
 }
 
-function getStartingChar(hashBuffer: Uint8Array): string {
+function getStartingChar(hash: number): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz';
-  const firstByte = hashBuffer[0];
-  return chars[firstByte % chars.length];
+  return chars[hash % chars.length];
 }
 
-export function genBase36Hash(object: ClassesObjectType | CustomCSSProperties, n: number) {
+export function genBase36Hash(object: ClassesObjectType | CustomCSSProperties, n: number): string {
   const serialized = JSON.stringify(object);
-  const hashBuffer = crypto.createHash('sha512').update(serialized).digest();
-  const base36Hash = encodeBase36(hashBuffer);
-  const startingChar = getStartingChar(hashBuffer);
+  const hash = simpleHash(serialized);
+  const base36Hash = encodeBase36(hash);
+  const startingChar = getStartingChar(hash);
 
   return startingChar + base36Hash.slice(0, n - 1);
 }
