@@ -1,6 +1,14 @@
-# TypedCSSX
+<div align="center">
+<a href="https://typedcssx.vercel.app">
+  <img width="830" alt="Vector" src="https://typedcssx.vercel.app/logo.png">
+</a>
+<p />
 
-A type-first CSS library for stably building user interfaces.
+[![Release Status](https://img.shields.io/github/release/typedcsslab/typedcssx.svg?color=64C8C8)](https://github.com/typedcsslab/typedcssx/releases/latest)
+[![Minzip Size](https://img.shields.io/bundlephobia/minzip/typedcssx?color=64C8C8)](https://bundlephobia.com/package/typedcssx)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=64C8C8)](https://opensource.org/licenses/MIT)
+
+</div>
 
 ## Key features:
 
@@ -16,9 +24,7 @@ A type-first CSS library for stably building user interfaces.
 
 ## Why TypedCSSX ?
 
-TypedCSSX allows you to write CSS as TypeScript, making your styles type safe and maintainable  
-and integrated with your development environment. With features like static CSS generation  
-Theoretical perfect performance while keeping your CSS code clean and scalable.
+TypedCSSX allows you to write CSS as TypeScript, making your styles type safe and maintainable and integrated with your development environment. With features like static CSS generation. Theoretical perfect performance while keeping your CSS code clean and scalable.
 
 ## Documentation
 
