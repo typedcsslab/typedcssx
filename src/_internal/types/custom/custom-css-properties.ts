@@ -32,9 +32,9 @@ interface CustomExtendProperties extends BaseCSSProperties {
   paddingRight?: CSSNumericValue;
   paddingTop?: CSSNumericValue;
   fontSize?: CSSNumericValue | CSSFontSizeSubValue;
-  scale?: CSSNumericValue | `${number}` | 'none';
-  opacity?: CSSNumericValue | `${number}`;
-  lineHeight?: CSSNumericValue | `${number}` | 'normal';
+  scale?: CSSNumericValue | number | 'none';
+  opacity?: CSSNumericValue | number;
+  lineHeight?: CSSNumericValue | number | 'normal';
   letterSpacing?: CSSNumericValue | 'normal';
   wordSpacing?: CSSNumericValue | 'normal';
   borderWidth?: CSSNumericValue | 'thin' | 'medium' | 'thick';
@@ -52,10 +52,7 @@ interface CustomExtendProperties extends BaseCSSProperties {
   rowGap?: CSSNumericValue;
   columnGap?: CSSNumericValue | 'normal';
   columns?: CSSColumnsValue;
-  gridColumn?: string;
-  gridRow?: string;
   color?: CSSColorValue | CSSGlobalValue;
-  background?: CSSColorValue | CSSGlobalValue | 'none';
   backgroundColor?: CSSColorValue | CSSGlobalValue;
 }
 
@@ -101,7 +98,6 @@ type PseudoElementsAndClassType = {
 };
 
 export type CustomCSSProperties = CustomExtendProperties | AndStringsType | ArgsPseudos | CSSVariableProperties | MediaQueryType | PseudoElementsAndClassType;
-
 export type ExtendedCSSProperties =
   | CustomCSSProperties
   | {
