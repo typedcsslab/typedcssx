@@ -1,6 +1,6 @@
 <div align="center">
 <a href="https://typedcssx.vercel.app">
-  <img width="830" alt="Vector" src="https://typedcssx.vercel.app/logo.png">
+  <img width="830" alt="visit typedcssx website" src="https://typedcssx.vercel.app/logo.png">
 </a>
 <p />
 
@@ -10,14 +10,22 @@
 
 </div>
 
+## Installation
+
+It works with any front-end framework and also works with a single ts file.
+
+```sh
+npm install --save-dev typedcssx
+```
+
 ## Key features:
 
 - Type first
 - Type safe
+- Ease API
 - Scaleble
 - Maintainable
-- Easy API
-- All Pure CSS compiler
+- Pure CSS compiler
 - Zero-runtime
 - Zero-config
 - RSC Full support
