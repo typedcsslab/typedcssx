@@ -11,10 +11,10 @@
   "dependencies": {
     "next": "^14.1.1",
     "react": "^18",
-    "react-dom": "^18",
-    "typedcssx": "*"
+    "react-dom": "^18"
   },
   "devDependencies": {
+    "typedcssx": "*",
     "@types/node": "^22.5.4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
