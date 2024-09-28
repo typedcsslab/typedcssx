@@ -1,4 +1,4 @@
-import type { ClassesObjectType, ExactClassesObjectType, ReturnStyleType, CustomHTMLType, ExtendedCSSProperties } from '../_internal';
+import type { CSSXStyleDefinition, CSSXTypedStyle, CSSXReturnStyle, CustomHTMLType, ExtendedCSSProperties } from '../_internal';
 import { create } from './method/create';
 import { set } from './method/set';
 import { global } from './method/global';
@@ -6,7 +6,7 @@ import { root } from './method/root';
 import { union } from './method/union';
 
 class cssx {
-  static create<T extends ClassesObjectType>(object: ExactClassesObjectType<T> | ClassesObjectType): ReturnStyleType<T> {
+  static create<T extends CSSXStyleDefinition>(object: CSSXTypedStyle<T> | CSSXStyleDefinition): CSSXReturnStyle<T> {
     return create(object);
   }
 
