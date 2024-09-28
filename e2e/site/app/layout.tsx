@@ -1,4 +1,4 @@
-import { PreviewServerCSS } from 'typedcssx/server';
+import { PreviewServerCSS } from 'typedcssx/next';
 import 'styles/typedcssx-global.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
