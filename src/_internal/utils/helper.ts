@@ -1,4 +1,4 @@
-import type { ClassesObjectType, HasEPE, HasECE } from '..';
+import type { CSSXStyleDefinition, HasEPE, HasECE } from '..';
 import htmlTags from './html-tags';
 
 const isWindowDefined = typeof window !== 'undefined';
@@ -17,7 +17,7 @@ export const applyCssValue = (value: string | number, cssProp: string): string =
   return value;
 };
 
-export const isClassesObjectType = (object: object): object is ClassesObjectType => {
+export const isClassesObjectType = (object: object): object is CSSXStyleDefinition => {
   return typeof object === 'object' && !Array.isArray(object);
 };
 

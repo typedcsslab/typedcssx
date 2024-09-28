@@ -1,4 +1,4 @@
-import { CustomCSSProperties, ClassesObjectType } from '..';
+import { CustomCSSProperties, CSSXStyleDefinition } from '..';
 
 const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -25,7 +25,7 @@ function getStartingChar(hash: number): string {
   return chars[hash % chars.length];
 }
 
-export function genBase36Hash(object: ClassesObjectType | CustomCSSProperties, n: number): string {
+export function genBase36Hash(object: CSSXStyleDefinition | CustomCSSProperties, n: number): string {
   const serialized = JSON.stringify(object);
   const hash = simpleHash(serialized);
   const base36Hash = encodeBase36(hash);
