@@ -43,7 +43,7 @@ export function styleCompiler<T extends CustomCSSProperties>(object: T, base36Ha
         bigIndent = true;
         const mediaRule = stringConverter(className, value, indentLevel + 1);
         const mainRule = mediaRule.mainRules ? `{\n  ${className} {\n${mediaRule.mainRules}  }` : '{';
-        mediaQueries += `\n${property} ${mainRule}${mediaRule.pseudoRules}${mediaRule.media}}\n`;
+        mediaQueries += `\n${property} ${mainRule}${mediaRule.pseudoRules}${mediaRule.media}\n}\n`;
         bigIndent = false;
       } else if (typeof value === 'string' || typeof value === 'number') {
         const CSSProp = camelToKebabCase(property);
