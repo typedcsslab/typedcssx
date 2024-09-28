@@ -1,7 +1,7 @@
 import { pseudo, camelToKebabCase, isClassesObjectType, applyCssValue } from '..';
-import type { PropertyType, ClassesObjectType, CustomCSSProperties, CustomHTMLType } from '..';
+import type { PropertyType, CSSXStyleDefinition, CustomCSSProperties, CustomHTMLType } from '..';
 
-export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base36Hash?: string, core?: string) {
+export function sheetCompiler(object: CSSXStyleDefinition | CustomCSSProperties | CustomHTMLType, base36Hash?: string, core?: string) {
   let styleSheet = '';
   let bigIndent = false;
   const mediaQueries: { media: string; css: string }[] = [];
@@ -121,10 +121,10 @@ export function sheetCompiler(object: ClassesObjectType | CustomHTMLType, base36
     return classSelector;
   };
 
-  const createStyles = (styleObject: PropertyType | CustomCSSProperties | ClassesObjectType, indentLevel = 0): string => {
+  const createStyles = (styleObject: PropertyType | CustomCSSProperties | CSSXStyleDefinition, indentLevel = 0): string => {
     let styleSheet = '';
 
-    const processStyles = (styles: PropertyType | CustomCSSProperties | ClassesObjectType, currentIndentLevel = 0): void => {
+    const processStyles = (styles: PropertyType | CustomCSSProperties | CSSXStyleDefinition, currentIndentLevel = 0): void => {
       const indent = '  '.repeat(currentIndentLevel);
       for (const property in styles) {
         if (Object.prototype.hasOwnProperty.call(styles, property)) {

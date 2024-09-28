@@ -1,9 +1,9 @@
-import type { ReturnStyleType, ClassesObjectType, ExactClassesObjectType } from '../../_internal';
+import type { CSSXReturnStyle, CSSXTypedStyle, CSSXStyleDefinition } from '../../_internal';
 import { isDevAndTest, sheetCompiler, injectServerCSS, genBase36Hash, isServer, injectClientCSS } from '../../_internal';
 import { createGlobalStyleSheetPromise, globalStyleSheetPromise, resolveGlobalStyleSheet } from './create-build-in-helper';
 import styles from '../styles/style.module.css';
 
-export function create<T extends ClassesObjectType>(object: ExactClassesObjectType<T> | ClassesObjectType): ReturnStyleType<T> {
+export function create<T extends CSSXStyleDefinition>(object: CSSXTypedStyle<T> | CSSXStyleDefinition): CSSXReturnStyle<T> {
   const base36Hash = genBase36Hash(object, 6);
   const { styleSheet } = sheetCompiler(object, base36Hash);
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
@@ -19,5 +19,5 @@ export function create<T extends ClassesObjectType>(object: ExactClassesObjectTy
       },
     });
   });
-  return object as ReturnStyleType<T>;
+  return object as CSSXReturnStyle<T>;
 }
