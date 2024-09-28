@@ -1,6 +1,6 @@
 import { set } from '../src/core/method/set';
 
-test('Style.set creates a class with correct styles', () => {
+test('cssx.set creates a class with correct styles', () => {
   const styleObject = {
     color: 'blue',
     margin: '10px',
