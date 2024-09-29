@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
 import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
-import { join, dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { join } from 'path';
 
 if (process.argv.includes('--compile')) {
   try {
     console.log('Running TypeScript compiler...');
-    execSync('npm run compiler', {
+    execSync('npx tsc --noEmit --incremental false', {
       stdio: 'inherit',
-      cwd: join(__dirname, '../../typedcssx'),
+      cwd: process.cwd(),
+    });
+    execSync('npx tsx compiler/src/index.ts', {
+      stdio: 'inherit',
+      cwd: join(process.cwd(), 'node_modules/typedcssx'),
     });
 
     console.log('Compilation completed successfully.');
