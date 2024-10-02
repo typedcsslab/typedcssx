@@ -1,9 +1,10 @@
 <div align="center">
 <a href="https://typedcssx.vercel.app">
-  <img width="830" alt="visit typedcssx website" src="https://typedcssx.vercel.app/logo.png">
+  <img width="830" alt="visit typedcssx website" src="https://typedcssx.vercel.app/banner.png">
 </a>
 <p />
 
+[![build](https://github.com/typedcsslab/typedcssx/actions/workflows/build.yml/badge.svg?event=push)](https://github.com/typedcsslab/typedcssx/actions/workflows/build.yml)
 [![Release Status](https://img.shields.io/github/release/typedcsslab/typedcssx.svg?color=64C8C8)](https://github.com/typedcsslab/typedcssx/releases/latest)
 [![Minzip Size](https://img.shields.io/bundlephobia/minzip/typedcssx?color=64C8C8)](https://bundlephobia.com/package/typedcssx)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=64C8C8)](https://opensource.org/licenses/MIT)
