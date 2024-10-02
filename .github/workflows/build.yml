@@ -1,11 +1,36 @@
-name: Playwright tests
+name: build
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
 jobs:
-  test:
+  jest-tests:
+    name: Run Jest Tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm install -g pnpm && pnpm install
+      - name: Install dependencies for e2e/site
+        run: |
+          cd e2e/site
+          npm install
+      - name: Run Jest tests with coverage
+        run: pnpm exec jest --ci --coverage --reporters=github-actions --reporters=summary
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  playwright-tests:
+    name: Run Playwright Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
