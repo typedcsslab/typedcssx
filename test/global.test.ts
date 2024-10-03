@@ -1,6 +1,6 @@
 import { global } from '../src/core/method/global';
 
-test('Style.global insert style into the head with data-scope="global"', () => {
+test('cssx.global insert style into the head with data-scope="global"', () => {
   global({
     h1: {
       fontSize: 24,

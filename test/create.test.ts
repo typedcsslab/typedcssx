@@ -1,6 +1,6 @@
 import { create } from '../src/core/method/create';
 
-test('Style.create returns an object with string values', () => {
+test('cssx.create returns an object with string values', () => {
   const styleObject = {
     test: {
       color: 'red',
