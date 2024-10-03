@@ -1,26 +1,25 @@
 'use client';
 
-import { useLayoutEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 
 export const RefreshOnNavigate = () => {
   const router = useRouter();
-  const handleClick = useCallback(
-    (e: MouseEvent) => {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const targetAnchor = target.closest('a');
-      if (targetAnchor instanceof HTMLAnchorElement) router.refresh();
-    },
-    [router]
-  );
+      if (pathname && targetAnchor instanceof HTMLAnchorElement && targetAnchor.origin === window.location.origin) router.refresh();
+    };
 
-  useLayoutEffect(() => {
     document.addEventListener('click', handleClick);
 
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, [handleClick]);
+  }, [router, pathname]);
 
   return null;
 };
