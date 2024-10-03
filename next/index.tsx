@@ -1,1 +1,1 @@
-export { PreviewServerCSS } from '../src/core/component/server-css';
+export { ServerStylePreview } from '../src/core/component/server-style-preview';

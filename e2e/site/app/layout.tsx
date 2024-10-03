@@ -1,11 +1,11 @@
-import { PreviewServerCSS } from 'typedcssx/next';
+import { ServerStylePreview } from 'typedcssx/next';
 import 'styles/typedcssx-global.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <PreviewServerCSS anchorEnabled={true} />
+        <ServerStylePreview />
       </head>
       <body>{children}</body>
     </html>
