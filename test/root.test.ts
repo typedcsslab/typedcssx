@@ -1,6 +1,6 @@
 import { root } from '../src/core/method/root';
 
-test('Style.root insert style into the head with data-scope="root"', () => {
+test('cssx.root insert style into the head with data-scope="root"', () => {
   root({
     '--color-heading': '#333',
   });

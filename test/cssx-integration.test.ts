@@ -20,3 +20,8 @@ test('cssx.root returns undefined', () => {
   const result = cssx.root({});
   expect(result).toBeUndefined();
 });
+
+test('cssx.union returns a string', () => {
+  const result = cssx.union('test', '', false, undefined);
+  expect(result).toBe('test');
+});
