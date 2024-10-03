@@ -10,11 +10,11 @@ export function create<T extends CSSXStyleDefinition>(object: CSSXTypedStyle<T> 
   resolveGlobalStyleSheet(styleSheet);
 
   const injectCSS = isServer ? injectServerCSS : injectClientCSS;
-  if (isDevAndTest) injectCSS(base36Hash, styleSheet, 'create');
   Object.keys(object).forEach(key => {
     Object.defineProperty(object, key, {
       get: () => {
         const className = key + '_' + base36Hash;
+        if (isDevAndTest) injectCSS(base36Hash, styleSheet, 'create');
         return isDevAndTest ? className : styles[className];
       },
     });
