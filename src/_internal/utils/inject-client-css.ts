@@ -18,7 +18,7 @@ export function createStyleElement(hash: string): HTMLStyleElement | null {
 export function injectClientCSS(hash: string, sheet: string, context: string) {
   if (isDevelopment) console.log('💫 ' + context + ' executing ...' + sheet);
   if (isServer) return;
-  queueMicrotask(() => {
+  requestAnimationFrame(() => {
     styleCleanUp();
   });
   hashCache[hash] = hash;
