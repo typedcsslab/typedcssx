@@ -28,8 +28,7 @@ npm install --save-dev typedcssx
 - Maintainable
 - Pure CSS compiler
 - Zero-runtime
-- Zero-config
-- RSC Full support
+- RSC support
 
 ## Why TypedCSSX ?
 
