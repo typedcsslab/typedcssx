@@ -22,6 +22,6 @@ test('cssx.root returns undefined', () => {
 });
 
 test('cssx.union returns a string', () => {
-  const result = cssx.union('test', '', false, undefined);
-  expect(result).toBe('test');
+  const result = cssx.union('test', '', false, undefined, 'abc');
+  expect(result).toBe('test abc');
 });
