@@ -1,14 +1,14 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as ts from 'typescript';
+import ts from 'typescript';
+import fg from 'fast-glob';
 import { cleanUp } from './clean-up';
 import { createBuildIn } from '../../src/core/method/create-build-in-helper.js';
 import { setBuildIn } from '../../src/core/method/set-build-in-helper.js';
 import { globalBuildIn } from '../../src/core/method/global-build-in-helper.js';
 import { rootBuildIn } from '../../src/core/method/root-build-in-helper.js';
-const fg = require('fast-glob');
 
-function isStyleClass(filePath: string): boolean {
+function isCSSX(filePath: string): boolean {
   const content = fs.readFileSync(filePath, 'utf8');
   const sourceFile = ts.createSourceFile(filePath, content, ts.ScriptTarget.Latest, true);
 
@@ -32,22 +32,18 @@ function isStyleClass(filePath: string): boolean {
   return isUsed;
 }
 
-(async () => {
-  await cleanUp();
-  let appRoot = '';
+async function getAppRoot(): Promise<string> {
   const threeLevelsUp = path.join(process.cwd(), '../../../../..');
   const pnpmExists = fs.existsSync(path.join(threeLevelsUp, 'node_modules/.pnpm'));
 
-  if (pnpmExists) {
-    appRoot = path.join(process.cwd(), '../../../../../');
-  } else {
-    appRoot = path.join(process.cwd(), '../../');
-  }
-  const pattern = [path.join(appRoot, '**/*.{ts,tsx}')];
-  const files = (await fg(pattern)) as string[];
-  const styleFiles = files.filter(file => {
-    return isStyleClass(file);
-  });
+  return pnpmExists ? path.join(process.cwd(), '../../../../../') : path.join(process.cwd(), '../../');
+}
+
+(async () => {
+  await cleanUp();
+  const appRoot = await getAppRoot();
+  const files = await fg([path.join(appRoot, '**/*.{ts,tsx}')]);
+  const styleFiles = files.filter(isCSSX);
   console.log('\n💬 The following CSS caches were accepted:\n');
   for (const file of styleFiles) {
     const filePath = path.resolve(file);
