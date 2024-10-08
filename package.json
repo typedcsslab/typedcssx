@@ -1,6 +1,6 @@
 {
   "name": "typedcssx",
-  "version": "2.6.6",
+  "version": "2.6.6-beta.0",
   "description": "CSS library for stably building user interfaces",
   "private": true,
   "author": "Refirst",
