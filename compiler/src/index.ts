@@ -12,31 +12,21 @@ function isCSSX(filePath: string): boolean {
   const content = fs.readFileSync(filePath, 'utf8');
   const sourceFile = ts.createSourceFile(filePath, content, ts.ScriptTarget.Latest, true);
 
-  let isUsed = false;
-
-  function checkNode(node: ts.Node) {
+  const checker = (node: ts.Node): boolean => {
     if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.name)) {
       const expressionText = node.expression.getText(sourceFile);
       const methodName = node.name.getText(sourceFile);
-      const methods = ['create', 'set', 'root', 'global'];
-      if (expressionText === 'cssx' && methods.includes(methodName)) {
-        isUsed = true;
-      }
+      return expressionText === 'cssx' && ['create', 'set', 'root', 'global'].includes(methodName);
     }
+    return ts.forEachChild(node, checker) || false;
+  };
 
-    ts.forEachChild(node, checkNode);
-  }
-
-  checkNode(sourceFile);
-
-  return isUsed;
+  return checker(sourceFile);
 }
 
 async function getAppRoot(): Promise<string> {
   const threeLevelsUp = path.join(process.cwd(), '../../../../..');
-  const pnpmExists = fs.existsSync(path.join(threeLevelsUp, 'node_modules/.pnpm'));
-
-  return pnpmExists ? path.join(process.cwd(), '../../../../../') : path.join(process.cwd(), '../../');
+  return fs.existsSync(path.join(threeLevelsUp, 'node_modules/.pnpm')) ? path.join(process.cwd(), '../../../../../') : path.join(process.cwd(), '../../');
 }
 
 (async () => {
@@ -45,9 +35,8 @@ async function getAppRoot(): Promise<string> {
   const files = await fg([path.join(appRoot, '**/*.{ts,tsx}')]);
   const styleFiles = files.filter(isCSSX);
   console.log('\n💬 The following CSS caches were accepted:\n');
-  for (const file of styleFiles) {
-    const filePath = path.resolve(file);
-    await import(filePath);
+  for (let i = 0; i < styleFiles.length; i++) {
+    await import(path.resolve(styleFiles[i]));
     createBuildIn();
     setBuildIn();
     globalBuildIn();
