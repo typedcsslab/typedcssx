@@ -19,18 +19,18 @@ It works with any front-end framework and also works with a single ts file.
 npm install --save-dev typedcssx
 ```
 
-## Key features:
+## Features
 
 - Type first
 - Type safe
+- Can linter
 - Ease API
 - Scaleble
 - Maintainable
-- Pure CSS compiler
-- Zero-runtime
-- RSC support
+- Zero-Runtime
+- RSC-Support
 
-## Why TypedCSSX ?
+## What is TypedCSSX ?
 
 TypedCSSX allows you to write CSS as TypeScript, making your styles type safe and maintainable and integrated with your development environment. With features like static CSS generation. Theoretical perfect performance while keeping your CSS code clean and scalable.
 
