@@ -15,7 +15,7 @@ function createGlobalStyleSheetPromise() {
 }
 
 async function executeBuildIn(styleSheet: string): Promise<void> {
-  if (!isDevelopment && styleSheet) await buildIn(styleSheet);
+  if (!isDevelopment && styleSheet) buildIn(styleSheet);
 }
 
 async function processStyleSheets() {

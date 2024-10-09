@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { isServer } from './helper';
 
-export const buildIn = async (styleSheet: string, global?: string): Promise<void> => {
+export const buildIn = (styleSheet: string, global?: string): void => {
   const styleFilePath = path.join(__dirname, '../../core/styles/style.module.css');
   const globalFilePath = path.join(__dirname, '../../core/styles/global.css');
 
