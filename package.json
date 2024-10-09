@@ -1,6 +1,6 @@
 {
   "name": "typedcssx",
-  "version": "2.6.6-beta.0",
+  "version": "3.0.0",
   "description": "CSS library for stably building user interfaces",
   "private": true,
   "author": "Refirst",
@@ -15,7 +15,7 @@
     "test:e2e": "playwright test"
   },
   "bin": {
-    "typedcssx": "./bin/typedcssx.mjs"
+    "cssx": "./bin/cssx.mjs"
   },
   "dependencies": {
     "fast-glob": "^3.3.2",
