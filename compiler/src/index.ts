@@ -35,11 +35,19 @@ async function getAppRoot(): Promise<string> {
   const files = await fg([path.join(appRoot, '**/*.{ts,tsx}')]);
   const styleFiles = files.filter(isCSSX);
   console.log('\n💬 The following CSS caches were accepted:\n');
+  const importPromises = styleFiles.map(styleFile => import(path.resolve(styleFile)));
+  await Promise.all(importPromises);
+
   for (let i = 0; i < styleFiles.length; i++) {
-    await import(path.resolve(styleFiles[i]));
-    createBuildIn();
-    setBuildIn();
-    globalBuildIn();
-    rootBuildIn();
+    await createBuildIn();
+  }
+  for (let i = 0; i < styleFiles.length; i++) {
+    await setBuildIn();
+  }
+  for (let i = 0; i < styleFiles.length; i++) {
+    await globalBuildIn();
+  }
+  for (let i = 0; i < styleFiles.length; i++) {
+    await rootBuildIn();
   }
 })();
