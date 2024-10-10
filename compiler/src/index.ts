@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import ts from 'typescript';
-import fg from 'fast-glob';
+import { globby } from 'globby';
 import { cleanUp } from './clean-up';
 import { createBuildIn } from '../../src/core/method/create-build-in-helper.js';
 import { setBuildIn } from '../../src/core/method/set-build-in-helper.js';
@@ -32,7 +32,7 @@ async function getAppRoot(): Promise<string> {
 (async () => {
   await cleanUp();
   const appRoot = await getAppRoot();
-  const files = await fg([path.join(appRoot, '**/*.{ts,tsx}')]);
+  const files = await globby([path.join(appRoot, '**/*.{ts,tsx}')]);
   const styleFiles = files.filter(isCSSX);
   console.log('\n💬 The following CSS caches were accepted:\n');
   for (let i = 0; i < styleFiles.length; i++) {
