@@ -18,7 +18,7 @@
     "cssx": "./bin/cssx.mjs"
   },
   "dependencies": {
-    "fast-glob": "^3.3.2",
+    "globby": "^14.0.2",
     "tsx": "^4.19.1"
   },
   "devDependencies": {
