@@ -1,5 +1,5 @@
 import type {
-  CSSCalcExpressionFunctioin,
+  CSSCalcExpressionFunction,
   CSSColumnsValue,
   CSSLengthSubValue,
   CSSFontSizeSubValue,
@@ -48,7 +48,7 @@ interface CustomExtendProperties extends BaseCSSProperties {
   minWidth?: CSSNumericValue | CSSLengthSubValue | 'auto';
   minHeight?: CSSNumericValue | CSSLengthSubValue | 'auto';
   flexBasis?: CSSNumericValue | 'auto';
-  gap?: CSSNumericValue | CSSCalcExpressionFunctioin;
+  gap?: CSSNumericValue | CSSCalcExpressionFunction;
   rowGap?: CSSNumericValue;
   columnGap?: CSSNumericValue | 'normal';
   columns?: CSSColumnsValue;
