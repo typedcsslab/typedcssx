@@ -10,7 +10,7 @@ import type {
 import type { CSSVariableValue } from './css-variables';
 
 type CSSArithmeticOperations = '+' | '-' | '*' | '/';
-export type CSSCalcExpressionFunctioin = `calc(${string} ${CSSArithmeticOperations} ${string})`;
+export type CSSCalcExpressionFunction = `calc(${string} ${CSSArithmeticOperations} ${string})`;
 export type CSSColumnsValue = `${CSSNumericValue | number}` | 'auto' | `${CSSNumericValue | number} auto` | `auto ${CSSNumericValue | number}` | 'auto auto';
 export type CSSLengthSubValue = 'none' | 'max-content' | 'min-content' | 'fit-content' | `fit-content(${number}${CSSNumericValue})`;
 export type CSSFontSizeSubValue = 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'xx-large' | 'math';
@@ -23,7 +23,7 @@ type CSSUnitsAndGlobalValue =
   | CSSViewportUnitValue
   | CSSRespectUnitValue
   | CSSPercentageUnitValue
-  | CSSCalcExpressionFunctioin
+  | CSSCalcExpressionFunction
   | CSSVariableValue
   | CSSGlobalValue;
 
