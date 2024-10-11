@@ -4,20 +4,21 @@ import { execSync } from 'child_process';
 import { join } from 'path';
 
 try {
-  if (process.argv.includes('--compile'))
+  const typecheck = process.argv.includes('--compile');
+  if (typecheck)
     console.log('Running TypeScript compiler...'),
       execSync('npx tsc --noEmit --incremental false', {
         stdio: 'inherit',
         cwd: process.cwd(),
       });
   else console.log('pre compile run...');
-
-  execSync('npx tsx compiler/src/index.ts', {
+  const argv = process.argv.includes('--log') ? ' --log' : '';
+  execSync('npx tsx compiler/src/index.ts' + argv, {
     stdio: 'inherit',
     cwd: join(process.cwd(), 'node_modules/typedcssx'),
   });
-
-  console.log('Compilation completed successfully.');
+  const completed = typecheck ? 'completed ' : '';
+  console.log(`Compilation ${completed}successfully`);
 } catch (error) {
   console.error('Compilation failed:', error.message);
   process.exit(1);
