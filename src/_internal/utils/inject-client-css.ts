@@ -1,4 +1,4 @@
-import { isServer, isDevelopment } from '..';
+import { isServer } from '..';
 
 const styleSheets: Record<string, HTMLStyleElement> = {};
 const hashCache: Record<string, string> = {};
@@ -15,8 +15,7 @@ export function createStyleElement(hash: string): HTMLStyleElement | null {
   return styleSheets[hash];
 }
 
-export function injectClientCSS(hash: string, sheet: string, context: string) {
-  if (isDevelopment) console.log('💫 ' + context + ' executing ...' + sheet);
+export function injectClientCSS(hash: string, sheet: string) {
   if (isServer) return;
   requestAnimationFrame(() => {
     styleCleanUp();
