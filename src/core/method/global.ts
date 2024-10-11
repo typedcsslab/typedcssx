@@ -9,5 +9,5 @@ export function global(object: CustomHTMLType): void {
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   resolveGlobalStyleSheet([styleSheet, '--global']);
 
-  if (isDevAndTest) isServer ? injectServerCSS(base36Hash, styleSheet, 'global') : injectClientGlobalCSS(styleSheet, 'global');
+  if (isDevAndTest) isServer ? injectServerCSS(base36Hash, styleSheet) : injectClientGlobalCSS(styleSheet, 'global');
 }

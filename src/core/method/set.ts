@@ -10,6 +10,6 @@ export function set(object: ExtendedCSSProperties): string {
   resolveGlobalStyleSheet(styleSheet);
 
   const injectCSS = isServer ? injectServerCSS : injectClientCSS;
-  if (isDevAndTest) injectCSS(base36Hash, styleSheet, 'set');
+  if (isDevAndTest) injectCSS(base36Hash, styleSheet);
   return isDevAndTest ? base36Hash : styles[base36Hash];
 }

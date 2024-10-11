@@ -14,7 +14,7 @@ export function create<T extends CSSXStyleDefinition>(object: CSSXTypedStyle<T> 
     Object.defineProperty(object, key, {
       get: () => {
         const className = key + '_' + base36Hash;
-        if (isDevAndTest) injectCSS(base36Hash, styleSheet, 'create');
+        if (isDevAndTest) injectCSS(base36Hash, styleSheet);
         return isDevAndTest ? className : styles[className];
       },
     });
