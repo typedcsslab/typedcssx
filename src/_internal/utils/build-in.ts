@@ -17,14 +17,10 @@ export const buildIn = async (styleSheet: string, global?: string): Promise<void
       const cssData = fs.readFileSync(filePath, 'utf-8');
       if (!cssData.includes(styleSheet)) {
         fs.appendFileSync(filePath, styleSheet, 'utf-8');
-        console.log(message + styleSheet);
       }
-    } else {
-      fs.appendFileSync(filePath, styleSheet, 'utf-8');
-      console.log(message + styleSheet);
+      if (process.argv.includes('--log')) console.log(message + styleSheet);
     }
   } catch (error) {
     console.error('Error writing to file:', error);
-    console.error('Stack trace:', error);
   }
 };
