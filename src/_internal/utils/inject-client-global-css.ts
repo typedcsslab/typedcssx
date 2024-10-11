@@ -1,4 +1,4 @@
-import { isServer, isDevelopment } from '..';
+import { isServer } from '..';
 
 let styleElement: HTMLStyleElement;
 
@@ -17,7 +17,6 @@ function createStyleElement(scoped: string) {
 }
 
 export function injectClientGlobalCSS(sheet: string, scoped: string) {
-  if (isDevelopment) console.log('💫 ' + scoped + ' executing ...' + sheet);
   if (isServer) return;
 
   styleElement = createStyleElement(scoped);

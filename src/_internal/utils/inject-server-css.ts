@@ -1,9 +1,6 @@
-import { isDevelopment } from '..';
-
 const styleSheets: Record<string, string> = {};
 
-export function injectServerCSS(hash: string, sheet: string, context: string) {
-  if (isDevelopment) console.log('💫 ' + context + ' executing ...' + sheet);
+export function injectServerCSS(hash: string, sheet: string) {
   styleSheets[hash] = sheet;
 }
 
