@@ -1,10 +1,13 @@
-'use server';
-
-import * as fs from 'fs';
-import * as path from 'path';
 import { isServer } from './helper';
 
 export const buildIn = (styleSheet: string, global?: string): void => {
+  let fs: typeof import('fs');
+  let path: typeof import('path');
+  if (typeof window === 'undefined') {
+    fs = require('fs');
+    path = require('path');
+  } else return;
+
   const styleFilePath = path.join(__dirname, '../../core/styles/style.module.css');
   const globalFilePath = path.join(__dirname, '../../core/styles/global.css');
 
