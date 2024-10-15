@@ -14,14 +14,10 @@ function createGlobalStyleSheetPromise() {
   });
 }
 
-async function executeBuildIn(styleSheet: string, option?: string): Promise<void> {
-  if (!isDevelopment && styleSheet) buildIn(styleSheet, option);
-}
-
 async function processStyleSheets() {
   while (styleSheetQueue.length > 0) {
     const [styleSheet, option] = styleSheetQueue.shift() as [string, string?];
-    await executeBuildIn(styleSheet, option);
+    if (!isDevelopment && styleSheet) await buildIn(styleSheet, option);
   }
   isProcessing = false;
 }
