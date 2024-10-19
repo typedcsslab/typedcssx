@@ -1,0 +1,82 @@
+name: release
+on:
+  push:
+    branches: [main, master]
+    tags:
+      - '*.*.*'
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test-and-publish:
+    name: Run test and publish
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install
+
+      - name: Compile TypeScript
+        run: npx tsc
+
+      - name: Copy styles to dist
+        run: |
+          mkdir -p dist/core
+          cp -r src/core/styles dist/core/
+
+      - name: Install e2e dependencies
+        run: |
+          cd e2e/site
+          pnpm install
+
+      - name: Copy local typedcssx
+        run: |
+          rm -rf e2e/site/node_modules/typedcssx/dist
+          cp -r dist e2e/site/node_modules/typedcssx/
+
+      - name: Run Jest tests
+        run: |
+          pnpm exec jest --ci --coverage --reporters=github-actions --reporters=summary
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Start Next.js Dev Server
+        run: pnpm run dev:e2e &
+        env:
+          CI: true
+
+      - name: Run Playwright tests
+        run: pnpm exec playwright test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Publish package
+        if: success()
+        run: |
+          mkdir publish
+          cp -r bin compiler dist next license readme.md npm/package.json ./publish
+          cd publish
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
