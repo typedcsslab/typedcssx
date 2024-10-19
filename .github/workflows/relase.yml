@@ -12,6 +12,8 @@ jobs:
     name: Run test and publish
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,20 +26,15 @@ jobs:
           npm install -g pnpm
           pnpm install
 
-      - name: Compile TypeScript
-        run: npx tsc
-
-      - name: Copy styles to dist
-        run: |
-          mkdir -p dist/core
-          cp -r src/core/styles dist/core/
+      - name: Compile and create dist
+        run: npm run build
 
       - name: Install e2e dependencies
         run: |
           cd e2e/site
           pnpm install
 
-      - name: Copy local typedcssx
+      - name: Copy new dist
         run: |
           rm -rf e2e/site/node_modules/typedcssx/dist
           cp -r dist e2e/site/node_modules/typedcssx/
@@ -77,6 +74,6 @@ jobs:
           mkdir publish
           cp -r bin compiler dist next license readme.md npm/package.json ./publish
           cd publish
-          npm publish
+          npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
