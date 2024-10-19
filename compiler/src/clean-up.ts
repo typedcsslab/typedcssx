@@ -2,8 +2,8 @@ import { writeFileSync } from 'fs';
 import { join } from 'path';
 
 export const cleanUp = async () => {
-  const styleFilePath = join(__dirname, '../../src/core/styles/style.module.css');
-  const globalFilePath = join(__dirname, '../../src/core/styles/style.module.css');
+  const styleFilePath = join(__dirname, '../../dist/core/styles/style.module.css');
+  const globalFilePath = join(__dirname, '../../dist/core/styles/style.module.css');
   try {
     writeFileSync(styleFilePath, '/*______________________________*/', 'utf-8');
     writeFileSync(globalFilePath, '/*______________________________*/', 'utf-8');
