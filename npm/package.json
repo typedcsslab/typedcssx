@@ -1,0 +1,24 @@
+{
+  "name": "typedcssx",
+  "version": "3.2.6",
+  "description": "CSS library for stably building user interfaces",
+  "author": "Refirst",
+  "repository": "github:typedcsslab/typedcssx",
+  "homepage": "https://typedcssx.vercel.app",
+  "license": "MIT",
+  "main": "dist/core/index.js",
+  "typings": "dist/core/index.d.ts",
+  "bin": {
+    "cssx": "./bin/cssx.mjs"
+  },
+  "dependencies": {
+    "globby": "^14.0.2",
+    "tsx": "^4.19.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/react": "^18.3.3",
+    "@types/node": "^22.5.4",
+    "@types/css-modules": "^1.0.5"
+  }
+}
