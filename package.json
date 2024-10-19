@@ -1,6 +1,6 @@
 {
   "name": "typedcssx",
-  "version": "3.2.8",
+  "version": "3.2.9",
   "description": "CSS library for stably building user interfaces",
   "private": true,
   "author": "Refirst",
@@ -10,6 +10,7 @@
   "main": "dist/core/index.js",
   "typings": "dist/core/index.d.ts",
   "scripts": {
+    "build": "npx tsc && cp -r src/core/styles dist/core",
     "test": "jest",
     "dev:e2e": "cd e2e/site && npm run dev -- -p 4000",
     "test:e2e": "playwright test"
