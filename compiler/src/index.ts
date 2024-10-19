@@ -3,10 +3,10 @@ import * as fs from 'fs';
 import ts from 'typescript';
 import { globby } from 'globby';
 import { cleanUp } from './clean-up';
-import { createBuildIn } from '../../src/core/method/create-build-in-helper.js';
-import { setBuildIn } from '../../src/core/method/set-build-in-helper.js';
-import { globalBuildIn } from '../../src/core/method/global-build-in-helper.js';
-import { rootBuildIn } from '../../src/core/method/root-build-in-helper.js';
+import { createBuildIn } from '../../dist/core/method/create-build-in-helper.js';
+import { setBuildIn } from '../../dist/core/method/set-build-in-helper.js';
+import { globalBuildIn } from '../../dist/core/method/global-build-in-helper.js';
+import { rootBuildIn } from '../../dist/core/method/root-build-in-helper.js';
 
 function isCSSX(filePath: string): boolean {
   const content = fs.readFileSync(filePath, 'utf8');
