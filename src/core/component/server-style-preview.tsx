@@ -1,6 +1,6 @@
 import { getServerCSS } from '../../_internal/utils/inject-server-css';
 import { isDevServer } from '../../_internal/utils/helper';
-import { RefreshOnNavigate } from './refresh-on-navigate';
+import { RefreshOn } from './refresh-on';
 
 export const ServerStylePreview = (): JSX.Element | null => {
   if (!isDevServer) return null;
@@ -9,7 +9,7 @@ export const ServerStylePreview = (): JSX.Element | null => {
 
   return (
     <>
-      <RefreshOnNavigate />
+      <RefreshOn />
       <style dangerouslySetInnerHTML={{ __html: serverCSS }} />
     </>
   );
