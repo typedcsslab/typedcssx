@@ -11,12 +11,6 @@ const css = cssx.create({
   },
 });
 
-cssx.global({
-  h1: {
-    color: 'aqua',
-  },
-});
-
 export function E2ETest() {
   return (
     <div className={css.e2e} data-testid="e2e-test-div">

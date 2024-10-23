@@ -15,4 +15,8 @@ test('CSS compilation logs contain expected output', async () => {
   expect(stdout).toContain('color: pink;');
   expect(stdout).toContain('@media (max-width: 1024px)');
   expect(stdout).toContain('color: aqua;');
+  // global and root are written at the same time.
+  expect(stdout).toContain('Generating global static css');
+  expect(stdout).toContain('color: cyan');
+  expect(stdout).toContain('--color-skyblue: skyblue');
 }, 15000);

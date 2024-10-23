@@ -9,6 +9,16 @@ const css = cssx.create({
   },
 });
 
+cssx.global({
+  h1: {
+    color: 'cyan',
+  },
+});
+
+cssx.root({
+  '--color-skyblue': 'skyblue',
+});
+
 export default function Home() {
   return (
     <main>
