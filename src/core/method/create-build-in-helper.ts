@@ -6,7 +6,7 @@ const styleSheetQueue: [string][] = [];
 let isProcessing = false;
 
 function createGlobalStyleSheetPromise() {
-  globalStyleSheetPromise = new Promise<string>((resolve) => {
+  globalStyleSheetPromise = new Promise<string>(resolve => {
     resolveGlobalStyleSheet = (value: string) => {
       styleSheetQueue.push([value]);
       resolve(value);
@@ -14,19 +14,15 @@ function createGlobalStyleSheetPromise() {
   });
 }
 
-async function executeBuildIn(styleSheet: string): Promise<void> {
-  if (!isDevelopment && styleSheet) buildIn(styleSheet);
-}
-
-async function processStyleSheets() {
+function processStyleSheets() {
   while (styleSheetQueue.length > 0) {
     const [styleSheet] = styleSheetQueue.shift() as [string];
-    await executeBuildIn(styleSheet);
+    if (!isDevelopment && styleSheet) buildIn(styleSheet);
   }
   isProcessing = false;
 }
 
-export function createBuildIn(): void {
+export async function createBuildIn(): Promise<void> {
   if (typeof globalStyleSheetPromise === 'undefined') createGlobalStyleSheetPromise();
   if (!isProcessing && styleSheetQueue.length > 0) {
     isProcessing = true;
