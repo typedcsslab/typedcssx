@@ -1,6 +1,6 @@
 'use server';
-import { isServer } from './helper';
 
+import { isServer } from './helper';
 export const buildIn = (styleSheet: string, global?: string): void => {
   if (!isServer) return;
 
@@ -10,13 +10,9 @@ export const buildIn = (styleSheet: string, global?: string): void => {
   const globalFilePath = path.join(__dirname, '../../core/styles/global.css');
   const filePath = global === '--global' ? globalFilePath : styleFilePath;
   const message = global === '--global' ? ' ✅ Generating global static css \n' : ' ✅ Generating module static css \n';
-
   try {
     if (fs.existsSync(filePath)) {
-      const cssData = fs.readFileSync(filePath, 'utf-8');
-      if (!cssData.includes(styleSheet)) {
-        fs.appendFileSync(filePath, styleSheet, 'utf-8');
-      }
+      fs.appendFileSync(filePath, styleSheet, 'utf-8');
       if (process.argv.includes('--log')) console.log(message + styleSheet);
     }
   } catch (error) {
