@@ -34,9 +34,10 @@ async function getAppRoot(): Promise<string> {
   const appRoot = await getAppRoot();
   const files = await globby([path.join(appRoot, '**/*.{ts,tsx}')]);
   const styleFiles = files.filter(isCSSX);
-  const importPromises = styleFiles.map(styleFile => import(path.resolve(styleFile)));
-  await Promise.all(importPromises);
 
+  for (let i = 0; i < styleFiles.length; i++) {
+    await import(path.resolve(styleFiles[i]));
+  }
   for (let i = 0; i < styleFiles.length; i++) {
     await createBuildIn();
   }
