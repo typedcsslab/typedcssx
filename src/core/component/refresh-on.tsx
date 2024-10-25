@@ -9,6 +9,7 @@ export const RefreshOn = () => {
   const [, startTransition] = useTransition();
 
   useEffect(() => {
+    router.refresh();
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const targetAnchor = target.closest('a');
