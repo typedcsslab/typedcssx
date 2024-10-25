@@ -1,11 +1,11 @@
 'use server';
 
 import { isServer } from './helper';
-export const buildIn = (styleSheet: string, global?: string): void => {
+export const buildIn = async (styleSheet: string, global?: string) => {
   if (!isServer) return;
 
-  const fs = require('fs');
-  const path = require('path');
+  const fs = await import('fs');
+  const path = await import('path');
   const styleFilePath = path.join(__dirname, '../../core/styles/style.module.css');
   const globalFilePath = path.join(__dirname, '../../core/styles/global.css');
   const filePath = global === '--global' ? globalFilePath : styleFilePath;
